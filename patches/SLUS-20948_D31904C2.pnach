@@ -1,0 +1,9 @@
+gametitle=Crimson Tears (NTSC-U) SLUS-20948 D31904C2
+
+[Remove Blur/Bloom]
+author=heavyjam
+description=Removes the full-screen glow/bloom post-process (the game's "GLOW" task). Kills the heavy haze and the upscale ghosting it causes; world, characters and HUD get much sharper. Room mood lighting overlays are lost while enabled.
+// CGlowTask draw thunk (0x32A200: j 0x32A550 ; lw a0,0x90(a0)) is the only entry
+// into the glow renderer CGlow::draw at 0x32A550 -> replace with jr ra ; nop
+patch=1,EE,0032A200,word,03E00008
+patch=1,EE,0032A204,word,00000000
