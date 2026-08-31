@@ -85,7 +85,8 @@ Exactly the signature of a distance-based blur: distant geometry gains the most,
 ## Gotchas worth remembering
 
 - **Pnach files only load at game boot.** A file dropped into `patches/` while the game is running does nothing, and the "patch doesn't work" report that follows is about an unpatched session, not a bad patch. Verify with a live read of the target word before diagnosing anything else.
-- **A loose `.pnach` on disk shadows the bundled `patches.zip` entry for that serial+CRC.** This game's bundled entry is a `[Widescreen 16:9]` hack, so it is reproduced verbatim in our file — otherwise installing an anti-blur patch would silently remove widescreen support.
+- **A loose `.pnach` does *not* shadow the bundled `patches.zip` entry** — PCSX2 loads both and merges them, de-duplicating by group name (`Skipped loading patch 'Widescreen 16:9' since a patch with a duplicate name was already loaded`). I initially assumed the opposite and copied the bundled `[Widescreen 16:9]` group into our file defensively; the log proved that unnecessary and it was removed. Reuse a bundled group name only if you actually mean to shadow it.
+- **Scoop's pcsx2 manifest does not persist `patches` or `gamesettings`**, so a scoop update wipes both. Fixing it at the manifest level is fragile (bucket edits get clobbered by `git pull`). The durable fix is PCSX2's own `[Folders]` section, since scoop *does* persist `inis`: set `Patches = ..\..\..\persist\pcsx2\patches` and add `GameSettings = ..\..\..\persist\pcsx2\gamesettings`. PCSX2 2.8.1 honours the `GameSettings` key even though it does not write it by default, and preserves both across its own ini rewrite on exit. The relative path resolves the same for any future version directory.
 - **`pkill` does not kill Windows processes from git bash.** A leftover background script kept a PINE connection open and every subsequent write timed out, which looked exactly like a hung emulator. `Stop-Process -Id` from PowerShell is the reliable form.
 
 ## Deliberately left alone
@@ -101,4 +102,4 @@ Exactly the signature of a distance-based blur: distant geometry gains the most,
 | `002D643C: 0000102D→3C02F000` | `CDeFocusPrim::calcZ` returns `0xF0000000` → the always-on defocus pass is never drawn |
 | `002D65AC: 0000102D→3C02F000` | `CBlurPrim::calcZ` returns `0xF0000000` → the cutscene radial smear is never drawn |
 
-Groups `[Remove Blur]` and `[No Motion Blur]`, plus `[Widescreen 16:9]` carried over from PCSX2's bundled file. All `place=1` (every vsync) like the rest of the repo.
+Groups `[Remove Blur]` and `[No Motion Blur]`, both `place=1` (every vsync) like the rest of the repo. PCSX2's bundled `[Widescreen 16:9]` group for this CRC keeps working alongside them untouched.
