@@ -82,6 +82,42 @@ Measured from a static camera, stock vs patched, via edge-energy variance:
 
 Exactly the signature of a distance-based blur: distant geometry gains the most, ground right under the camera (inside the near plane of 30.0) is unaffected — and the HUD, which should never have been touched, gains 14%. Soaked 35 samples with the patch resident: no word drift, no PINE errors, no instability.
 
+## Does it need brightness/saturation compensation? (No — measured)
+
+The Crimson Tears patch in this repo needed a companion ShadeBoost curve, because the effect it removes
+(`CGlow`) is an *additive* pass: deleting it cost 7.6% luminance and 28% chroma. That correction is
+**not** transferable, and this game was measured rather than assumed.
+
+Same-scene A/B via PINE, toggling `calcZ` between `move v0,zero` and the `0xF0000000` sentinel, three
+samples averaged per variant:
+
+| variant | luma | chroma | sharpness |
+|---|---|---|---|
+| stock | 69.99 | 15.622 | 4.974 |
+| defocus off (`[Remove Blur]`) | 69.62 (**−0.5%**) | 15.550 (**−0.5%**) | +2.1% |
+| both off (+ `[No Motion Blur]`) | 69.39 (−0.9%) | 15.560 (−0.4%) | +2.5% |
+
+**Verdict: no ShadeBoost compensation for this game.** A defocus pass *redistributes* light — it averages
+neighbouring pixels — where a glow *adds* it, so removing the blur returns the same photons to sharper
+positions instead of deleting them. Adding Gamma 54 / Saturation 68 here would simply over-brighten and
+over-saturate the game.
+
+The patch is doing real work regardless — the effect is confirmed active, and it is confirmed to be
+distance-keyed as `near=30/far=200` implies. Differencing stock against defocus-off, 32.5% of the frame
+moves by more than 2 levels, and the change is concentrated in the distance:
+
+| frame band | rows | mean |Δ| | pixels changed >2 |
+|---|---|---|---|
+| top (far geometry) | 0–543 | 5.93 | 42.4% |
+| middle | 543–1086 | 3.45 | 47.7% |
+| bottom (near ground) | 1086–1630 | 1.01 | 7.4% |
+
+In the most-affected window, edge detail goes up 1.06x, and visually the difference is much larger than
+that number suggests: a glowing orb loses a large smeared halo and becomes a crisp sphere, blue haze
+stops washing over the rock face behind it, and background colour detail that the blur had flattened
+(a magenta streak) becomes visible again. Global sharpness metrics understate a localised effect —
+always difference the frames and look at where the change actually lands.
+
 ## Gotchas worth remembering
 
 - **Pnach files only load at game boot.** A file dropped into `patches/` while the game is running does nothing, and the "patch doesn't work" report that follows is about an unpatched session, not a bad patch. Verify with a live read of the target word before diagnosing anything else.
