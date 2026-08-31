@@ -1,0 +1,20 @@
+// Rename this file to SERIAL_CRC.pnach, e.g. SLUS-12345_DEADBEEF.pnach
+// (serial + CRC are shown in PCSX2: right-click the game -> Properties -> Summary)
+// Delete the groups you don't use. Format reference: docs/pnach-format.md
+gametitle=Game Title (NTSC-U) SLUS-12345 DEADBEEF
+
+[60 FPS]
+author=YourName
+description=Unlocks the framerate to 60fps. May need EE Overclock.
+patch=0,EE,00000000,word,00000000
+
+[No-Interlacing]
+author=YourName
+description=Disables interlaced rendering for a stable image.
+gsinterlacemode=1
+patch=1,EE,00000000,word,00000000
+
+[Remove Blur]
+author=YourName
+description=Removes the blur/ghosting filter.
+patch=1,EE,00000000,word,00000000
