@@ -1,0 +1,38 @@
+gametitle=Musashi - Samurai Legend (NTSC-U) SLUS-20983 675CEB8F
+
+// [Widescreen 16:9] is reproduced verbatim from the patch PCSX2 bundles in
+// resources/patches.zip for this same serial+CRC. A loose .pnach on disk takes
+// precedence over the bundled zip entry, so it has to be carried forward here
+// or installing this file would silently remove widescreen support.
+[Widescreen 16:9]
+author=PCSX2 (bundled patch, kept so this file does not shadow it)
+description=Widescreen Hack
+gsaspectratio=16:9
+patch=1,EE,203DD108,extended,3F19999A
+
+// CDeFocusPrim is a camera-distance defocus pass that runs during ordinary
+// gameplay (flags=0, near=30.0, far=200.0). It draws layered translucent copies
+// offset along a camera-relative direction, so at native resolution the offsets
+// are sub-pixel and read as softness, while at 3x-4x internal resolution they
+// separate into visible ghosting. It is not a true depth-of-field: it softens
+// the 2D HUD too, which is how you can tell it is a full-frame pass.
+// CGPrim::disp (0x0010AC58) skips a prim entirely when its virtual calcZ returns
+// 0xF0000000, so returning that sentinel is the engine's own "do not draw" path.
+// calcZ__12CDeFocusPrim (0x002D6438) is `jr ra ; move v0,zero` and is reachable
+// only through _vt$12CDeFocusPrim+0x2c -- no other caller in the image.
+[Remove Blur]
+author=heavyjam
+description=Removes the always-on defocus pass that softens the whole frame, including the HUD. Biggest win on distant geometry. Measured 1.31x edge detail on background, 1.14x on the HUD.
+patch=1,EE,002D643C,word,3C02F000
+
+// CBlurPrim is the layered radial/zoom smear used by in-game cutscenes and some
+// events. It is dormant during normal play (kind=0 -> zero-size packet) and only
+// turns on for those scenes (observed kind=1, rate=4, color=0x0a808080).
+// Same mechanism and same uniqueness: calcZ__9CBlurPrim (0x002D65A8) is
+// `jr ra ; move v0,zero`, reachable only through _vt$9CBlurPrim+0x2c.
+// This one is a deliberate artistic effect -- enable only if you would rather
+// have a clean image than the intended smear.
+[No Motion Blur]
+author=heavyjam
+description=Removes the radial/zoom smear used in in-game cutscenes. Optional: it is an intentional effect, but it ghosts heavily at raised internal resolutions.
+patch=1,EE,002D65AC,word,3C02F000
