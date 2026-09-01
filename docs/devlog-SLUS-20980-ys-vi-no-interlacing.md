@@ -1,6 +1,8 @@
 # Devlog: No-Interlacing for Ys VI - The Ark of Napishtim (SLUS-20980)
 
-Record of how [`patches/SLUS-20980_EF9E43EF.pnach`](../patches/SLUS-20980_EF9E43EF.pnach) was made.
+Record of how the `[No-Interlacing]` group in
+[`patches/SLUS-20980_EF9E43EF.pnach`](../patches/SLUS-20980_EF9E43EF.pnach) was made.
+The `[60 FPS]` group in the same file is [a separate piece of work](devlog-SLUS-20980-ys-vi-60fps.md).
 The game was entry 10 on the [NTSC-U shortlist](no-interlacing-candidates.md#ntsc-u-shortlist) —
 "measured full-frame, so far cheaper than Ys V". That prediction held: it is a genuine
 TIER-B and the fix is three words. The interesting part is that two of those three words

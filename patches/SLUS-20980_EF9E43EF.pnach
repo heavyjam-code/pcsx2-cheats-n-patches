@@ -1,5 +1,10 @@
 gametitle=Ys - The Ark of Napishtim (NTSC-U) SLUS-20980 EF9E43EF
 
+[60 FPS]
+author=heavyjam
+description=Presents a frame every field instead of every second field, lifting the 30 fps cap the PS2 port puts on an engine that was already built for 60. Game speed is untouched: Ys VI advances its simulation in fixed 1/60-second steps counted off the vblank interrupt, so at 30 fps it runs two steps per frame and throws away one of the frames they were computed for, and at 60 it runs one step per frame. Movement, physics, animation, text and cutscene timing are all identical - there are simply twice as many frames. The cost is twice the drawing; a machine that cannot keep up drops frames by itself rather than slowing down, which is the path the game already takes today. Applied at boot, so restart the game after ticking it.
+patch=0,EE,00217624,word,2403003c
+
 [No-Interlacing]
 author=heavyjam
 description=Outputs a progressive frame instead of an interlaced one, with the DISPLAY origin corrected to match, on both the engine's display env and the movie player's. The game already renders a full 448-line frame, so nothing is lost and the picture does not move; what changes is that it is no longer flagged as interlaced, so PCSX2 stops deinterlacing it. Worth having if you run a Blend deinterlace mode, which otherwise softens every line of this game.
