@@ -1,6 +1,28 @@
-// Rename this file to SERIAL_CRC.pnach, e.g. SLUS-12345_DEADBEEF.pnach
-// (serial + CRC are shown in PCSX2: right-click the game -> Properties -> Summary)
-// Delete the groups you don't use. Format reference: docs/pnach-format.md
+// ── Using this template ─────────────────────────────────────────────────
+// 1. Rename to SERIAL_CRC.pnach, e.g. SLUS-12345_DEADBEEF.pnach. Serial and
+//    CRC: right-click the game in PCSX2 -> Properties -> Summary.
+// 2. Fill in the groups you need and delete the rest.
+// 3. Delete this entire comment block. Format reference: docs/pnach-format.md
+//
+// ── Rule: a finished .pnach contains no // comments ─────────────────────
+// Ship these keys and nothing else: gametitle=, [Group], author=,
+// description=, gsinterlacemode=, patch=. No header block, no per-address
+// annotations, no "same builder, NTSC path" notes next to a patch= line.
+//
+// This is not a style preference — it is a question of which file the
+// writing belongs in:
+//
+//   description=                 one or two sentences the user actually
+//                                reads in PCSX2's Patches tab. Say what the
+//                                patch does and what it costs.
+//   docs/devlog-SERIAL-slug.md   the write-up: addresses, disassembly, why
+//                                each value, what was tried and ruled out.
+//
+// If you are about to explain an address, you are writing the devlog. Put it
+// there. A pnach carrying that explanation has it in the wrong file, and the
+// next person to read the patch has to scroll past it to find the six lines
+// that matter.
+// ────────────────────────────────────────────────────────────────────────
 gametitle=Game Title (NTSC-U) SLUS-12345 DEADBEEF
 
 [60 FPS]

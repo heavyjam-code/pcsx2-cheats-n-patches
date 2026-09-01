@@ -30,7 +30,7 @@ Default Windows locations: `Documents\PCSX2\patches` and `Documents\PCSX2\cheats
 
 ## File structure
 
-Plain text. `//` starts an end-of-line comment.
+Plain text. `//` starts an end-of-line comment — but the files in this repo ship without a single one; see [Comments](#comments) below.
 
 ```pnach
 gametitle=Game Title (NTSC-U) SLUS-12345 DEADBEEF
@@ -50,6 +50,24 @@ patch=1,EE,00234567,word,00000063
 - `[Group Name]` — starts a patch group. **Each group is an individually toggleable checkbox** in the Patches/Cheats tab. A backslash nests groups in the UI tree (`[Cheats\Infinite Health]`).
 - `author=` and `description=` — shown in the UI for the group they appear in.
 - Files with no group labels still load (legacy pnach 1.0) as a single always-on patch, but write new files with groups.
+
+## Comments
+
+The format allows `//` comments. **This repo does not use them.** A finished
+`.pnach` here contains only `gametitle=`, `[Group]`, `author=`, `description=`,
+`gsinterlacemode=` and `patch=` — no header block, no note beside a `patch=`
+line explaining what the address does.
+
+That explanation is wanted, just not here. It goes in one of two places:
+
+| What you want to record | Where it goes |
+|---|---|
+| What the patch does and what it costs — the text PCSX2 displays in the Patches tab | `description=` in that group |
+| Addresses, disassembly, why each value, what was tried and ruled out | `docs/devlog-SERIAL-<slug>.md` |
+
+`description=` is the one field that should read like prose: it is what someone
+sees when choosing between two mutually exclusive groups in the UI. The devlog
+carries everything else, at whatever length the work deserves.
 
 ## The `patch=` line
 
