@@ -106,7 +106,7 @@ Standouts, with what is already known about each:
 - **Legaia 2** `SLUS-20414` — a two-line forum code exists and was never merged. A requester calls it "severe interlacing artifacts".
 - **Mortal Kombat: Shaolin Monks** `SLUS-21087` — the existing code is explicitly incomplete, fixing 3D but not menus or HUD, and people are still asking.
 - **Raiden III** `SLUS-21465` — no patch in any region, and the only shmup in this research whose field rendering survives measurement.
-- **Mega Man X7** `SLUS-20487` — measured `512x448 -> 1024x447`. A naive interlace flip is on record as failing.
+- **Mega Man X7** `SLUS-20487` — measured `512x448 -> 1024x447`. A naive interlace flip is on record as failing. **Done** for the Ns Edition v1.5.2 romhack (`55AC9791`), see [the devlog](devlog-SLUS-20487-mega-man-x7-no-interlacing.md); the failing flip is the CSR.FIELD trap again, and the fix is six words of libgraph output constants. Retail `3EDA6DE7` is untested (no disc to hand), but worth a byte-search: the romhack does not appear to have relocated code, since the shipped retail `[Widescreen 16:9]` address `0014d3e4` still holds its original `lui v0,0x44e0` in this build.
 - **Melty Blood: Act Cadenza** `SLPM-66438` — no pnach at all; the later *Actress Again* `SLPM-55184` has a community code to read as the idiom.
 - **Haven — Call of the King** `SLUS-20517`, **Beat Down** `SLUS-21150`, **Dark Angel** `SLUS-20131` — all independently tester-confirmed as still needing a patch, and all reached this list from two directions.
 

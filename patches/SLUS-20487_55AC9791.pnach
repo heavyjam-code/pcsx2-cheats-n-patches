@@ -1,0 +1,26 @@
+gametitle=Mega Man X7 (Ns Edition v1.5.2) (NTSC-U) SLUS-20487 55AC9791
+
+[No-Interlacing]
+author=heavyjam
+description=Forces progressive output (SMODE2 INT=0) and removes the per-field half-line offset. Game logic still believes it is interlaced, which it requires for its vsync/field waits.
+gsinterlacemode=1
+// sceGsSetDefDispEnv: SMODE2 value for interlaced FRAME mode 3 -> 2 (INT=0). This is
+// the branch the game itself takes (it boots with sceGsResetGraph(0,1,2,ffmd=1)).
+patch=1,EE,001059a4,word,24020002
+// same builder: SMODE2 value for interlaced FIELD mode 1 -> 0 (INT=0). This is the
+// branch the movie player takes (sceGsResetGraph(0,1,2,ffmd=0)).
+patch=1,EE,001059a8,word,24020000
+// same builder, NTSC FRAME DISPLAY path: DH = height-1 (224 lines) instead of
+// 2*height-1 (448). NOT the byte-identical PAL twin at 00105b00.
+patch=1,EE,00105a4c,word,02401021
+// same builder, NTSC interlaced DISPLAY path: DY base 0x32 -> 0x19. DY and DH are a
+// matched pair -- DY counts half-lines while INT=1 and real scanlines once INT=0, so
+// the progressive branch of this same function already uses 0x19 (at 00105a84).
+// Without this the 224-line window is placed at raster line 50 instead of 25 and the
+// picture sits high with a black band below whenever PCSX2's Screen Offsets is on.
+patch=1,EE,00105a14,word,24420019
+// per-frame draw env setup: force the field argument of sceGsSetHalfOffset to 0 so
+// XYOFFSET stops alternating by 8 (half a pixel in 12.4 fixed point) between buffers.
+patch=1,EE,002edfb8,word,0000382d
+// second draw env of the same pair: same half-offset neutralization.
+patch=1,EE,002edfe4,word,0000382d
