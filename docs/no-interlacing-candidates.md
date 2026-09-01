@@ -77,7 +77,7 @@ Rule: any `no pnach at all` row whose sibling serial is patched must be checked 
 | 7 | Total Overdose | `SLUS-21283` | C | Force the dormant DTV480P selector — three immediates. Donor `SLES-53492_4C380F8B`; the identical triple appears in Ape Escape 3 from a different studio. |
 | 8 | Sonic Heroes | `SLUS-20718` | C | Force the three `sceGsResetGraph` arguments. **Drop the PAL conditional** — `SLES-51950` gates on the 50/60 Hz menu, which NTSC-U does not have. |
 | 9 | Dynasty Warriors 5 | `SLUS-21153` | D | Two lines. Donor `SLUS-21299_A719D130`. Byte-search the *original* forms `64420008` and `30420001`, not the patched ones. |
-| 10 | Ys: The Ark of Napishtim | `SLUS-20980` | B | Measured full-frame, so far cheaper than Ys V. Squarely in the same lane as existing work here. |
+| 10 | Ys: The Ark of Napishtim | `SLUS-20980` | B | **Done** (`EF9E43EF`), see [the devlog](devlog-SLUS-20980-ys-vi-no-interlacing.md). Three words, and the prediction held — but two of them are not where the Ys V recipe looks: the engine overwrites libgraph's SMODE2 with its own, and the movie player keeps a second pair of display envs. |
 | 11 | Final Fantasy XII | `SLUS-20963` | B | Measured `512x448 -> 1024x896`. Also unlocks the IZJS build `SLPM-66750`. |
 | 12 | Kingdom Hearts II | `SLUS-21005` | ? | Largest audience on the list, no donor in any region. **Do before KH2 Final Mix+** — one disassembly ships to four to six files across both lanes. |
 
