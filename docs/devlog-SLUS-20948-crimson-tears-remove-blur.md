@@ -176,7 +176,15 @@ PINE IPC (`EnablePINE = true`, TCP 28011) replaced the savestate-unzip loop from
 | `0032A200: 080CA954→03E00008` | `CGlowTask` draw thunk → `jr ra`: glow/bloom pass never dispatched |
 | `0032A204: 8C840090→00000000` | former delay slot (`lw a0,0x90(a0)`) → `nop` |
 
-`[Remove Blur/Bloom (keep bloom, fix ghosting only)]` (optional, mutually exclusive with the above) — for anyone who wants the bloom look and only the upscale ghosting gone; needs no ShadeBoost:
+`[Remove Blur/Bloom (keep bloom, fix ghosting only)]` — **cut from the shipped
+pnach on 2026-09-01 on the user's judgement of how it actually looks in motion.**
+It was the milder option for anyone who wanted the bloom kept and only the
+upscale ghosting gone; needs no ShadeBoost. Zeroing the jitter leaves every
+accumulation pass running on the same texel, which tightens the glow into a
+harder, brighter core rather than removing anything — the numbers said
+"41% less haze, brightness unchanged" but the look was worse than either stock
+or the full kill. Kept here as a record; the addresses are still good if anyone
+wants to rebuild it:
 
 | Patch | Purpose |
 |---|---|

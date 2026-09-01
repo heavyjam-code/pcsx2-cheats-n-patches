@@ -5,10 +5,3 @@ author=heavyjam
 description=Disables the full-screen glow/bloom pass. Removes the upscale ghosting and, more importantly, the light bleed that washes over pipes, railings and characters. Costs about 8 percent of scene brightness - see the devlog for the recommended ShadeBoost Gamma 54 setting that restores it exactly without bringing the bleed back.
 patch=1,EE,0032A200,word,03E00008
 patch=1,EE,0032A204,word,00000000
-
-[Remove Blur/Bloom (keep bloom, fix ghosting only)]
-author=heavyjam
-description=Milder alternative that KEEPS the bloom and its brightness, and only removes the upscale ghosting. The bloom offsets each pass by +/-1 native pixel, which becomes a multi-pixel double image at raised internal resolution; zeroing the offsets stops the smear while every accumulation pass still runs. Haze over dark areas drops about 41 percent and brightness is unchanged, but glow around bright objects becomes tighter and stronger. Do not enable together with the group above.
-patch=1,EE,0038BA44,word,00000000
-patch=1,EE,0038BA48,word,00000000
-patch=1,EE,0038BA4C,word,00000000
