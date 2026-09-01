@@ -5,7 +5,7 @@ Research notes for picking the next `[No-Interlacing]` patch to write. Scope is 
 Everything here is measured against PCSX2 **2.8.1**'s own bundled database (`resources/patches.zip`, 4704 files; `resources/GameIndex.yaml`, 12830 serials). Regenerate the tables in [`data/`](data/) with:
 
 ```
-python tools/scan_deinterlace_coverage.py --pcsx2 <PCSX2 install> --out docs/data
+python tools/scan_deinterlace_coverage.py --pcsx2 <PCSX2 install> --out docs/deinterlace/data
 ```
 
 ## The state of play

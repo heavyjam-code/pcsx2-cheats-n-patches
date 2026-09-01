@@ -1,6 +1,6 @@
 # Devlog: No-Interlacing for Ys V - Lost Kefin, Kingdom of Sand (SLPM-66360)
 
-Trial-and-error record of how [`patches/SLPM-66360_09F7E99D.pnach`](../patches/SLPM-66360_09F7E99D.pnach) was made. No existing no-interlacing code existed for this game, so everything below came from reverse-engineering the boot ELF of the English 1.1 fan-translated ISO. Kept because the failures are more instructive than the final patch.
+Trial-and-error record of how [`patches/SLPM-66360_09F7E99D.pnach`](../../patches/SLPM-66360_09F7E99D.pnach) was made. No existing no-interlacing code existed for this game, so everything below came from reverse-engineering the boot ELF of the English 1.1 fan-translated ISO. Kept because the failures are more instructive than the final patch.
 
 Target: PS2 remake by Taito (2006), boot ELF `SLPM_663.60`, ELF CRC `09F7E99D` (PCSX2 CRC = XOR of every little-endian u32 of the whole ELF file). Tested on PCSX2 2.8.0.
 

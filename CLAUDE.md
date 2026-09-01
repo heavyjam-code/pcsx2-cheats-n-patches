@@ -20,7 +20,12 @@ This is a rule about which file the writing goes in, not about being terse:
 | What you want to record | Where it goes |
 |---|---|
 | What the patch does and what it costs — the text PCSX2 shows in the Patches tab | `description=` in that group |
-| Addresses, disassembly, why each value, what was tried and ruled out | `docs/devlog-SERIAL-<slug>.md` |
+| Addresses, disassembly, why each value, what was tried and ruled out | `docs/<category>/devlog-SERIAL-<slug>.md` |
+
+`<category>` is one of `deinterlace`, `deblur`, `60fps` or `misc` — the same
+split the `docs/` tree uses. A patch whose file spans two categories (Ys VI
+ships both `[60 FPS]` and `[No-Interlacing]`) gets one devlog per category,
+cross-linked, not one devlog filed under whichever came first.
 
 So: explain generously, just not in the `.pnach`. When you catch yourself about
 to write `// same builder, NTSC FRAME path: DH = height-1`, that sentence is a

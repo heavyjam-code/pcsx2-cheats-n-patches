@@ -1,6 +1,6 @@
 # Devlog: Remove Blur/Bloom for Crimson Tears (SLUS-20948)
 
-How [`patches/SLUS-20948_D31904C2.pnach`](../patches/SLUS-20948_D31904C2.pnach) was made. Symptom: heavy haze and edge ghosting over the whole image, much worse at upscaled internal resolutions. PCSX2's GameDB already applies `halfPixelOffset: 4` + `nativeScaling: 4` ("Aligns/Fixes post effects") for this game and the ghosting survives them.
+How [`patches/SLUS-20948_D31904C2.pnach`](../../patches/SLUS-20948_D31904C2.pnach) was made. Symptom: heavy haze and edge ghosting over the whole image, much worse at upscaled internal resolutions. PCSX2's GameDB already applies `halfPixelOffset: 4` + `nativeScaling: 4` ("Aligns/Fixes post effects") for this game and the ghosting survives them.
 
 Target: Capcom/DreamFactory brawler (2004), boot ELF `SLUS_209.48`, ELF CRC `D31904C2` (PCSX2 CRC = XOR of every little-endian u32 of the whole file — verified byte-identical against the record for this exact ISO in PCSX2's `cache/gamelist.cache`). The 2021 undub keeps the retail ELF, so the patch works for stock USA discs too. Tested on PCSX2 2.8.1, Vulkan, 3x scale. Single loadable segment maps `file_offset = va - 0x100000 + 0x80`; `$gp = 0x3A03F0`.
 

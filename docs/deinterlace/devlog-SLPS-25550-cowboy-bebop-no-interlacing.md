@@ -1,6 +1,6 @@
 # Devlog: No-Interlacing for Cowboy Bebop - Tsuioku no Serenade, English v1.0.0 (SLPS-25550)
 
-Record of how [`patches/SLPS-25550_53DDC158.pnach`](../patches/SLPS-25550_53DDC158.pnach)
+Record of how [`patches/SLPS-25550_53DDC158.pnach`](../../patches/SLPS-25550_53DDC158.pnach)
 was made. The game was on the greenfield list in
 [the candidates notes](no-interlacing-candidates.md#ntsc-j-fan-translations) — no pnach on
 any serial or CRC, nothing to copy from. It turned out to be the cheapest class of job on

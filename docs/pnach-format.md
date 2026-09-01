@@ -63,7 +63,7 @@ That explanation is wanted, just not here. It goes in one of two places:
 | What you want to record | Where it goes |
 |---|---|
 | What the patch does and what it costs — the text PCSX2 displays in the Patches tab | `description=` in that group |
-| Addresses, disassembly, why each value, what was tried and ruled out | `docs/devlog-SERIAL-<slug>.md` |
+| Addresses, disassembly, why each value, what was tried and ruled out | `docs/<category>/devlog-SERIAL-<slug>.md` |
 
 `description=` is the one field that should read like prose: it is what someone
 sees when choosing between two mutually exclusive groups in the UI. The devlog

@@ -1,8 +1,8 @@
 # Devlog: 60 FPS for Ys VI - The Ark of Napishtim (SLUS-20980)
 
 Record of how the `[60 FPS]` group in
-[`patches/SLUS-20980_EF9E43EF.pnach`](../patches/SLUS-20980_EF9E43EF.pnach) was made. The
-[No-Interlacing group in the same file](devlog-SLUS-20980-ys-vi-no-interlacing.md) is a
+[`patches/SLUS-20980_EF9E43EF.pnach`](../../patches/SLUS-20980_EF9E43EF.pnach) was made. The
+[No-Interlacing group in the same file](../deinterlace/devlog-SLUS-20980-ys-vi-no-interlacing.md) is a
 separate piece of work and shares nothing with this one but the ELF.
 
 Target: Falcom/Konami (2005), NTSC-U retail, boot ELF `SLUS_209.80` (1,753,008 bytes),

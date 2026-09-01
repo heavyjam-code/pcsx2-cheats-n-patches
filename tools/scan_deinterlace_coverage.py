@@ -15,17 +15,18 @@ Usage:
 
     python tools/scan_deinterlace_coverage.py \
         --pcsx2 "%USERPROFILE%/scoop/apps/pcsx2/current" \
-        --out docs/data
+        --out docs/deinterlace/data
 
     # add the measured field-render join
     python tools/scan_deinterlace_coverage.py \
-        --pcsx2 ... --out docs/data --upscale-survey path/to/survey.md
+        --pcsx2 ... --out docs/deinterlace/data \
+        --upscale-survey path/to/survey.md
 
 The upscale survey is the community "games tested (upscale without patches)"
 list -- a plain-text file of `* Title (REGION)` lines each followed by lines of
 the form `640x448 (Before) -> 1280x896 (After)`. It is not redistributed here;
-point at your own copy. See docs/no-interlacing-candidates.md for what the two
-measurements mean.
+point at your own copy. See docs/deinterlace/no-interlacing-candidates.md
+for what the two measurements mean.
 """
 
 from __future__ import annotations
@@ -254,7 +255,7 @@ def main() -> int:
         required=True,
         help="PCSX2 install directory (the one containing resources/patches.zip)",
     )
-    parser.add_argument("--out", default="docs/data", help="output directory")
+    parser.add_argument("--out", default="docs/deinterlace/data", help="output directory")
     parser.add_argument(
         "--upscale-survey",
         help="community upscale survey, to emit fieldrender-gaps.tsv as well",

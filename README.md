@@ -13,11 +13,14 @@ Hand-made patches and cheats for PS2 games, in the `.pnach` format used by the [
 | [`patches/`](patches/) | Quality-of-life patches (60 FPS, No-Interlacing, Remove Blur, ...) | `patches` folder |
 | [`cheats/`](cheats/) | Gameplay-altering cheats (infinite health, unlocks, ...) | `cheats` folder |
 | [`docs/pnach-format.md`](docs/pnach-format.md) | Reference for the pnach 2.0 file format | — |
-| [`docs/no-interlacing-candidates.md`](docs/no-interlacing-candidates.md) | Which games still need a No-Interlacing patch, and how to grade one | — |
+| [`docs/deinterlace/`](docs/deinterlace/) | No-Interlacing devlogs, the [candidate list](docs/deinterlace/no-interlacing-candidates.md), and coverage data | — |
+| [`docs/deblur/`](docs/deblur/) | Remove Blur devlogs | — |
+| [`docs/60fps/`](docs/60fps/) | 60 FPS devlogs | — |
+| [`docs/misc/`](docs/misc/) | Write-ups that fit none of the above | — |
 | [`tools/`](tools/) | Scripts for surveying PCSX2's patch coverage | — |
 | [`templates/template.pnach`](templates/template.pnach) | Starting point for making a new patch file | — |
 
-Files are stored flat (no per-game subfolders), one file per game release, exactly like the official [PCSX2/pcsx2_patches](https://github.com/PCSX2/pcsx2_patches) repo — so you can copy them straight into your PCSX2 folders.
+Patch and cheat files are stored flat (no per-game subfolders), one file per game release, exactly like the official [PCSX2/pcsx2_patches](https://github.com/PCSX2/pcsx2_patches) repo — so you can copy them straight into your PCSX2 folders.
 
 ## Installing a patch
 

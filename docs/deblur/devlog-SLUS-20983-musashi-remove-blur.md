@@ -1,6 +1,6 @@
 # Devlog: Remove Blur for Musashi - Samurai Legend (SLUS-20983)
 
-How [`patches/SLUS-20983_675CEB8F.pnach`](../patches/SLUS-20983_675CEB8F.pnach) was made. Symptom: soft blur and ghosting around characters, much worse at raised internal resolution (reported at 4x, Vulkan).
+How [`patches/SLUS-20983_675CEB8F.pnach`](../../patches/SLUS-20983_675CEB8F.pnach) was made. Symptom: soft blur and ghosting around characters, much worse at raised internal resolution (reported at 4x, Vulkan).
 
 Target: Square Enix action-RPG (2005), boot ELF `SLUS_209.83`, ELF CRC `675CEB8F`. Unlike the previous entries in this repo the CRC needed no cross-check against `gamelist.cache` — PCSX2 already ships a widescreen patch named exactly `SLUS-20983_675CEB8F.pnach` inside `resources/patches.zip`, which confirms serial and CRC outright. (The XOR-of-every-LE-u32 method was still re-validated against Crimson Tears' known `D31904C2` first.) Single loadable segment maps `file_offset = va - 0x100000 + 0x1000`; `.text` `0x100000..0x2d8b68`, `.data` `0x2d8b80`, `.rodata` `0x3aba00`.
 
