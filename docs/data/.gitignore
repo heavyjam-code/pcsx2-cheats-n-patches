@@ -1,0 +1,4 @@
+# Full 8300-row lookup table: regenerate locally with
+#   python tools/scan_deinterlace_coverage.py --pcsx2 <install> --out docs/data
+# Too large to be worth versioning, and it goes stale with every PCSX2 release.
+deinterlace-coverage.tsv
