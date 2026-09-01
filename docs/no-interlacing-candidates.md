@@ -92,7 +92,9 @@ Rule: any `no pnach at all` row whose sibling serial is patched must be checked 
 | 5 | Front Mission 5 | `SLPM-66205` | FM Translation Project, Patch 4 | English CRC is already tracked upstream, so this is an append. Diff against `2615F542` first. |
 | 6 | Boku no Natsuyasumi 2 | `SCPS-15026` | Hilltop v1.2 | The only entry with a direct, dated player complaint naming the CRC. Never answered. |
 
-Greenfield, no pnach on any serial or CRC: **Berwick Saga** `SLPS-25497`, **SRW OG Gaiden** `SLPS-25836`, **Zill O'll Infinite** `SLPM-65892`, **Cowboy Bebop: Tsuioku no Serenade** `SLPS-25551`, **Gantz: The Game** `SLPM-65950`, **Detective Conan** `SLPS-25426`. Gantz is the pick — the Japanese build is unsolved too, so one investigation yields two files.
+Greenfield, no pnach on any serial or CRC: **Berwick Saga** `SLPS-25497`, **SRW OG Gaiden** `SLPS-25836`, **Zill O'll Infinite** `SLPM-65892`, ~~**Cowboy Bebop: Tsuioku no Serenade** `SLPS-25551`~~, **Gantz: The Game** `SLPM-65950`, **Detective Conan** `SLPS-25426`. Gantz is the pick — the Japanese build is unsolved too, so one investigation yields two files.
+
+**Cowboy Bebop is done** (`SLPS-25550_53DDC158`, English v1.0.0), see [the devlog](devlog-SLPS-25550-cowboy-bebop-no-interlacing.md) — and it corrects this list twice. The serial above is the standard edition; the translated disc is the **First Limited Edition `SLPS-25550`**, which has no bundled pnach of any kind, so check the serial off the disc rather than off a wiki. And it measured TIER-B but is really **TIER-C**: the ELF carries a complete `[ 4] 640x480 DTV480` entry in a ten-entry video-mode table that early init never selects. Six words of table data buy 480p progressive instead of two words of hand-forged 448p.
 
 Two gotchas: grep Zill O'll by serial, its GameIndex title uses fullwidth tildes. And boot SRW OG holding Triangle+X first — Banpresto titles of that era sometimes ship a progressive mode.
 

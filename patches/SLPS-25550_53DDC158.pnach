@@ -1,0 +1,12 @@
+gametitle=Cowboy Bebop - Tsuioku no Serenade (English v1.0.0) (NTSC-J) SLPS-25550 53DDC158
+
+[No-Interlacing]
+author=heavyjam
+description=Switches the game into the DTV480P mode it already contains but never selects: 640x480 progressive in place of 640x448 interlaced. The camera and framing are unchanged, you get 32 extra lines of real vertical resolution, and interlacing disappears entirely rather than being filtered away afterwards. Costs about 7% more fill rate. Only the video-mode table is touched, so no engine code is altered.
+gsinterlacemode=1
+patch=1,EE,00461ef8,word,000001e0
+patch=1,EE,00461f00,word,3f891687
+patch=1,EE,00461f08,word,bf800000
+patch=1,EE,00461f10,word,43700000
+patch=1,EE,00461f34,word,00000000
+patch=1,EE,00461f38,word,00000050
