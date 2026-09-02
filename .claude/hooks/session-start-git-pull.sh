@@ -2,9 +2,9 @@
 # SessionStart hook: fast-forward this clone from its upstream before work starts.
 #
 # This repo is edited from more than one machine, so whichever clone sat idle is
-# behind the other. The hook is committed so every clone runs it. On a machine
-# whose own ~/.claude/settings.json already runs a session-start git pull, it
-# stands down, so the two hooks never pull the same checkout at the same time.
+# behind the other. The hook is committed so every clone runs it. A machine-wide
+# session-start pull hook, if one is installed, is expected to stand down in
+# repos that carry their own, so this is the only pull that runs here.
 #
 # Deliberately conservative:
 #   - not a git repo, detached HEAD, or no upstream -> do nothing
@@ -14,9 +14,6 @@
 # Silent unless it actually moved HEAD or hit a non-fast-forward.
 
 set -u
-
-# A machine-wide session-start pull hook takes precedence over this one.
-grep -qs 'session-start-git-pull' "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/settings.json" && exit 0
 
 repo="${CLAUDE_PROJECT_DIR:-$PWD}"
 
