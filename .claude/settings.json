@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|fork",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-start-git-pull.sh\"",
+            "shell": "bash",
+            "timeout": 20,
+            "statusMessage": "Pulling latest from origin"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,3 +1,4 @@
 * text=auto
 *.pnach text
 *.md text
+*.sh text eol=lf
