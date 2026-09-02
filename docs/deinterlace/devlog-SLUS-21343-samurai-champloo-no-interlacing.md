@@ -150,34 +150,16 @@ detail and a permanent half-line shake.
 
 - **`[Widescreen 16:9]`.** PCSX2 already bundles ElHecht's for this exact serial+CRC, and
   loose files merge with the zip rather than shadowing it.
-- **The soft-focus pass — measured, and deliberately not patched.** The game does run a
-  post-process, in the same place as the ones removed for
-  [GitS SAC](../deblur/devlog-SLUS-21006-gits-sac-remove-blur.md) and
-  [Cowboy Bebop](../deblur/devlog-SLPS-25550-cowboy-bebop-remove-blur.md), and a GS dump
-  lays it out exactly: after the 3D and before the HUD, a GS local-to-local transfer copies
-  the whole 512x224 frame to a scratch buffer at `TBP0 0x1500` (`FBP 0xa8`), and four
-  full-screen sprites blend it straight back at alpha 64/56/48/40 of 128, `LINEAR`, offset
-  by −0.1 / +0.1 texel vertically and −0.2 / +0.2 texel horizontally. About 88% of the final
-  image comes from the offset copies, which sounds decisive and is not: the offsets are a
-  fifth of a texel, so only ~15% of each pixel bleeds one pixel sideways.
+- **The soft-focus pass.** The game also runs a full-screen post-process — a copy of the
+  frame blended back over itself four times — and it is removed by the `[Remove Blur]` group
+  in the same file. See [that devlog](../deblur/devlog-SLUS-21343-samurai-champloo-remove-blur.md);
+  it is a separate effect from anything here, and this patch does not touch it.
 
-  Pinning all eight alpha bytes to zero over PINE (the packet is rebuilt every frame —
-  measured revert latency 21 ms — so this took ~2,700 write rounds per second) and
-  confirming in a second GS dump that every tap really reached the GS at alpha 0, the whole
-  pass is worth **+0.2% horizontal and +1.1% vertical detail**. That is not a blur worth a
-  `[Remove Blur]` group; a `description=` for it could not honestly promise anything.
-
-  Nothing in the dump samples the *other* frame buffer, so there is no previous-frame
-  feedback here — no Bebop-style trail to find. What reads as softness is the native
-  512x224, plus a scaling change this patch causes: stock, PCSX2 emitted 448 display lines
-  (the 224 rendered lines stretched 2x) and the window *downscaled* that; patched, it emits
-  224 and the window upscales slightly. No rendered detail is lost either way, but the
-  resampling flips direction, and integer scaling or nearest-neighbour display filtering
-  puts the crispness back.
-
-  Caveat on the evidence: one gameplay scene. A pass that only runs during a trick move or a
-  specific area would not appear in it.
-- **PAL.** `SLES-54096` is a different build with its own addresses and no file here.
+  Worth recording that an earlier revision of this file called that pass not worth patching,
+  on the strength of a whole-frame mean-gradient that moved less than a percent. That was the
+  wrong instrument — most of a frame is flat, and the two captures were of an animated scene
+  a couple of frames apart. Counting draws in a GS dump, and asking the person looking at the
+  screen, both said otherwise.
 
 ## Harness notes
 
