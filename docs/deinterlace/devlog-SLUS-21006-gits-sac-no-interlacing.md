@@ -149,6 +149,11 @@ the boot sequence play normally, and gameplay is stable.
 - **The `[60 FPS]` group.** PCSX2 already bundles a working one for this exact
   serial+CRC — see [the 60 FPS note](../60fps/devlog-SLUS-21006-gits-sac-60fps.md) for
   what it does and why it does not change game speed.
+- **The flicker filter.** This patch stops PCSX2 deinterlacing the frame, but the
+  game blurs it on its own account before it is ever displayed — three source lines
+  averaged into every output line. That is a separate effect and a separate group;
+  see [the Remove Blur devlog](../deblur/devlog-SLUS-21006-gits-sac-remove-blur.md).
+  If the picture still looks soft with No-Interlacing on, that is why.
 
 ## Harness notes
 

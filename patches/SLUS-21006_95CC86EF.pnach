@@ -6,3 +6,9 @@ description=Outputs a progressive frame instead of an interlaced one, with the D
 gsinterlacemode=1
 patch=1,EE,001bb0f4,word,24020002
 patch=1,EE,003984d0,word,0000001d
+
+[Remove Blur]
+author=heavyjam
+description=Removes the full-screen flicker filter. On its way to the display buffer every finished frame is composited three times - the line itself, the line above at 50 percent and the line below at 33 percent - which leaves each output line an even average of three source lines. It was built to tame interlace flicker on a CRT; on a progressive display it is a pure vertical smear across edges, the HUD and text, and with No-Interlacing there is no flicker left for it to hide. Vertical detail measures about 30 percent higher with it off, horizontal is untouched, and because the three weights sum to one the image brightness does not change - nothing needs compensating afterwards.
+patch=1,EE,001b9988,word,24070000
+patch=1,EE,001b99b8,word,24070000
