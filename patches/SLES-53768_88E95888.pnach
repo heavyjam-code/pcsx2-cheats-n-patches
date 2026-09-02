@@ -1,0 +1,6 @@
+gametitle=The Sword of Etheria (PAL) SLES-53768 88E95888
+
+[60 FPS]
+author=heavyjam
+description=Presents a frame on every vblank instead of every second one, so the game runs at 60 fps in its NTSC (60Hz) video mode and 50 fps in PAL (50Hz) mode. The title, menus and dialogue cutscenes already run unlocked; missions and movies install a vblank handler that holds every buffer swap back to odd fields, and this patch skips that hold. Game speed is untouched: the engine measures real elapsed time on an EE timer every frame and steps everything by that delta, so a 3-second walk covers the same distance at 60 fps as at 30 and every timer reads the same. Costs twice the drawing per second.
+patch=1,EE,00511f2c,word,10000006
