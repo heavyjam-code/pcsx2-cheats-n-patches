@@ -18,6 +18,10 @@ group name, so the two coexist in the Patches tab.
 The whole patch is one word. The work was in finding out what the game actually does with its
 frames, and in proving that presenting twice as many of them does not make it run twice as fast.
 
+Running at 60 made the game's previous-frame feedback pass read as motion blur; that is the
+`[No Motion Blur]` group in the same file, covered in
+[its own devlog](../deblur/devlog-SLES-53768-sword-of-etheria-no-motion-blur.md).
+
 ## Where the 30 comes from
 
 Nothing in this engine counts to two. There is no frame divider in the main loop, no

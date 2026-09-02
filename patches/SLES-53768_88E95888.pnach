@@ -4,3 +4,12 @@ gametitle=The Sword of Etheria (PAL) SLES-53768 88E95888
 author=heavyjam
 description=Presents a frame on every vblank instead of every second one, so the game runs at 60 fps in its NTSC (60Hz) video mode and 50 fps in PAL (50Hz) mode. The title, menus and dialogue cutscenes already run unlocked; missions and movies install a vblank handler that holds every buffer swap back to odd fields, and this patch skips that hold. Game speed is untouched: the engine measures real elapsed time on an EE timer every frame and steps everything by that delta, so a 3-second walk covers the same distance at 60 fps as at 30 and every timer reads the same. Costs twice the drawing per second.
 patch=1,EE,00511f2c,word,10000006
+
+[No Motion Blur]
+author=heavyjam
+description=Stops the previous frame from being blended into every new one. The engine adds a quarter of the last displayed frame on top of each frame it draws, which leaves a fading trail behind anything that moves and, because the trail feeds back into itself, also brightens the still parts of the picture by about a third. With the 60 FPS patch the trail sits closer to whatever cast it and reads as motion blur. This patch points that blend at the frame being drawn instead of the previous one and raises its weight to compensate, so brightness stays where the game put it, within a tenth of a luma unit of stock in a matched A/B, and only the trail goes. The one visible side effect is a slightly weaker blue haze, about 5 percent, because the game's haze and bloom passes come after this blend and used to be accumulated by it too. No cost, and it works the same at 30 and 60 fps.
+patch=1,EE,006ffc78,word,dc44d110
+patch=1,EE,006ffc84,word,dc44d280
+patch=1,EE,007003ac,word,dc44d110
+patch=1,EE,007003b4,word,dc44d280
+patch=1,EE,00591e6c,word,2403005c
