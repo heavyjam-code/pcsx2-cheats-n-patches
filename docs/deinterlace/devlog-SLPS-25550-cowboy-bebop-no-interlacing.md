@@ -268,3 +268,11 @@ the wrong trade.
 
 Plus `gsinterlacemode=1`, which at this point is belt and braces — there is no interlaced
 signal left to deinterlace.
+
+## Follow-up: the picture is still soft
+
+Progressive output did not make the game sharp, and that is not this patch's fault. The
+engine blends a 37% copy of every finished frame back over itself, offset by half a pixel
+and 1.25 lines — a CRT flicker filter that has nothing left to do once the signal is 480p.
+It is a separate group, `[Remove Blur]`, in the same file; see the
+[Remove Blur devlog](../deblur/devlog-SLPS-25550-cowboy-bebop-remove-blur.md).

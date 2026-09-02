@@ -10,3 +10,8 @@ patch=1,EE,00461f08,word,bf800000
 patch=1,EE,00461f10,word,43700000
 patch=1,EE,00461f34,word,00000000
 patch=1,EE,00461f38,word,00000050
+
+[Remove Blur]
+author=heavyjam
+description=Removes the full-screen flicker filter: every frame the game blends a 37 percent copy of itself back over the picture, shifted half a pixel right and 1.25 lines up. Built to tame interlace flicker on a CRT, on a progressive display it only smears edges, subtitles and the HUD, and with No-Interlacing there is no flicker left to hide. No visual cost; saves a little fill rate.
+patch=1,EE,00101450,word,1000002a
