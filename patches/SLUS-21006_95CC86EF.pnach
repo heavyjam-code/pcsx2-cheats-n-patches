@@ -1,0 +1,8 @@
+gametitle=Ghost in the Shell - Stand Alone Complex (NTSC-U) SLUS-21006 95CC86EF
+
+[No-Interlacing]
+author=heavyjam
+description=Outputs a progressive frame instead of an interlaced one, with the DISPLAY origin corrected to match. The game already draws a full 640x448 frame from a fixed draw offset, so nothing is resampled and the picture does not move: at default settings the rendered frames are byte-identical to stock, and they stay identical with Screen Offsets enabled. What changes is that the frame is no longer flagged as interlaced, so PCSX2 stops deinterlacing it - which otherwise softens every line under the Blend modes and shimmers under Bob. Leaves the boot-menu 480p mode alone.
+gsinterlacemode=1
+patch=1,EE,001bb0f4,word,24020002
+patch=1,EE,003984d0,word,0000001d
