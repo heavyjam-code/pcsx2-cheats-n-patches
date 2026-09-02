@@ -1,0 +1,7 @@
+gametitle=Samurai Champloo - Sidetracked (NTSC-U) SLUS-21343 7A5B4F80
+
+[No-Interlacing]
+author=heavyjam
+description=Switches the display from interlaced to progressive. The game renders 512x224 into two buffers and shifts every other frame down by half a scanline so the two fields interleave on a CRT; on a progressive display that offset is just a jitter, and it shakes the whole picture 60 times a second whichever deinterlacer you pick. Forcing the non-interlaced mode makes the game's own field offset stand down - both buffers settle on the same draw origin - while the DISPLAY height and origin follow through the library's own progressive path, so the frame lands exactly where the interlaced one did, with no black band under Screen Offsets. Consecutive frames of a still scene come out byte-identical instead of alternating between two positions half a line apart. The cost is vertical detail: two half-line-apart fields resolve as roughly 448 lines on a CRT, and a progressive frame is honestly the 224 lines the game draws.
+gsinterlacemode=1
+patch=0,EE,00369294,word,0000882d
