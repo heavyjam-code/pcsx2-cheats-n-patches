@@ -157,7 +157,7 @@ camera-relative rather than the world. Pixels were the honest instrument this ti
 Before the animation lever was found, the user played the unlock-only build and reported
 double speed by eye; the FPS constant set from boot (a real patched launch, verified by
 reading the words back) made no difference to that. That report is what turned this from a
-one-word patch into a three-word one, and the second play-test (jumps) into a sixteen-word one.
+one-word patch into a three-word one, and the second play-test (jumps) into a sixteen-word one, and the third into forty.
 
 ## The jump
 
@@ -239,6 +239,41 @@ a fractional clock now, so a footstep sound or a hit window keyed that way could
 two consecutive steps. None of this was measured; it needs playing, and the description says
 so in gentler words. Movies were not exercised.
 
+## Third pass: hops, fades, water, particles
+
+The third play-test listed camera easing, fades, effects and the evade hops. What was found:
+
+- **Scripted hops** (`0x001C9960`, action types `0x38`-`0x3B`): a direct velocity setter, no
+  fit needed. Horizontal `0.015625` -> `0.0078125` at `0x001C99EC`, `0x001C9AB4` (negative
+  for the backward hop) and `0x001C9B48`; vertical launches `0.03125*(n+1)`, `0.125` and
+  `0.53125*0.03125*(n+1)` scaled by the same 0.456 the jump fit produced, at `0x001C9A0C`,
+  `0x001C9AD4`, `0x001C9BBC` and `0x001C9C40`. All single `lui` words, so the values are
+  16-bit-rounded (0.01422 for 0.01424, 0.0569 for 0.05694).
+- **Colour fade** `0x001CEC20`: the one site that adds `16 * FPS / 30` per frame; with
+  FPS = 60 that is twice the increment at twice the rate. `16.0 -> 4.0` at `0x001CEC6C`.
+- **Screen fades** were already right: the general stepper `0x001E0770` counts frames
+  against the FPS constant (a fade is `FPS` frames long, one second either way), and every
+  one of its ~30 "start fade" callers only fills in the four globals at `0x002EE6B4`. Nothing
+  to patch.
+- **Water**: `0x00158340` scrolls the river texture by `0.002` per frame (`gp-0x747c`,
+  wrapping at 1.0) - halved at `0x00158378`. Its 30-frame texture cycle (`gp-0x7480`,
+  `slti 0x1e`) indexes a 30-entry table, so slowing that counter needs code, not a
+  constant, and it still cycles at 2x.
+- **Particles** (`particle`/`kemuri` classes, vtables `0x002EC750`-`0x002EC810`, updates
+  `0x0023F820`, `0x00241290`, `0x002414A0`, `0x00241670`, `0x00241A90`, `0x00241D80`): each
+  update adds fixed per-step amounts - a `0.1`-scaled velocity, `+0.01 * sin` drift,
+  `+0.002`/`+0.005`/`+0.0001` growth, `+0.001`/`+0.1` rise. All fifteen rate constants are
+  halved (each is a `lui` word; thresholds such as the `0.3` compare at `0x0023F8E0` are
+  left alone). Lifetimes are integer frame counters inside the same updates, so a particle
+  now moves at the stock rate but lives half as long. The gate-stub alternative (run the
+  particle update every other presented frame from a 6-word stub in the text padding at
+  `0x002BC7CC`) was built and tried, but the class update slot also draws, so gating it
+  makes particles flicker; it is not used.
+- **Camera**: not corrected. The gameplay camera is applied by `0x0012EBD0` from the scene
+  update at `0x001DD710` (via `0x00166040` / `0x00165430`), and none of the modules read so
+  far hold an easing constant next to anything camera-shaped; the eye vector only exists
+  inside the display context (`+0x260`). It settles twice as fast at 60 fps.
+
 ## The patch
 
 | Patch | Purpose |
@@ -250,6 +285,10 @@ so in gentler words. Movies were not exercised.
 | `001CC0B8/BC: 0.2 -> 0.1025`, `001CC0CC: 0.01 -> 0.0025` | air drag and gravity per step, fitted to the stock curve |
 | `001CC074: 0.15625 -> 0.078125`, `001CC088/90: 0.004 -> 0.00104` | the same for the body's alternate physics mode |
 | `001CBA98: 0.004 -> 0.001` | in-air steering acceleration per step |
+| `001C99EC`, `001C9AB4`, `001C9B48`, `001C9A0C`, `001C9AD4`, `001C9BBC`, `001C9C40` | scripted hop launches: horizontal halved, vertical x0.456 |
+| `001CEC6C: 16.0 -> 4.0` | the one `x * FPS/30` per-frame colour increment |
+| `00158378: 0.002 -> 0.001` | water texture scroll per step |
+| `0023F838` ... `00241DBC` (15 words) | particle per-step rates halved |
 
 All lines are `place=0`: the first two are consumed at boot, the constructor runs each time a
 character is created, and the physics words are plain code in per-frame functions.
