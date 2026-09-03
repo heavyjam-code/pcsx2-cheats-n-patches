@@ -237,7 +237,8 @@ colour channels, which at 60 is twice the increment at twice the rate; it is a f
 will be quick. Motion-keyed events that test the integer frame (`int(frame) == N`) will see
 a fractional clock now, so a footstep sound or a hit window keyed that way could trigger on
 two consecutive steps. None of this was measured; it needs playing, and the description says
-so in gentler words. Movies were not exercised.
+so in gentler words. Movies were not exercised - and they were where the one real surprise
+was hiding; see [the fourth pass](#fourth-pass-the-interval-also-switches-on-field-rendering).
 
 ## Third pass: hops, fades, water, particles
 
@@ -273,6 +274,61 @@ The third play-test listed camera easing, fades, effects and the evade hops. Wha
   update at `0x001DD710` (via `0x00166040` / `0x00165430`), and none of the modules read so
   far hold an easing constant next to anything camera-shaped; the eye vector only exists
   inside the display context (`+0x260`). It settles twice as fast at 60 fps.
+
+## Fourth pass: the interval also switches on field rendering
+
+Found on 2026-09-03, while checking whether the game wants a `[No-Interlacing]` group at all.
+It does not change the patch, but it is a cost the description was not naming.
+
+The interval word at `0x001E1C34` does a second thing. The present function `0x00131240`
+refreshes the per-field `XYOFFSET` of the draw environment before it waits, and that refresh
+is behind three gates:
+
+```
+00131258  lw   v1, -0x7524(gp)   ; 0x002EE4CC, the display mode
+0013125C  bne  v1, v0, 0x131398  ; != 1 -> the other present path, no refresh at all
+00131264  lw   v0, -0x7548(gp)   ; 0x002EE4A8, read 0 in every state sampled
+00131268  beqz v0, 0x1312d8
+001312D8  lw   v0, 0xc(s1)       ; the vsync interval
+001312DC  slti at, v0, 2         ; <- only refresh when a frame is a field
+001312E0  beqz at, 0x131310
+001312FC  lh   a3, -0x754c(gp)   ; 0x002EE4A4, the field flag
+00131304  jal  0x105ac0
+```
+
+`0x00105AC0` reads `SCISSOR` from the environment at `+0x30`, centres the buffer, writes
+`XYOFFSET` back at `+0x20` - and adds **8** to `OFY` when its `a3` is non-zero, which is half
+a pixel in 12.4 fixed point, i.e. half a scanline. The flag it is handed is the logical NOT of
+`sceGsSyncV` (`0x00104B38`), which returns `CSR` bit 13 - the field - but only while the
+libgraph state's `inter` at `0x002CD130` is 1.
+
+So at the stock interval of 2 the `slti` gate is shut and the offset never moves. At interval
+1 it opens, and the engine starts doing what a game drawing every field is supposed to do:
+put each field half a line below the last. Measured over PINE on the two draw environments at
+`ctx+0x80` and `ctx+0x170` (`ctx` = `0x0059E9F0`), same scene, two cold boots differing only
+in whether this group was enabled:
+
+| | vsync interval | `OFY` env A / env B |
+|---|---|---|
+| `[60 FPS]` off | 2 | 29184 / 29184 - equal |
+| `[60 FPS]` on | 1 | 29192 / 29184 - **8 apart** |
+
+That is correct interlaced rendering and wrong for the way anyone will actually play it: an
+emulator's deinterlacer turns a half-line hop into a shimmer, worst on static high-contrast
+content. It is confined to the branch where the display mode global `0x002EE4CC` is 1, which
+the game enters around movie playback - its setter `0x001E1AF0` has no callers outside the
+cluster at `0x002BB9F8`-`0x002BBFC0` wrapping the `MOVIE\NTSC\*.PSS` loads - so the title
+screen and the attract demo, not the field.
+
+Left alone, deliberately. Two ways out were considered and neither is this patch's business:
+
+- A `[No-Interlacing]` group would settle it for free, because freezing `inter` also freezes
+  the flag `sceGsSyncV` feeds the offset helper. But the one-word interlace flip blanks
+  PCSX2's output on this game - the reasoning and the addresses are in
+  [the candidates doc](../deinterlace/no-interlacing-candidates.md).
+- Pinning the field argument (`0x001312FC`, `lh a3, -0x754c(gp)` -> `addiu a3, zero, 0`) would
+  hold `OFY` still without touching the video mode. **Not tested**, and it would make the
+  frame-a-field behaviour a half-measure: every field drawn, none of them offset.
 
 ## The patch
 
