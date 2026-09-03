@@ -157,13 +157,82 @@ camera-relative rather than the world. Pixels were the honest instrument this ti
 Before the animation lever was found, the user played the unlock-only build and reported
 double speed by eye; the FPS constant set from boot (a real patched launch, verified by
 reading the words back) made no difference to that. That report is what turned this from a
-one-word patch into a three-word one.
+one-word patch into a three-word one, and the second play-test (jumps) into a sixteen-word one.
+
+## The jump
+
+The first play-test came back with walking and combat right and jumps at double speed. A
+jump is the one movement here that is not root motion: it is a small vertical physics
+integrator on the body object (`character + 0x1A0`), sampled every vsync over PINE with the
+player at `0x01621620`:
+
+| Body field | Meaning |
+|---|---|
+| `+0xB0/B4/B8` | position |
+| `+0xD0/D4/D8` | next position, `pos + vel`, written by `0x001CBE90` (vector add at `0x001CBF6C`) |
+| `+0xF0/F4/F8` | velocity |
+| `+0x08` bit 3 | airborne |
+
+Reading `vy` every frame of a stock jump gave, to four decimals, `vy = 0.8 vy - 0.01`
+while rising and `vy = 1.2 vy - 0.01` while falling, with `y += vy` after each update. That
+is one rule, `vy -= 0.2 |vy| + 0.01`, and it lives in `0x001CBF90` (called once per frame
+from the body update `0x001CC680`, only while airborne):
+
+```
+001CC0B8  lui  v0, 0x3e4c / ori 0xcccd     ; 0.2
+001CC0C4  jal  0x136e80                    ; fabs(0.2 * vy)
+001CC0CC  lui  v0, 0x3c23 / ori 0xd70a     ; 0.01
+001CC0E0  sub.s f1, f2, f1                 ; -|0.2 vy| - 0.01
+001CC0E4  add.s f0, f0, f1                 ; vy += that
+```
+
+with a second branch under body flag `0x40000` using 0.15625 and 0.004 (`0x001CC074`,
+`0x001CC088`). The launch is the `flag & 4` branch of the velocity setter `0x001CB2B0`:
+`vy = 0.36` (`0x001CB328`, `lui 0x3eb8 / ori 0x51ec`), found by zeroing drag and gravity and
+reading the value that stayed put; its two sibling branches launch at 0.4 and 0.284 for other
+actions. Stock, then, is: `vy = 0.36`, and each frame decay then integrate - `0.278, 0.4904,
+0.6503, ...` - apex 0.9699 on frame 9, 20 frames in the air.
+
+At 60 steps a second the same rule runs twice as often, and the animation clock does not
+touch it. The exact conversion of `v' = a v - b` to half steps is `a' = sqrt(a)`,
+`b' = b / (1 + a')`, but the rule has one drag constant serving both `a = 0.8` and `a = 1.2`,
+and the launch is decayed once before it is first integrated, so the constants were fitted
+instead: a grid search over launch, drag and gravity against the stock curve sampled at the
+30 fps instants, weighting the flight length, gave
+
+| | stock (per 1/30 s) | patch (per 1/60 s) | words |
+|---|---|---|---|
+| launch | 0.36 | 0.164 | `001CB328/2C: 3E27EF9E` |
+| launch, sibling branches | 0.4, 0.284 | 0.182, 0.129 (same ratio) | `001CB344/48: 3E3A9876`, `001CB358/5C: 3E047B9C` |
+| drag | 0.2 | 0.1025 | `001CC0B8/BC: 3DD1EB85` |
+| gravity | 0.01 | 0.0025 | `001CC0CC: lui 0x3b23` (ori unchanged) |
+| alt-mode drag, gravity | 0.15625, 0.004 | 0.078125, 0.00104 | `001CC074: lui 0x3da0`, `001CC088/90: 3A88A2CB` |
+| air steering | 0.004 | 0.001 | `001CBA98: lui 0x3a83` |
+
+Measured in-game with all of it applied over PINE at 60 fps: apex **0.975** (stock 0.970),
+39 half-steps in the air by the model and 35 sampled after the first read caught it mid-rise
+(stock 20 frames). The alt-mode pair uses the same arithmetic and was not exercised.
+
+That fixed the standing jump and left the running jump catapulting forward. Horizontal is
+two terms. The launch is the length of the body's root-motion delta (`+0xE0`, the vector
+the animation moved the character by this frame) along the facing direction (`+0x110`) -
+`0x001D1F60` - and that delta is already half-size under the animation clock (0.0548 per
+step patched, 0.1094 per frame stock, the same ground per second), so the launch takes care
+of itself: 0.0431 patched, 0.0860 stock. The other term is air steering: `0x001CBA70`
+normalises the facing direction, scales it by `0.004` (`lui 0x3b83 / ori 0x126f` at
+`0x001CBA98`) and adds it to `vel.xz` every step while body flag `0x8000` is set, which is
+why stock `vz` climbs 0.086 -> 0.154 across the flight. A per-frame acceleration halves
+twice going to half steps (half the velocity, twice the steps), so `0.004 -> 0.001`, one
+`lui`. Forward jump measured from the launch frame: **2.12** patched vs 2.03 stock, 37 vs 36
+vsyncs in the air. Without that word it was 4.40.
 
 ## What the patch does not correct
 
-Anything stepped per frame outside the animation system now runs twice as fast in real
-time: camera easing, screen fades, particle lifetimes and any UI motion that counts frames
-without going through the FPS constant. `0x001CEC20` adds `16 * FPS / 30` per frame to three
+Anything stepped per frame outside the animation system and the jump integrator now runs
+twice as fast in real time: camera easing, screen fades, particle lifetimes and any UI motion
+that counts frames without going through the FPS constant. The small scripted hops in
+`0x001C9960` (types `0x38`-`0x3A`, launch 0.03-0.125) go through the same integrator and get
+the corrected drag and gravity but keep their full launch, so they rise a little higher. `0x001CEC20` adds `16 * FPS / 30` per frame to three
 colour channels, which at 60 is twice the increment at twice the rate; it is a fade and it
 will be quick. Motion-keyed events that test the integer frame (`int(frame) == N`) will see
 a fractional clock now, so a footstep sound or a hit window keyed that way could trigger on
@@ -177,9 +246,13 @@ so in gentler words. Movies were not exercised.
 | `001E1C34: 00C0582D -> 240B0001` | display setup passes a vsync interval of 1 instead of 2 - a frame every field |
 | `002EDA00: 0000001E -> 0000003C` | the engine's frames-per-second constant reads 60, so frame-counted timers keep their length |
 | `00137738: 3C023F80 -> 3C023F00` | motion players are constructed with a clock speed of 0.5 instead of 1.0, so animation and the movement driven by it keep their pace |
+| `001CB328/2C`, `001CB344/48`, `001CB358/5C` | jump launch velocities 0.36 / 0.4 / 0.284 -> 0.164 / 0.182 / 0.129 |
+| `001CC0B8/BC: 0.2 -> 0.1025`, `001CC0CC: 0.01 -> 0.0025` | air drag and gravity per step, fitted to the stock curve |
+| `001CC074: 0.15625 -> 0.078125`, `001CC088/90: 0.004 -> 0.00104` | the same for the body's alternate physics mode |
+| `001CBA98: 0.004 -> 0.001` | in-air steering acceleration per step |
 
-All three are `place=0`: the first two are consumed at boot, and the third is a constructor
-that runs each time a character is created, so it must be in place before the first one is.
+All lines are `place=0`: the first two are consumed at boot, the constructor runs each time a
+character is created, and the physics words are plain code in per-frame functions.
 A stock savestate loaded into a patched session brings back its own 30, 2 and 1.0 with it;
 play from the memory card save instead.
 
