@@ -12,9 +12,10 @@ ELF CRC **`DD35AC9F`** - the same CRC PCSX2's bundled `patches.zip` carries for 
 names as strings (`clGiantAnt`, `clPlayerObject_Male`, `clVgsControl`, `utKksSystem`), which is
 how the engine core was told apart from the game.
 
-The additive haze that reads as blur on distant objects is a separate pass and has
-[its own devlog](../deblur/devlog-SLES-54464-global-defence-force-remove-blur.md); the
-`[Remove Blur]` group in the same file comes from there.
+The blur on distant objects is two separate passes, a depth of field and an additive haze,
+and has [its own devlog](../deblur/devlog-SLES-54464-global-defence-force-remove-blur.md); the
+`[Remove Blur]` group in the same file comes from there. The progressive switch is
+[the No-Interlacing devlog](../deinterlace/devlog-SLES-54464-global-defence-force-no-interlacing.md).
 
 The request was 60 fps, or 50 if the PAL disc could not do 60. The disc turned out to be a
 stranger thing than either: a game whose logic already runs at 60 Hz, on a 50 Hz display, at a

@@ -2,7 +2,7 @@ gametitle=Global Defence Force (PAL) SLES-54464 DD35AC9F
 
 [60 FPS]
 author=heavyjam
-description=Runs the game at 60 fps. Two things: this PAL disc's video output switches from 50Hz to NTSC 60Hz, and the frame rate is allowed to climb back to 60 after a slow frame. The game already runs its logic at 60 steps a second off an EE timer (this PAL build kept the NTSC clock, so it plays at NTSC speed) and it draws a frame on every 60Hz tick whenever the EE keeps up, but a frame that needs two ticks makes the next frame run two logic steps, which is heavier still, so once the game drops to 30 fps it stays there even in scenes it could draw at 60. This patch extends the engine's own catch-up mode, which stock only enters at 20 fps, to those 2-tick frames: they are presented as soon as they are ready until the game fits a tick again. Game speed does not change, because the world advances per timer tick and not per frame; a 3-second walk ends in the same place at 30, 45 and 60 fps. In PCSX2, holding 60 fps in missions needs EE headroom: EE Overclock 180% held a locked 60 through mission 1 and 130% was enough on a quiet street; without it the game runs uncapped and unevenly between 30 and 45 fps. The 60Hz output also gives the 30 fps movies and the 30 fps fallback an even cadence instead of the 50Hz judder. Tick this or NTSC Mode, not both. Applied at boot, so restart the game after ticking it.
+description=Runs the game at 60 fps. Two things: this PAL disc's video output switches from 50Hz to NTSC 60Hz, and the frame rate is allowed to climb back to 60 after a slow frame. The game already runs its logic at 60 steps a second off an EE timer (this PAL build kept the NTSC clock, so it plays at NTSC speed) and it draws a frame on every 60Hz tick whenever the EE keeps up, but a frame that needs two ticks makes the next frame run two logic steps, which is heavier still, so once the game drops to 30 fps it stays there even in scenes it could draw at 60. This patch extends the engine's own catch-up mode, which stock only enters at 20 fps, to those 2-tick frames: they are presented as soon as they are ready until the game fits a tick again. Game speed does not change, because the world advances per timer tick and not per frame; a 3-second walk ends in the same place at 30, 45 and 60 fps. In PCSX2, holding 60 fps in missions needs EE headroom: EE Overclock 180% held a locked 60 through mission 1 and 130% was enough on a quiet street; without it the game runs uncapped and unevenly between 30 and 45 fps. The 60Hz output also gives the 30 fps movies and the 30 fps fallback an even cadence instead of the 50Hz judder. Tick this or NTSC Mode, not both; pairs with No-Interlacing. Applied at boot, so restart the game after ticking it.
 patch=0,EE,0012c034,word,24060002
 patch=0,EE,0012b07c,word,3c010003
 patch=0,EE,0012b0b4,word,34222000
@@ -11,7 +11,7 @@ patch=1,EE,001109b4,word,2e610002
 
 [NTSC Mode]
 author=heavyjam
-description=The video-mode half of the 60 FPS patch on its own: NTSC 60Hz output with the stock frame pacing, for anyone who prefers the game to lock to a steady 30 fps when it cannot hold 60 rather than run uncapped. Same 448-line picture, movies and menus at their native NTSC rate, game speed unchanged. With EE Overclock the game reaches 60 fps here too, but after any slow frame it sticks at 30 until the load drops well below a tick. Tick this or 60 FPS, not both. Applied at boot, so restart the game after ticking it.
+description=The video-mode half of the 60 FPS patch on its own: NTSC 60Hz output with the stock frame pacing, for anyone who prefers the game to lock to a steady 30 fps when it cannot hold 60 rather than run uncapped. Same 448-line picture, movies and menus at their native NTSC rate, game speed unchanged. With EE Overclock the game reaches 60 fps here too, but after any slow frame it sticks at 30 until the load drops well below a tick. Tick this or 60 FPS, not both; pairs with No-Interlacing. Applied at boot, so restart the game after ticking it.
 patch=0,EE,0012c034,word,24060002
 patch=0,EE,0012b07c,word,3c010003
 patch=0,EE,0012b0b4,word,34222000
@@ -19,7 +19,9 @@ patch=0,EE,0012b0c8,word,64020280
 
 [Remove Blur]
 author=heavyjam
-description=Takes the vaseline smear off distant objects without dimming the picture. Every frame the game shrinks the screen down to an 11-pixel copy, blurs it, and adds 70 percent of that back over the whole picture, no depth test; it is the game's exposure lift as much as its bloom, and on the fog-coloured distant city it reads as smear while the dark soldier in front stays sharp. Simply skipping the pass makes the game a third darker (the sky loses 40 percent of its brightness), so this patch keeps the pass and repoints its final sprite at the sharp frame itself: the same 70 percent is added, but of the real pixels instead of the blurred copy. Measured on mission 1: average brightness within 3 percent of stock, sky and ground within 3 percent, and three times the fine detail on the far buildings. The picture is a little more contrasty than stock, with about 1 percent more clipped highlights. Works at any frame rate and with either video-mode group. No restart needed.
+description=Removes the two things this game does to soften its picture, and keeps its exposure. One is a depth-of-field pass: every frame it redraws the frame onto itself shifted by about a pixel, at half strength, in up to three depth bands, so anything distant is blurred. At native resolution that is a half-pixel softening; at 4x the shifted copy lands four pixels off and reads as a second building, and PCSX2's GameDB fixes for this title exist to turn that double back into blur. The pass is skipped entirely, which costs no brightness. The other is a haze pass that shrinks the screen to an 11-pixel copy, blurs it and adds 70 percent of it back over everything with no depth test; it is the game's exposure lift as much as its bloom, so simply dropping it makes the picture a third darker. That pass is kept but repointed at the sharp frame itself, so the same 70 percent is added of the real pixels, and brightness stays within 3 percent of stock. The distant city goes from a smear to single, crisp edges; what stays soft at distance is the resolution of the textures themselves. In PCSX2, turn off this game's Align to Native half-pixel offset (Game Properties, Graphics, manual hardware fixes; keep Auto Flush on): the GameDB sets it for the depth-of-field pass this patch removes, and with the pass gone it still costs a fifth of the far detail. Applies every frame, no restart needed.
+patch=1,EE,0012eae0,word,03e00008
+patch=1,EE,0012eae4,word,00000000
 patch=1,EE,0012fd80,word,24070280
 patch=1,EE,0012fdb8,word,3c056800
 patch=1,EE,0012fde8,word,316901ff
@@ -28,3 +30,15 @@ patch=1,EE,0012fe38,word,00000000
 patch=1,EE,0012fe5c,word,34850005
 patch=1,EE,0012fef4,word,a7b2016c
 patch=1,EE,0012fef8,word,a7b1016e
+patch=1,EE,0012fe00,word,24130000
+
+[No-Interlacing]
+author=heavyjam
+description=Outputs a progressive 448-line frame instead of an interlaced one, with the display origin halved to match. The game draws all 448 lines every frame from one fixed draw offset and only flags the result as interlaced, so nothing is resampled and the picture does not move; what changes is that PCSX2 stops deinterlacing a frame that never needed one. It switches the disc to NTSC 60Hz output with the same video-mode words as the 60 FPS group, so it pairs with 60 FPS or NTSC Mode and also works on its own. Applied at boot, so restart the game after ticking it.
+gsinterlacemode=1
+patch=0,EE,0012c030,word,24050000
+patch=0,EE,0012c03c,word,24070001
+patch=0,EE,0012c034,word,24060002
+patch=0,EE,0012b07c,word,3c010001
+patch=0,EE,0012b0b4,word,34229000
+patch=0,EE,0012b0c8,word,64020280
