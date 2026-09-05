@@ -1,0 +1,10 @@
+gametitle=Blood Will Tell - Tezuka Osamu's Dororo (PAL) SLES-52755 D781869F
+
+[60 FPS]
+author=heavyjam
+description=Presents a frame on every vblank instead of every second one, and rebuilds the engine's timing table around the new rate, so the game runs at 60 fps in its 60Hz TV setting and 50 fps in 50Hz. Pick 60 Hz at the TV setting screen the game shows at boot. Game speed is untouched: Blood Will Tell is a fixed-step engine that runs exactly one logic update per drawn frame and expresses every duration as a number of updates, with the updates per second held in one global the stock game sets to half the refresh rate; this patch sets it to the full refresh rate, so the same second of real time still buys the same amount of game. Measured from a shared savestate, ten seconds of holding forward ends in the same place at 60 fps as at 30, matching to a sixth of a percent, and of the ten thousand values in memory that the walk moved, none advance at half or double rate. The pre-rendered Sofdec movies are 30 fps files whose player only fills a frame buffer on the frames it has a new picture ready for, which at 60 fps would leave every second frame of a movie black; the last three words switch the player's own hold-the-last-frame path from a buffer it is never given to the picture it just drew, so a movie repeats each frame instead of blanking, and plays exactly as before. The cost is twice the drawing. One small change: the countdown on that TV setting confirmation is a raw frame count, so you get about 2.5 seconds to answer it instead of 5. Applied at boot, so restart the game after ticking it.
+patch=0,EE,001b40ec,word,0080182d
+patch=0,EE,003d91ec,word,24030001
+patch=0,EE,002790cc,word,00000000
+patch=0,EE,002790ec,word,af96fc38
+patch=0,EE,002790f0,word,00000000
