@@ -16,3 +16,15 @@ patch=0,EE,0012c034,word,24060002
 patch=0,EE,0012b07c,word,3c010003
 patch=0,EE,0012b0b4,word,34222000
 patch=0,EE,0012b0c8,word,64020280
+
+[Remove Blur]
+author=heavyjam
+description=Takes the vaseline smear off distant objects without dimming the picture. Every frame the game shrinks the screen down to an 11-pixel copy, blurs it, and adds 70 percent of that back over the whole picture, no depth test; it is the game's exposure lift as much as its bloom, and on the fog-coloured distant city it reads as smear while the dark soldier in front stays sharp. Simply skipping the pass makes the game a third darker (the sky loses 40 percent of its brightness), so this patch keeps the pass and repoints its final sprite at the sharp frame itself: the same 70 percent is added, but of the real pixels instead of the blurred copy. Measured on mission 1: average brightness within 3 percent of stock, sky and ground within 3 percent, and three times the fine detail on the far buildings. The picture is a little more contrasty than stock, with about 1 percent more clipped highlights. Works at any frame rate and with either video-mode group. No restart needed.
+patch=1,EE,0012fd80,word,24070280
+patch=1,EE,0012fdb8,word,3c056800
+patch=1,EE,0012fde8,word,316901ff
+patch=1,EE,0012fe30,word,00097140
+patch=1,EE,0012fe38,word,00000000
+patch=1,EE,0012fe5c,word,34850005
+patch=1,EE,0012fef4,word,a7b2016c
+patch=1,EE,0012fef8,word,a7b1016e
