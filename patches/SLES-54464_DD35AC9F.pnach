@@ -1,0 +1,18 @@
+gametitle=Global Defence Force (PAL) SLES-54464 DD35AC9F
+
+[60 FPS]
+author=heavyjam
+description=Runs the game at 60 fps. Two things: this PAL disc's video output switches from 50Hz to NTSC 60Hz, and the frame rate is allowed to climb back to 60 after a slow frame. The game already runs its logic at 60 steps a second off an EE timer (this PAL build kept the NTSC clock, so it plays at NTSC speed) and it draws a frame on every 60Hz tick whenever the EE keeps up, but a frame that needs two ticks makes the next frame run two logic steps, which is heavier still, so once the game drops to 30 fps it stays there even in scenes it could draw at 60. This patch extends the engine's own catch-up mode, which stock only enters at 20 fps, to those 2-tick frames: they are presented as soon as they are ready until the game fits a tick again. Game speed does not change, because the world advances per timer tick and not per frame; a 3-second walk ends in the same place at 30, 45 and 60 fps. In PCSX2, holding 60 fps in missions needs EE headroom: EE Overclock 180% held a locked 60 through mission 1 and 130% was enough on a quiet street; without it the game runs uncapped and unevenly between 30 and 45 fps. The 60Hz output also gives the 30 fps movies and the 30 fps fallback an even cadence instead of the 50Hz judder. Tick this or NTSC Mode, not both. Applied at boot, so restart the game after ticking it.
+patch=0,EE,0012c034,word,24060002
+patch=0,EE,0012b07c,word,3c010003
+patch=0,EE,0012b0b4,word,34222000
+patch=0,EE,0012b0c8,word,64020280
+patch=1,EE,001109b4,word,2e610002
+
+[NTSC Mode]
+author=heavyjam
+description=The video-mode half of the 60 FPS patch on its own: NTSC 60Hz output with the stock frame pacing, for anyone who prefers the game to lock to a steady 30 fps when it cannot hold 60 rather than run uncapped. Same 448-line picture, movies and menus at their native NTSC rate, game speed unchanged. With EE Overclock the game reaches 60 fps here too, but after any slow frame it sticks at 30 until the load drops well below a tick. Tick this or 60 FPS, not both. Applied at boot, so restart the game after ticking it.
+patch=0,EE,0012c034,word,24060002
+patch=0,EE,0012b07c,word,3c010003
+patch=0,EE,0012b0b4,word,34222000
+patch=0,EE,0012b0c8,word,64020280
