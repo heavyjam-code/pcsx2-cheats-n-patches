@@ -320,21 +320,105 @@ the game enters around movie playback - its setter `0x001E1AF0` has no callers o
 cluster at `0x002BB9F8`-`0x002BBFC0` wrapping the `MOVIE\NTSC\*.PSS` loads - so the title
 screen and the attract demo, not the field.
 
-Left alone, deliberately. Two ways out were considered and neither is this patch's business:
+Left alone at the time. Two ways out were considered:
 
 - A `[No-Interlacing]` group would settle it for free, because freezing `inter` also freezes
   the flag `sceGsSyncV` feeds the offset helper. But the one-word interlace flip blanks
   PCSX2's output on this game - the reasoning and the addresses are in
   [the candidates doc](../deinterlace/no-interlacing-candidates.md).
 - Pinning the field argument (`0x001312FC`, `lh a3, -0x754c(gp)` -> `addiu a3, zero, 0`) would
-  hold `OFY` still without touching the video mode. **Not tested**, and it would make the
-  frame-a-field behaviour a half-measure: every field drawn, none of them offset.
+  hold `OFY` still without touching the video mode.
+
+Both of those judgements rested on "confined to the movie-backed screens", and that reading of
+the gate was wrong. The fifth pass is where it came back.
+
+## Fifth pass: the offset sticks, and it is the menu strobe
+
+Reported 2026-09-05: the menu and the status screen strobe. They do, and it is the fourth
+pass's half-line hop - which that pass measured correctly and then under-called, because
+"confined to the branch where the mode global is 1" describes where the offset is *written*,
+not where it is *seen*.
+
+`0x00105AC0` writes `XYOFFSET` into one draw environment - whichever of `ctx+0x80` and
+`ctx+0x170` the buffer counter at `0x002EE4A0` selects this frame (`0x001312E8`, `andi v0, 1`).
+Nothing ever writes it back. So one pass through any mode-1 screen leaves that env holding
+`OFY = base + 8` for the rest of the session, and the present function keeps alternating the
+two envs every frame. The offset does not need the refresh to keep running; it only needs it
+to have run once. The game boots through the title screen, where the mode
+global sits at 1 and the main present runs every field, so by the time anyone reaches gameplay the picture is already hopping half a scanline every
+frame - 30 Hz, over everything.
+
+Measured over PINE, `[60 FPS]` on, all five 2026-09-03 savestates plus a live run:
+
+| Where | `0x002EE4CC` | `OFY` env A / env B |
+|---|---|---|
+| savestate 01 (cutscene), 06 (attract movie) | 1 | 29192 / 29184 |
+| savestates 08, 09 (title screen) | 0 | 29192 / 29184 |
+| savestates 02, 03, 04, 07 (attract demo) | 1 | 29184 / 29192 |
+| savestate 05 (title screen) | 0 | 29184 / 29192 |
+| save-data screen, live | 0 | 29192 / 29184 |
+| character selection, live | 0 | 29192 / 29184 |
+| in-game pause menu, live | 0 | 29192 / 29184 |
+| status check, live | 0 | 29192 / 29184 |
+
+Which env carries the 8 depends on the buffer parity when the refresh last ran; that it is
+carried at all does not depend on the screen. Watching the title screen live, the mode global
+flips 0 -> 1 and back within a second and the 8 changes envs with it.
+
+### What it looks like in pixels
+
+`ScreenshotSize = 2` (1280x896, 2x internal), F8 bursts about 1.1 s apart, then each frame
+scored against the first at a vertical shift of -1, 0 and +1 lines. Half a scanline of a
+448-line buffer is one line at 2x, so a frame drawn through the offset env lands exactly one
+row off.
+
+| Screen | `OFY` A/B | Frames at each shift | MSE within a class | MSE across |
+|---|---|---|---|---|
+| status check | 29192 / 29184 | 3 at 0, 5 at +1 | **0.00** | **363** |
+| status check | 29184 / 29184 | 8 at 0 | **0.00** | - |
+| in-game pause menu | 29192 / 29184 | 6 at 0, 4 at +1 | <= 0.8 | 34 |
+| character selection | 29192 / 29184 | 6 at 0, 4 at -1 | <= 10 | 250 |
+| save-data screen | 29184 / 29184 | 10 at 0 | <= 9 | - |
+| save-data screen | 29192 / 29184 (written) | 5 at 0, 5 at +1 | <= 9 | 63 |
+
+The status check is the clean one: the screen is completely static, so within a class the
+frames are byte-identical and the two classes are one row apart and nothing else. It and the
+save-data screen each appear twice, once with the eight and once without, the difference
+written or cleared over PINE between the two bursts on an otherwise untouched scene - so the
+split tracks the eight, not the screen.
+
+### The fix
+
+One word, the option the fourth pass listed and did not test:
+
+```
+001312FC  87878AB4  lh    a3, -0x754c(gp)   ; the field flag
+       -> 24070000  addiu a3, zero, 0
+```
+
+`0x00105AC0` adds 8 to `OFY` only when its `a3` is non-zero, so the refresh keeps re-centring
+the buffer and stops offsetting it. Cold boot with the line in the pnach: the word reads back
+`24070000`, the vsync interval is still 1, vblanks still 60/s, and 393 samples taken while the
+mode global sat at 1 - the state where the refresh runs every frame - all read
+`OFY = 29184 / 29184`. Nothing to stick, on any screen after it.
+
+Pinning the argument rather than skipping the block (`001312E0: 1020000B -> 1000000B`, which
+makes the branch unconditional and reproduces stock exactly, since at interval 2 the block
+never runs) was the choice: it is self-healing. A savestate written under the older build
+carries the 8 in its draw environment, and with the argument pinned the next mode-1 screen
+overwrites it; with the block skipped nothing ever would.
+
+Not touched: the movie player's own display path. The vsync handler at `0x00164530` reads
+`CSR` bit 13 straight from `0x12001000`, and hands `!field` to the same offset helper for its
+own environments at `0x00309440` / `0x00309530`. That runs at 60 Hz off the interrupt whatever
+the vsync interval is, so it is stock behaviour and the interval word does not reach it.
 
 ## The patch
 
 | Patch | Purpose |
 |---|---|
 | `001E1C34: 00C0582D -> 240B0001` | display setup passes a vsync interval of 1 instead of 2 - a frame every field |
+| `001312FC: 87878AB4 -> 24070000` | the per-field `XYOFFSET` refresh that the interval switches on is handed field 0, so both draw environments keep the same `OFY` and the picture does not hop half a scanline every frame |
 | `002EDA00: 0000001E -> 0000003C` | the engine's frames-per-second constant reads 60, so frame-counted timers keep their length |
 | `00137738: 3C023F80 -> 3C023F00` | motion players are constructed with a clock speed of 0.5 instead of 1.0, so animation and the movement driven by it keep their pace |
 | `001CB328/2C`, `001CB344/48`, `001CB358/5C` | jump launch velocities 0.36 / 0.4 / 0.284 -> 0.164 / 0.182 / 0.129 |
@@ -357,6 +441,16 @@ play from the memory card save instead.
   well as the scan code; without it the D-pad is silently dropped while letter keys work,
   which looks like a menu ignoring you.
 - PINE `SaveState`/`LoadState` with a slot argument both work on 2.8.1 with this game, so the
-  user's savestate slot can be left alone and the A/B written to other slots.
+  user's savestate slot can be left alone and the A/B written to other slots. On 2026-09-05
+  only `LoadState` worked - `SaveState`, `Status`, `GameID` and `Title` all returned error
+  255 - so read memory and drive the game, and do not plan a run around writing states.
+- **PCSX2 shows two windows to `PostMessage`**: the top-level `QWindowIcon` titled with the
+  game, and a child `QWindowIcon` titled `pcsx2-qt`. Both translate a posted key, so posting
+  to both delivers everything twice - five Downs walk ten rows, one Cross types two letters,
+  and `TogglePause` cancels itself. Post to the top-level only. Hotkeys and pad input both
+  arrive there without focus.
+- Frame advance is unbound by default and adding `FrameAdvance` to `[Hotkeys]` did not take;
+  the frame-by-frame work was done with F8 bursts and a shift-scored diff instead, which is
+  enough when the artefact is a fixed two-position alternation.
 - The tutorial fight kills a scripted player quickly; drawing the sword and attacking makes
   the thugs flee, fleeing on foot does not.
