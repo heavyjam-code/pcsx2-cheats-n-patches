@@ -95,7 +95,7 @@ Nothing here is measured unless a row says so. 'no pnach' means nobody has filed
 - **Oni** `SLUS-20064` - 640x448, no half-offset helper in the image, and eight byte-identical frames of its static main menu.
 - **Mortal Kombat: Shaolin Monks** `SLUS-21087` - listed in section 4 on a field-render measurement that did **not** reproduce: 1280x896 in Goro's Lair, and eight byte-identical pause-menu frames with PCSX2's interlace-offset handling tested both ways. Two scenes only, so reproduce before budgeting work.
 
-See [the corrections](no-interlacing-candidates.md#corrections-and-shaky-claims).
+See [the corrections](no-interlacing-candidates.md#corrections-and-shaky-claims). Frame rate was measured too - Samurai Western, Oni and Shaolin Monks already present 60, Red Dead Revolver and Radiata Stories present 30 - and the levers, and what they cost, are in [the frame-rate survey](../60fps/frame-rate-survey.md).
 
 ### Action-adventure
 
