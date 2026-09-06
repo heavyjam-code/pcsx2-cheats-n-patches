@@ -80,17 +80,21 @@ Writing **1** to `003E4B00+0x20` over PINE gives **exactly 60.0 fps**, reversibl
 | interval 1 | 59.7/s | **59.7/s** |
 | restored | 60.0/s | 30.0/s |
 
-**And every game-logic counter doubles with it.** Four heap counters sampled alongside - `0091D3FC`,
+**And the world runs at exactly double speed.** Counters doubling could be trivial, so this was settled with pixels: from one savestate at the attract flyover, captures at fixed wall-clock offsets after the load, at interval 2 and again at interval 1. The interval-1 frame at **2 s matches the interval-2 frame at 4 s** (MSE 19.9) and the one at **3 s matches 6 s** (MSE 19.7), against 320-430 for every other pairing - the scripted camera covers the same path in half the time. Every game-logic counter doubles with it too: Four heap counters sampled alongside - `0091D3FC`,
 `0091D750`, `00A0398C`, `00A075CC` - go 30.0/s to 60.0/s while vblanks hold at 60, i.e. their rate
 *per vblank* goes 0.502 to 1.004. That is a fixed-step engine stepping once per presented frame, so
 60 fps is 2x game speed, exactly the Way of the Samurai 2 problem, and that patch needed forty words
 and three play-tests to correct. Not attempted.
 
-One loose end: the obvious static initialiser is `001468A4: li v0, 2` feeding `sw v0, 32(s0)` at
-`001468B0`, and the struct's `+0x1C/+0x20/+0x24/+0x28` match that block's `1 / 2 / 0 / 262`
-exactly - but patching it to `li v0, 1` at `place=0` left the runtime value reading 2 on a cold
-boot, with the patched word verified in memory. Something else supplies it. Since the patch is not
-shippable anyway the hunt was stopped there; resume from "who else writes `+0x20`".
+The lever itself is shippable in the Red Dead shape - `patch=1,EE,003E4B20,word,00000001` (and `003E4CB0` for the second
+copy of the struct) holds 1 against the initialiser and gives 60.0 fps from boot; the obvious static initialiser at
+`001468A4` (`li v0, 2` into `sw v0, 32(s0)`) does *not* stick at `place=0`, something else writes the 2 after it. But the
+line is not shipped, because of the speed. There is no single time constant to halve: `1/30f` and `1/60f` are each used
+nowhere in code, while `30.0f` appears at 27 code sites and `60.0f` at 49, scattered through subsystems. The main loop
+(`001A0470`-`001A0F40`) passes no tick count into an update - the one constant-2 argument in its tail goes to a varargs
+formatter at `0024D710`, not a stepper. So correcting the speed is the Way of the Samurai 2 job: find the animation clock,
+the movement integrators and the frame-counted timers one subsystem at a time, forty words and a play-test cycle. Not
+started.
 
 ### Radiata Stories - unfinished
 
