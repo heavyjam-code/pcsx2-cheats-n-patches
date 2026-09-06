@@ -86,7 +86,12 @@ A donor named **No-Interlacing** is a real deinterlacing patch to re-target. A d
 
 Nothing here is measured unless a row says so. 'no pnach' means nobody has filed anything for the build; a widescreen-only file means someone opened the ELF and never wrote interlacing code. The ten-minute boot test in [the candidates doc](no-interlacing-candidates.md) still decides each one.
 
-**Measured and rejected so far:** Samurai Western `SLUS-21187` renders a full 640x448 frame with both draw environments pinned to one `XYOFFSET`, already runs at 60 fps, and shows no bob and no combing over an eight-frame static burst - it wants neither group. See [the correction](no-interlacing-candidates.md#corrections-and-shaky-claims).
+**Measured and rejected so far**, both with full-frame renderers, both draw environments pinned to one `XYOFFSET`, and no bob or combing over an eight-frame static burst:
+
+- **Samurai Western** `SLUS-21187` - 640x448, and already 60 fps natively, so it wants neither group.
+- **Red Dead Revolver** `SLUS-20500` - 512x448; its 60 FPS group already ships upstream and, measured here, raises the present rate 30 -> 60 without switching field rendering on.
+
+See [the corrections](no-interlacing-candidates.md#corrections-and-shaky-claims).
 
 ### Action-adventure
 
