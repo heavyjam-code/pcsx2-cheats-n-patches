@@ -93,6 +93,7 @@ Nothing here is measured unless a row says so. 'no pnach' means nobody has filed
 - **Dragon Quest VIII** `SLUS-21207` - 512x448, and no half-offset helper in the image at all. It also carries a dormant 480p mode three data words away that renders with correct geometry and then blanks in-game; see the correction for the addresses.
 - **Radiata Stories** `SLUS-21262` - genuinely native 480p, and the game prints the Triangle+Cross instruction on its own Screen menu, so the field-render row in the survey data is a 480i measurement. A one-line autoboot for its own flag is written and pending a gameplay check.
 - **Oni** `SLUS-20064` - 640x448, no half-offset helper in the image, and eight byte-identical frames of its static main menu.
+- **Mortal Kombat: Shaolin Monks** `SLUS-21087` - listed in section 4 on a field-render measurement that did **not** reproduce: 1280x896 in Goro's Lair, and eight byte-identical pause-menu frames with PCSX2's interlace-offset handling tested both ways. Two scenes only, so reproduce before budgeting work.
 
 See [the corrections](no-interlacing-candidates.md#corrections-and-shaky-claims).
 
