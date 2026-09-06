@@ -90,6 +90,7 @@ Nothing here is measured unless a row says so. 'no pnach' means nobody has filed
 
 - **Samurai Western** `SLUS-21187` - 640x448, and already 60 fps natively, so it wants neither group.
 - **Red Dead Revolver** `SLUS-20500` - 512x448; its 60 FPS group already ships upstream and, measured here, raises the present rate 30 -> 60 without switching field rendering on.
+- **Dragon Quest VIII** `SLUS-21207` - 512x448, and no half-offset helper in the image at all. It also carries a dormant 480p mode three data words away that renders with correct geometry and then blanks in-game; see the correction for the addresses.
 
 See [the corrections](no-interlacing-candidates.md#corrections-and-shaky-claims).
 
