@@ -13,7 +13,7 @@ Hand-made patches and cheats for PS2 games, in the `.pnach` format used by the [
 | [`patches/`](patches/) | Quality-of-life patches (60 FPS, No-Interlacing, Remove Blur, ...) | `patches` folder |
 | [`cheats/`](cheats/) | Gameplay-altering cheats (infinite health, unlocks, ...) | `cheats` folder |
 | [`docs/pnach-format.md`](docs/pnach-format.md) | Reference for the pnach 2.0 file format | — |
-| [`docs/deinterlace/`](docs/deinterlace/) | No-Interlacing devlogs, the [candidate list](docs/deinterlace/no-interlacing-candidates.md), and coverage data | — |
+| [`docs/deinterlace/`](docs/deinterlace/) | No-Interlacing devlogs, the [candidate list](docs/deinterlace/no-interlacing-candidates.md), the [/v/ recommended-games cross-reference](docs/deinterlace/vsrecommended-ps2-crossref.md), and coverage data | — |
 | [`docs/deblur/`](docs/deblur/) | Remove Blur devlogs | — |
 | [`docs/60fps/`](docs/60fps/) | 60 FPS devlogs | — |
 | [`docs/misc/`](docs/misc/) | Write-ups that fit none of the above | — |
