@@ -214,6 +214,9 @@ Two ways to force it, and only one is correct:
 That line is installed as a `[480p Mode]` group. It holds from the first frame through the settings screens and into the opening cinematic; **3D gameplay is still unverified**, which is the one thing left to check before this is called done - Dragon Quest VIII above renders happily on its settings screen and blanks the moment it leaves it. `place=1` is deliberate: the flag lives in `.bss`, so a `place=0` write risks being zeroed after it lands. The cost of `place=1` is that it also overrides the in-game toggle, which the description says.
 
 
+**Oni is the cleanest negative of the set.** `SLUS-20064_FD9CD8FC`, the bundle carries a 128-byte widescreen-only file. Like Dragon Quest VIII it has **no half-offset helper at all** - not one `64420008` anywhere in the image - so the per-field `XYOFFSET` mechanism this whole document is about does not exist in it. It renders `640x448` and doubles to `1280x896` at 2x, and eight consecutive screen-resolution frames of its **main menu** - fine blue line art, small high-contrast text, a completely static screen, the worst case for any interlacing artefact - come back **byte-identical**, MSE 0.00 across all eight, comb energy flat at 0.64. Nothing to fix.
+
+
 **A 60 FPS patch can switch field rendering on, and it will look like a deinterlacing bug.** The engine here refreshes its per-field `XYOFFSET` only when the vsync interval is below 2 (`slti at, v0, 2` at `001312DC`), which at stock 30 fps never runs. This repo's `[60 FPS]` group sets that interval to 1, which opens the gate and starts genuine interlaced field rendering — the full working is in [that patch's devlog](../60fps/devlog-SLUS-20893-way-of-the-samurai-2-60fps.md#fourth-pass-the-interval-also-switches-on-field-rendering). Measured A/B on the same scene and boot procedure:
 
 ```
