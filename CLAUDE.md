@@ -58,6 +58,12 @@ someone picks between them. Write it properly.
   restart the game after ticking it."
 - Commit subjects read `Add <Group> for <Game> (SERIAL)` for a new group and
   `<Game>: <what was found>` for survey and measurement work.
+- Work lands on `main` directly: no feature branches, no pull requests. From a
+  harness worktree, fast-forward the primary checkout and push from there.
+- `.claude/settings.json` runs a SessionStart hook that fast-forwards this
+  clone from origin, because the repo is edited from more than one machine. It
+  stands down on a dirty tree, and a machine-wide pull hook is expected to
+  stand down here in turn.
 
 ## Before writing a group
 
@@ -81,8 +87,7 @@ someone picks between them. Write it properly.
   `docs/60fps/frame-rate-survey.md` are its companions. The TSVs under
   `docs/deinterlace/data/` come from
   `python tools/scan_deinterlace_coverage.py --pcsx2 <PCSX2 install> --out docs/deinterlace/data`
-  (Python 3, no dependencies; the full coverage table is gitignored and rebuilt
-  locally).
+  (stdlib only; the full coverage table is gitignored and rebuilt locally).
 - Every investigation leaves a record, negative ones included. A game measured
   and found to need nothing gets a bold-lead paragraph in the candidates doc
   and a row in the frame-rate survey; a bundled group worth explaining gets a
@@ -92,7 +97,9 @@ someone picks between them. Write it properly.
   (SERIAL)`, a paragraph linking the pnach and any sibling devlog, then a
   `Target:` line with developer and year, the exact build (retail, undub,
   translation), boot ELF name and CRC, what PCSX2 bundles for that serial+CRC,
-  and the PCSX2 version tested. Emulator and harness lessons go under
+  and the PCSX2 version tested. A sibling devlog for the same disc may link to
+  the primary's `Target:` line instead of repeating it, as the deblur devlogs
+  do. Emulator and harness lessons go under
   `## Notes for next time` or `## Harness notes`, and what was considered and
   rejected under `## Deliberately left alone`, so they can be grepped across
   devlogs.
@@ -103,9 +110,15 @@ someone picks between them. Write it properly.
   tick custom groups in Game Properties → Patches or in
   `gamesettings/SERIAL_CRC.ini` (`[Patches]`, then one `Enable = <Group>` line
   each), and restart the game. Machine-specific paths belong in
-  `CLAUDE.local.md`, not here.
+  `CLAUDE.local.md` (gitignored), not here.
 - A savestate (`.p2s`) is a zip; `eeMemory.bin` inside is the flat 32 MB EE RAM,
   the cheapest way to confirm a patched word landed and to read display envs.
+- Frame rate and game speed are measured from two savestates:
+  `python tools/diff_savestates.py FIRST.p2s SECOND.p2s --seconds <gap>`
+  histograms the per-word EE RAM deltas, and `docs/60fps/frame-rate-survey.md`
+  says how to read it. Unlike the scan script it needs numpy, and because
+  PCSX2 2.x zstd-compresses `.p2s` members it also needs Python 3.14+, the
+  `pyzstd` package, or 7-Zip on PATH.
 - PINE (`EnablePINE = true`, TCP 28011) can write memory live, but writing a
   code word that a `place=1` line also targets, or one inside a live interrupt
   handler, crashes PCSX2. A/B code through a pnach and a restart; write only
