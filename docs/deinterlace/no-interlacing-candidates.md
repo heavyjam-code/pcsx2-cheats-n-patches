@@ -13,10 +13,12 @@ python tools/scan_deinterlace_coverage.py --pcsx2 <PCSX2 install> --out docs/dei
 | | |
 |---|---|
 | Serials with a deinterlacing or progressive group | **507** (435 distinct titles) |
-| NTSC-U | 174 covered of 2364 |
-| NTSC-J / NTSC-K | 104 covered of 5949 |
+| NTSC-U | 176 covered of 1944 |
+| NTSC-J / NTSC-K | 108 covered of 5624 |
 | Median size of the 531 existing deinterlace groups | **2 `patch=` lines** (78% are ≤3) |
 | Groups that also set `gsinterlacemode=1` | 85% |
+
+Demo, kiosk, beta and in-store promo discs are left out of every table: 746 NTSC serials, 421 of them NTSC-U, which would otherwise make up over a third of the NTSC-U `no pnach at all` rows.
 
 Most solved cases are trivial. [The Ys V patch](devlog-SLPM-66360-ys-v-no-interlacing.md), at 6 lines plus a render-dispatch fix, sits in the top ~10% of complexity in the entire corpus — that is the exception, not the shape of the work.
 
@@ -101,7 +103,7 @@ Two gotchas: grep Zill O'll by serial, its GameIndex title uses fullwidth tildes
 
 ## Measured field renderers
 
-[`data/fieldrender-gaps.tsv`](data/fieldrender-gaps.tsv) is the evidence-first list: 50 NTSC-U serials whose vertical resolution does not double under upscaling and which have no deinterlacing group. Nothing on it was nominated from memory. Nearly all already carry a Widescreen patch, meaning someone opened the ELF and simply never wrote the interlacing code.
+[`data/fieldrender-gaps.tsv`](data/fieldrender-gaps.tsv) is the evidence-first list: 49 NTSC-U serials whose vertical resolution does not double under upscaling and which have no deinterlacing group. Nothing on it was nominated from memory. Nearly all already carry a Widescreen patch, meaning someone opened the ELF and simply never wrote the interlacing code.
 
 Standouts, with what is already known about each:
 

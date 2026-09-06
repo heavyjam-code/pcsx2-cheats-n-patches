@@ -4,8 +4,10 @@
 Reads a PCSX2 installation's bundled patch database and game index, and writes
 three TSV tables into an output directory:
 
-  deinterlace-coverage.tsv   every NTSC-U / NTSC-J serial with its deinterlacing
-                             status and the patch groups it already has
+  deinterlace-coverage.tsv   every NTSC-U / NTSC-J / NTSC-K serial with its
+                             deinterlacing status and the patch groups it
+                             already has; demo, kiosk, beta and other promo
+                             discs are left out (see is_demo)
   cross-region-gaps.tsv      titles where one region or revision already has a
                              deinterlacing patch and an NTSC sibling does not
   fieldrender-gaps.tsv       (needs --upscale-survey) NTSC-U serials measured as
@@ -48,30 +50,66 @@ DEINTERLACE_GROUP = re.compile(r"interlac|progressive|480p|full ?frame", re.I)
 # ...but those keywords also appear in unrelated groups.
 NOT_DEINTERLACE = re.compile(r"depth of field|softlock", re.I)
 
+# GameIndex.yaml is read line by line. Any non-comment line that starts in
+# column 0 opens a new block; only keys that look like a serial are kept.
 SERIAL_LINE = re.compile(r"^([A-Z]{4}-\d{5}):")
+BLOCK_START = re.compile(r"^[^\s#]")
+# `  name: "Title" # comment` -- the value is group 2 when quoted, group 3
+# when bare, and a trailing YAML comment is never part of it.
+FIELD_LINE = re.compile(r'^  (name|name-en|region):\s*(?:"([^"]*)"|([^#]*?))\s*(?:#.*)?$')
 GROUP_LINE = re.compile(r"^\[(.+?)\]", re.M)
 NTSC_REGIONS = ("NTSC-U", "NTSC-J", "NTSC-K")
+
+# Demo, kiosk, beta, trial and in-store promo discs are not release builds
+# worth patching, and there are enough of them (about one NTSC-U serial in
+# six) to swamp the "no pnach at all" rows. SLUS-28xxx / SLUS-29xxx is the
+# US third-party demo and public-beta range. NTSC-J names say 体験版 (trial
+# version) or 店頭 (in-store), and their name-en says Trial or Demo.
+DEMO_SERIAL = re.compile(r"^SLUS-2[89]\d{3}$")
+DEMO_NAME = re.compile(
+    r"\bdemo\b|kiosk|taikenban|\bbeta\b|\btrial\b|\bpreview\b"
+    r"|playstation underground|体験版|店頭",
+    re.I,
+)
 
 
 def is_deinterlace(group: str) -> bool:
     return bool(DEINTERLACE_GROUP.search(group)) and not NOT_DEINTERLACE.search(group)
 
 
+def is_demo(serial: str, entry: dict[str, str]) -> bool:
+    """A demo, kiosk, beta or promo disc: not a build anyone will patch."""
+    if DEMO_SERIAL.match(serial):
+        return True
+    return any(DEMO_NAME.search(entry.get(key, "")) for key in ("name", "name-en"))
+
+
 def read_game_index(path: str) -> dict[str, dict[str, str]]:
-    """Parse GameIndex.yaml into {serial: {name, region}} without a YAML dep."""
+    """Parse GameIndex.yaml into {serial: {name, name-en, region}} without a
+    YAML dep.
+
+    Three traps in the 2.8.1 file. A few keys do not look like serials
+    (SLUS-20643BD, SLUS-21782B, ALCH-0004, PKP2-00702); unless every column-0
+    key ends the previous block, their fields land on the entry before them,
+    which is how SoulCalibur II came out as a demo disc. About 250 values
+    carry a trailing YAML comment. And should a block ever repeat a field,
+    the first value wins."""
     entries: dict[str, dict[str, str]] = {}
     current = None
     with open(path, encoding="utf-8", errors="replace") as handle:
         for line in handle:
-            match = SERIAL_LINE.match(line)
-            if match:
-                current = match.group(1)
-                entries[current] = {}
+            if BLOCK_START.match(line):
+                match = SERIAL_LINE.match(line)
+                current = match.group(1) if match else None
+                if current:
+                    entries[current] = {}
                 continue
-            if current:
-                field = re.match(r'^  (name|region):\s*"?(.*?)"?\s*$', line)
-                if field:
-                    entries[current][field.group(1)] = field.group(2)
+            if not current:
+                continue
+            field = FIELD_LINE.match(line)
+            if field and field.group(1) not in entries[current]:
+                quoted, bare = field.group(2), field.group(3)
+                entries[current][field.group(1)] = quoted if quoted is not None else bare
     return entries
 
 
@@ -137,7 +175,7 @@ def write_tsv(path: str, header: list[str], rows: list[list[str]]) -> None:
 def emit_coverage(index, serial_groups, out_dir) -> list[list[str]]:
     rows = []
     for serial, entry in sorted(index.items(), key=lambda kv: kv[1].get("name", "")):
-        if entry.get("region") not in NTSC_REGIONS:
+        if entry.get("region") not in NTSC_REGIONS or is_demo(serial, entry):
             continue
         groups = serial_groups.get(serial, set())
         solved = sorted(g for g in groups if is_deinterlace(g))
@@ -160,6 +198,9 @@ def emit_cross_region(index, serial_groups, out_dir) -> None:
     def solved(serial: str) -> bool:
         return any(is_deinterlace(g) for g in serial_groups.get(serial, ()))
 
+    # A patched demo is still a donor, so demos stay on the "have" side; an
+    # unpatched one is not a gap, and neither should name the family.
+    demos = {serial for serial, entry in index.items() if is_demo(serial, entry)}
     families: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
     for serial, entry in index.items():
         families[normalise_title(entry.get("name", ""))].append(
@@ -167,13 +208,20 @@ def emit_cross_region(index, serial_groups, out_dir) -> None:
         )
 
     rows = []
-    for members in families.values():
+    for key, members in families.items():
+        # A title that is all kana, hangul or hanzi normalises to its ASCII
+        # residue ("3", "z", ""), which would group unrelated games.
+        if len(key) < 3 or not re.search(r"[a-z]", key):
+            continue
         have = [m for m in members if solved(m[0])]
-        missing = [m for m in members if not solved(m[0]) and m[1] in NTSC_REGIONS]
+        missing = [
+            m for m in members
+            if not solved(m[0]) and m[1] in NTSC_REGIONS and m[0] not in demos
+        ]
         if not have or not missing:
             continue
         rows.append([
-            members[0][2],
+            next((m[2] for m in members if m[0] not in demos), members[0][2]),
             "; ".join(f"{s}({r})" for s, r, _ in have),
             "; ".join(f"{s}({r})" for s, r, _ in missing),
         ])
@@ -278,9 +326,13 @@ def main() -> int:
     serial_groups = by_serial(groups)
 
     solved = {s for s, g in serial_groups.items() if any(is_deinterlace(x) for x in g)}
+    demos = sum(
+        1 for s, e in index.items() if e.get("region") in NTSC_REGIONS and is_demo(s, e)
+    )
     print(
         f"{len(index)} serials indexed, {files_read} pnach files, "
-        f"{len(solved)} serials already deinterlaced"
+        f"{len(solved)} serials already deinterlaced, "
+        f"{demos} NTSC demo/promo discs left out of the tables"
     )
 
     coverage = emit_coverage(index, serial_groups, args.out)
