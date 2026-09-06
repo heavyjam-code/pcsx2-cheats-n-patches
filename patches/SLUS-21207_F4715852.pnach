@@ -1,0 +1,10 @@
+gametitle=Dragon Quest VIII - Journey of the Cursed King (NTSC-U) SLUS-21207 F4715852
+
+[No-Interlacing]
+author=heavyjam
+description=Switches the display from interlaced 480i to progressive 480p. The game already carries complete 480p video modes in its own mode table, one twin for each of its NTSC resolutions, and never selects them; this routes the entries it does pick to those twins, so the same 512x448 frame is programmed through the game's own progressive path and PCSX2 reports SDTV 480p. One thing then has to give: on entering the game world the frame loop spins until the graphics library reports an even field, and the library's non-interlaced path reports 1 forever, so the screen would stay black. The last line takes that wait out. Framing and sharpness are identical to the interlaced picture. Be aware that on PCSX2's stock output this game already looked clean, so what you gain is true progressive output with no deinterlacer in the way rather than a visible fix. PCSX2's default Auto 4:3/3:2 aspect ratio shows progressive modes as 3:2, so set 4:3 if the image looks a little wide.
+gsinterlacemode=1
+patch=0,EE,003B5C58,word,001467AC
+patch=0,EE,003B5C5C,word,001467C4
+patch=0,EE,003B5C60,word,001467DC
+patch=0,EE,001A0DD4,word,00000000
