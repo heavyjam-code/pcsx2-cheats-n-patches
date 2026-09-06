@@ -15,7 +15,7 @@ Hand-made patches and cheats for PS2 games, in the `.pnach` format used by the [
 | [`docs/pnach-format.md`](docs/pnach-format.md) | Reference for the pnach 2.0 file format | — |
 | [`docs/deinterlace/`](docs/deinterlace/) | No-Interlacing devlogs, the [candidate list](docs/deinterlace/no-interlacing-candidates.md), the [/v/ recommended-games cross-reference](docs/deinterlace/vsrecommended-ps2-crossref.md), and coverage data | — |
 | [`docs/deblur/`](docs/deblur/) | Remove Blur devlogs | — |
-| [`docs/60fps/`](docs/60fps/) | 60 FPS devlogs | — |
+| [`docs/60fps/`](docs/60fps/) | 60 FPS devlogs and the [frame-rate survey](docs/60fps/frame-rate-survey.md) | — |
 | [`docs/misc/`](docs/misc/) | Write-ups that fit none of the above | — |
 | [`tools/`](tools/) | Scripts for surveying PCSX2's patch coverage | — |
 | [`templates/template.pnach`](templates/template.pnach) | Starting point for making a new patch file | — |
