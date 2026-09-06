@@ -39,7 +39,7 @@ Two traps:
 | Oni | `SLUS-20064` | **60** | not needed - already 60 |
 | Mortal Kombat: Shaolin Monks | `SLUS-21087` | **60** | not needed - already 60 |
 | Red Dead Revolver | `SLUS-20500` | 30 | **ships upstream**, verified here |
-| Dragon Quest VIII | `SLUS-21207` | 30 | lever found and proven; **doubles game speed** |
+| Dragon Quest VIII | `SLUS-21207` | 30 | lever found and proven; **doubles game speed** (confirmed twice) |
 | Radiata Stories | `SLUS-21262` | 30 | lever not located |
 
 ### Already 60 fps
@@ -64,37 +64,44 @@ write to the *instruction* sticks - if a hot write will not take, patch the code
 the draw environments stay pinned at `OFY = 29184` throughout, so unlike Way of the Samurai 2 the
 interval change does **not** switch field rendering on here.
 
-### Dragon Quest VIII - the lever exists, and it is not shippable
+### Dragon Quest VIII - the lever exists, and it is not shippable (confirmed twice)
 
 The pacer is `wait_vblanks(start, count)` at `001604A0`: it loops on the vblank counter at
 `003D26B0` (`gp-28864`, `$gp = 003D9770`) until `now - start >= count`. Its caller at `001450CC`
 reads the count from **`config+0x20`**, where `config = *(obj+0x260)` - the same struct the video
 mode table fills, live at **`003E4B00`** reading mode 2, `512x448`, `+0x1C=1`, `+0x20=2`,
-`+0x24=0`, `+0x28=262`.
+`+0x24=0`, `+0x28=262`. Writing **1** there gives **exactly 60.0 fps**, reversibly, with vblanks
+unchanged at 60. The engine keeps a copy at `003E4CB0` that it refreshes from the config every
+frame, so only the config word matters; the static initialiser at `001468A4` is rewritten later
+in boot, so a shipped line would have to be `place=1`. Note that unticking such a patch does not
+restore 30 fps: nothing ever writes the 2 back until the video mode is re-initialised.
 
-Writing **1** to `003E4B00+0x20` over PINE gives **exactly 60.0 fps**, reversibly:
+**And the world runs at exactly double speed.** First shown on the attract flyover (the interval-1
+frame at 2 s matches the interval-2 frame at 4 s), then wrongly retracted for a day, then confirmed
+in the field the way it should have been done the first time: sampling all of static memory and
+the active heap at 30-50 Hz with the lever on and again with it off, and comparing the period of
+every cycling value and the rate of every counter. **813 of 869 comparable words run at exactly
+twice the rate at interval 1** - the hero's idle cycle goes from 1.68 s to 0.84 s, the grass sway
+block at `003F6860` halves its period, every bone matrix in `00B30000`-`00C10000` oscillates twice
+as fast - and the 12 that hold their rate are vblank counters. The player confirmed it on screen:
+animations, grass and water all at double speed.
 
-| | vblanks | frames |
-|---|---|---|
-| stock | 59.7/s | 30.0/s |
-| interval 1 | 59.7/s | **59.7/s** |
-| restored | 60.0/s | 30.0/s |
+What misled the retraction, so nobody repeats it: the hero's **translation** is time-correct at
+interval 1 - 47.9 units/s against 47.5, sampled on the position vector at `0040F3E0` - because
+the player module scales its step by `interval / 2` (`001847F8`), and the frame function does
+compute a measured frame delta at `sys+0xF00` (`003E5790`, 2.0 stock, 1.0 at interval 1) that
+is handed to one entity scheduler (`00176CD0`). Those two facts, plus a handful of
+`interval == 1` branches (`00168960` returns 1.0 for 2 and 0.5 otherwise; `00229B58`,
+`002D7F48`, `0036CF78`), looked like an engine designed for interval 1. They are islands. A
+savestate diff cannot see a periodic clock - a walk that ends after a whole number of animation
+cycles produces the same end frame at either rate, which is exactly what happened - so the
+"no per-frame steppers" verdict from snapshot diffs was worthless, and the live period
+comparison is the test that should have been run before anything shipped.
 
-**And the world runs at exactly double speed.** Counters doubling could be trivial, so this was settled with pixels: from one savestate at the attract flyover, captures at fixed wall-clock offsets after the load, at interval 2 and again at interval 1. The interval-1 frame at **2 s matches the interval-2 frame at 4 s** (MSE 19.9) and the one at **3 s matches 6 s** (MSE 19.7), against 320-430 for every other pairing - the scripted camera covers the same path in half the time. Every game-logic counter doubles with it too: Four heap counters sampled alongside - `0091D3FC`,
-`0091D750`, `00A0398C`, `00A075CC` - go 30.0/s to 60.0/s while vblanks hold at 60, i.e. their rate
-*per vblank* goes 0.502 to 1.004. That is a fixed-step engine stepping once per presented frame, so
-60 fps is 2x game speed, exactly the Way of the Samurai 2 problem, and that patch needed forty words
-and three play-tests to correct. Not attempted.
-
-The lever itself is shippable in the Red Dead shape - `patch=1,EE,003E4B20,word,00000001` (and `003E4CB0` for the second
-copy of the struct) holds 1 against the initialiser and gives 60.0 fps from boot; the obvious static initialiser at
-`001468A4` (`li v0, 2` into `sw v0, 32(s0)`) does *not* stick at `place=0`, something else writes the 2 after it. But the
-line is not shipped, because of the speed. There is no single time constant to halve: `1/30f` and `1/60f` are each used
-nowhere in code, while `30.0f` appears at 27 code sites and `60.0f` at 49, scattered through subsystems. The main loop
-(`001A0470`-`001A0F40`) passes no tick count into an update - the one constant-2 argument in its tail goes to a varargs
-formatter at `0024D710`, not a stepper. So correcting the speed is the Way of the Samurai 2 job: find the animation clock,
-the movement integrators and the frame-counted timers one subsystem at a time, forty words and a play-test cycle. Not
-started.
+The fix would be the Way of the Samurai 2 job at Dragon Quest scale: the motion player's frame
+advance, the texture and vertex animators (grass, water), the particle systems, the NPC and event
+timers, the camera, battle timing, each found and halved - or the whole engine made to consume
+the frame delta it already computes. Not started.
 
 ### Radiata Stories - unfinished
 
