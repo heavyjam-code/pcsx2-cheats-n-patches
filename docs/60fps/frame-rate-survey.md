@@ -10,17 +10,23 @@ inferred.
 ## How to measure a PS2 game's frame rate without a frame counter
 
 Do not hunt for the game's own counter first - find it. Save a savestate, wait, save another,
-and diff `eeMemory.bin` between them:
+and diff `eeMemory.bin` between them with [`tools/diff_savestates.py`](../../tools/diff_savestates.py):
 
 ```
-python tools/... (see docs; the working script diffs two .p2s files as numpy uint32 arrays)
+python tools/diff_savestates.py "SLUS-21207 (F4715852).02.p2s" "SLUS-21207 (F4715852).03.p2s" --seconds 9.12
 ```
 
-Then histogram the per-word deltas. A 30 fps game with 60 Hz vblank produces **two clusters in a
-2:1 ratio** - the vblank counters and the game-logic counters - and the ratio *is* the answer.
-Dragon Quest VIII over a 9.12 s gap: delta 546 on eight addresses (59.9/s) and delta 273 on five
-(29.9/s). A game that is already 60 fps produces one dominant cluster and almost nothing at half
-it: Oni in gameplay gave **1092** addresses near 60/s against **2** near 30/s.
+`--seconds` is the real gap between the two file writes. Leave it out and the script takes the
+gap from the two files' modification times, which on 2.8.1 agreed with a game's own vblank
+counter to 0.01 s over a 13.66 s pair. It needs numpy, and because PCSX2 2.x compresses the
+members of a `.p2s` with Zstandard it also needs 7-Zip on `PATH` or the `pyzstd` package; the
+script's docstring has the details.
+
+The script histograms the per-word deltas. A 30 fps game with 60 Hz vblank produces **two
+clusters in a 2:1 ratio** - the vblank counters and the game-logic counters - and the ratio *is*
+the answer. Dragon Quest VIII over a 9.12 s gap: delta 546 on eight addresses (59.9/s) and delta
+273 on five (29.9/s). A game that is already 60 fps produces one dominant cluster and almost
+nothing at half it: Oni in gameplay gave **1092** addresses near 60/s against **2** near 30/s.
 
 Two traps:
 

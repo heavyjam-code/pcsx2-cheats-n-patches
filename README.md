@@ -17,7 +17,7 @@ Hand-made patches and cheats for PS2 games, in the `.pnach` format used by the [
 | [`docs/deblur/`](docs/deblur/) | Remove Blur devlogs | — |
 | [`docs/60fps/`](docs/60fps/) | 60 FPS devlogs and the [frame-rate survey](docs/60fps/frame-rate-survey.md) | — |
 | [`docs/misc/`](docs/misc/) | Write-ups that fit none of the above | — |
-| [`tools/`](tools/) | Scripts for surveying PCSX2's patch coverage | — |
+| [`tools/`](tools/) | Scripts for surveying PCSX2's patch coverage and measuring a game's frame rate from two savestates | — |
 | [`templates/template.pnach`](templates/template.pnach) | Starting point for making a new patch file | — |
 
 Patch and cheat files are stored flat (no per-game subfolders), one file per game release, exactly like the official [PCSX2/pcsx2_patches](https://github.com/PCSX2/pcsx2_patches) repo — so you can copy them straight into your PCSX2 folders.
