@@ -84,7 +84,9 @@ A donor named **No-Interlacing** is a real deinterlacing patch to re-target. A d
 
 ## 6. Open and untracked
 
-Nothing here is measured. 'no pnach' means nobody has filed anything for the build; a widescreen-only file means someone opened the ELF and never wrote interlacing code. The ten-minute boot test in [the candidates doc](no-interlacing-candidates.md) still decides each one.
+Nothing here is measured unless a row says so. 'no pnach' means nobody has filed anything for the build; a widescreen-only file means someone opened the ELF and never wrote interlacing code. The ten-minute boot test in [the candidates doc](no-interlacing-candidates.md) still decides each one.
+
+**Measured and rejected so far:** Samurai Western `SLUS-21187` renders a full 640x448 frame with both draw environments pinned to one `XYOFFSET`, already runs at 60 fps, and shows no bob and no combing over an eight-frame static burst - it wants neither group. See [the correction](no-interlacing-candidates.md#corrections-and-shaky-claims).
 
 ### Action-adventure
 
