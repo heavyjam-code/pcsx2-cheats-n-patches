@@ -1,0 +1,7 @@
+gametitle=Radiata Stories (NTSC-U) SLUS-21262 47B9B2FD
+
+[No-Interlacing]
+author=heavyjam
+description=Switches the display from interlaced 480i to progressive 480p from the first frame. The game already has a progressive mode of its own - its Screen options page offers it under Triangle plus Cross - and this simply sets the flag that page writes, so the picture comes out of the game's own progressive path and PCSX2 reports SDTV 480p. Same 640x448 frame, same framing and sharpness, with no interlacing left for the emulator to undo. The cost is the in-game toggle: the flag is rewritten every frame, so the Screen page can no longer switch back to interlaced while this is ticked. Untick it if you would rather pick the mode yourself. PCSX2's default Auto 4:3/3:2 aspect ratio shows progressive modes as 3:2, so set 4:3 if the image looks a little wide.
+gsinterlacemode=1
+patch=1,EE,0019E9C4,byte,00000001
