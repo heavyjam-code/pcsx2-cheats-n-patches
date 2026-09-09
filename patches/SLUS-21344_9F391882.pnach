@@ -1,0 +1,18 @@
+gametitle=Steambot Chronicles (USA) SLUS-21344 9F391882
+
+[60 FPS]
+author=heavyjam
+description=Experimental 60 FPS with on-foot movement, animation, idle-gesture timing and clock corrections. A three-second running test matched stock distance within 0.002 game units; tested character animation cycles, idle-gesture intervals and the clock rate also matched. Turning, acceleration and camera smoothing still use per-frame timing; vehicles, physics, rhythm games and cutscenes are unverified and may run fast. Tested at 2x internal resolution on a Radeon 880M without EE Overclock; reduce resolution if emulator speed drops. After enabling or disabling, restart and load from the memory card. Older savestates can retain incorrect animation rates or code from another timing patch.
+patch=1,EE,005BC89C,word,00000001
+patch=1,EE,0022B68C,word,3C0341F0
+patch=1,EE,004186E4,word,3D0F5C29
+patch=1,EE,004186E8,word,3DA3D70A
+patch=1,EE,004186F4,word,3D0F5C29
+patch=1,EE,004186F8,word,3D4CCCCE
+patch=1,EE,00418704,word,3BAC0832
+patch=1,EE,00418708,word,3C449BA6
+patch=1,EE,001118A4,word,28830078
+patch=1,EE,001118C0,word,24040078
+patch=1,EE,001DD970,word,2841012D
+patch=1,EE,001DDA18,word,24020258
+patch=1,EE,001DDA1C,word,2463FED4

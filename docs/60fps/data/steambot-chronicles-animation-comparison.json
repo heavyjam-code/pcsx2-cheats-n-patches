@@ -1,0 +1,451 @@
+{
+  "method": "Identical cleaned state; patch variants applied through restart. Forward input first 3 s, then idle. Compare stable clip/state/rate/node ranges. Parent cycle phases are normalized to VBlank; child scalar output is evaluated at child_phase-rate. Initial stale candidate Connie rate 2 excluded.",
+  "inputs": {
+    "stock": {
+      "filename": "anim-stock.json",
+      "samples": 4775,
+      "elapsed_seconds": 27.996619499999724,
+      "code_words": [
+        "3C034270",
+        "C4610000",
+        "1080001A",
+        "3E23D70A",
+        "2883003C"
+      ]
+    },
+    "candidate": {
+      "filename": "anim-candidate.json",
+      "samples": 4749,
+      "elapsed_seconds": 27.997355100000277,
+      "code_words": [
+        "3C0341F0",
+        "C4610000",
+        "1080001A",
+        "3DA3D70A",
+        "28830078"
+      ]
+    }
+  },
+  "comparison": {
+    "Vanilla_run": {
+      "stock": {
+        "first_sample": 121,
+        "last_sample": 475,
+        "start": {
+          "time": 6801.4617472,
+          "vblank": 109084,
+          "frame": 57801,
+          "phase": 2.0,
+          "cycles": 1,
+          "child_phase": 0.0
+        },
+        "end": {
+          "time": 6803.4621006,
+          "vblank": 109204,
+          "frame": 57861,
+          "phase": 2.0,
+          "cycles": 5,
+          "child_phase": 0.0
+        },
+        "seconds": 2.000353399999767,
+        "vblanks": 120,
+        "frames": 60,
+        "phase_units": 120.0,
+        "units_per_second": 59.989399873049415,
+        "units_per_60_vblanks": 60.0,
+        "complete_cycles": 4,
+        "clip": "00773DB0",
+        "rate": 2.0,
+        "child_limitation": "Recorded child index 0 has key range 0..0 and state 2; no run-bone claim."
+      },
+      "candidate": {
+        "first_sample": 119,
+        "last_sample": 472,
+        "start": {
+          "time": 6735.4049623,
+          "vblank": 108018,
+          "frame": 57477,
+          "phase": 1.0,
+          "cycles": 1,
+          "child_phase": 0.0
+        },
+        "end": {
+          "time": 6737.4061684,
+          "vblank": 108138,
+          "frame": 57597,
+          "phase": 1.0,
+          "cycles": 5,
+          "child_phase": 0.0
+        },
+        "seconds": 2.001206099999763,
+        "vblanks": 120,
+        "frames": 120,
+        "phase_units": 120.0,
+        "units_per_second": 59.96383880701454,
+        "units_per_60_vblanks": 60.0,
+        "complete_cycles": 4,
+        "clip": "00773DB0",
+        "rate": 1.0,
+        "child_limitation": "Recorded child index 0 has key range 0..0 and state 2; no run-bone claim."
+      }
+    },
+    "Connie_idle": {
+      "stock": {
+        "first_sample": 1044,
+        "last_sample": 4444,
+        "start": {
+          "time": 6806.8016199,
+          "vblank": 109404,
+          "frame": 57961,
+          "phase": 2.0,
+          "cycles": 1,
+          "child_phase": 122.0
+        },
+        "end": {
+          "time": 6826.8209,
+          "vblank": 110604,
+          "frame": 58561,
+          "phase": 2.0,
+          "cycles": 11,
+          "child_phase": 122.0
+        },
+        "seconds": 20.019280099999378,
+        "vblanks": 1200,
+        "frames": 600,
+        "phase_units": 1200.0,
+        "units_per_second": 59.94221540464071,
+        "units_per_60_vblanks": 60.0,
+        "complete_cycles": 10,
+        "clip": "0126DFB0",
+        "rate": 2.0,
+        "child_index": 46,
+        "child_state": 1,
+        "child_phase_units": 1200.0,
+        "child_units_per_second": 59.94221540464071,
+        "child_units_per_60_vblanks": 60.0
+      },
+      "candidate": {
+        "first_sample": 957,
+        "last_sample": 4335,
+        "start": {
+          "time": 6740.2591185,
+          "vblank": 108309,
+          "frame": 57768,
+          "phase": 1.0,
+          "cycles": 1,
+          "child_phase": 121.0
+        },
+        "end": {
+          "time": 6760.278648,
+          "vblank": 109509,
+          "frame": 58968,
+          "phase": 1.0,
+          "cycles": 11,
+          "child_phase": 121.0
+        },
+        "seconds": 20.019529500000317,
+        "vblanks": 1200,
+        "frames": 1200,
+        "phase_units": 1200.0,
+        "units_per_second": 59.94146865439475,
+        "units_per_60_vblanks": 60.0,
+        "complete_cycles": 10,
+        "clip": "0126DFB0",
+        "rate": 1.0,
+        "child_index": 46,
+        "child_state": 1,
+        "child_phase_units": 1200.0,
+        "child_units_per_second": 59.94146865439475,
+        "child_units_per_60_vblanks": 60.0
+      }
+    },
+    "Vanilla_idle_120": {
+      "stock": {
+        "first_sample": 579,
+        "last_sample": 913,
+        "start": {
+          "time": 6804.0654014,
+          "vblank": 109240,
+          "frame": 57879,
+          "phase": 2.0,
+          "cycles": 0,
+          "child_phase": 0.0
+        },
+        "end": {
+          "time": 6806.0345827,
+          "vblank": 109358,
+          "frame": 57938,
+          "phase": 120.0,
+          "cycles": 0,
+          "child_phase": 0.0
+        },
+        "seconds": 1.9691812999999456,
+        "vblanks": 118,
+        "frames": 59,
+        "phase_units": 118,
+        "units_per_second": 59.923380340857015,
+        "units_per_60_vblanks": 60.0,
+        "clip": "0076D7B0",
+        "measurement": "Matched monotonic phase range 2 to clip end; excludes blend startup."
+      },
+      "candidate": {
+        "first_sample": 575,
+        "last_sample": 909,
+        "start": {
+          "time": 6738.0023899,
+          "vblank": 108174,
+          "frame": 57633,
+          "phase": 2.0,
+          "cycles": 0,
+          "child_phase": 0.0
+        },
+        "end": {
+          "time": 6739.9763311,
+          "vblank": 108292,
+          "frame": 57751,
+          "phase": 120.0,
+          "cycles": 0,
+          "child_phase": 0.0
+        },
+        "seconds": 1.9739411999998993,
+        "vblanks": 118,
+        "frames": 118,
+        "phase_units": 118,
+        "units_per_second": 59.778882977874936,
+        "units_per_60_vblanks": 60.0,
+        "clip": "0076D7B0",
+        "measurement": "Matched monotonic phase range 2 to clip end; excludes blend startup."
+      }
+    },
+    "Vanilla_gesture_160": {
+      "stock": {
+        "first_sample": 1435,
+        "last_sample": 1880,
+        "start": {
+          "time": 6809.1032145,
+          "vblank": 109542,
+          "frame": 58030,
+          "phase": 2.0,
+          "cycles": 0,
+          "child_phase": 2.0
+        },
+        "end": {
+          "time": 6811.7371892,
+          "vblank": 109700,
+          "frame": 58109,
+          "phase": 160.0,
+          "cycles": 0,
+          "child_phase": 160.0
+        },
+        "seconds": 2.6339747000001807,
+        "vblanks": 158,
+        "frames": 79,
+        "phase_units": 158,
+        "units_per_second": 59.985390140607336,
+        "units_per_60_vblanks": 60.0,
+        "clip": "00E97570",
+        "measurement": "Matched monotonic phase range 2 to clip end; excludes blend startup."
+      },
+      "candidate": {
+        "first_sample": 1001,
+        "last_sample": 1443,
+        "start": {
+          "time": 6740.5254736,
+          "vblank": 108325,
+          "frame": 57784,
+          "phase": 2.0,
+          "cycles": 0,
+          "child_phase": 2.0
+        },
+        "end": {
+          "time": 6743.159451,
+          "vblank": 108483,
+          "frame": 57942,
+          "phase": 160.0,
+          "cycles": 0,
+          "child_phase": 160.0
+        },
+        "seconds": 2.633977400000731,
+        "vblanks": 158,
+        "frames": 158,
+        "phase_units": 158,
+        "units_per_second": 59.985328651626304,
+        "units_per_60_vblanks": 60.0,
+        "clip": "00E97570",
+        "measurement": "Matched monotonic phase range 2 to clip end; excludes blend startup."
+      }
+    }
+  },
+  "bone_values": {
+    "Connie": {
+      "clip": "0126DFB0",
+      "child_index": 46,
+      "comparison": "One recorded scalar channel, grouped by evaluation phase = stored child phase minus rate. Not a whole-skeleton comparison.",
+      "common_phase_count": 60,
+      "evaluation_phase_min": 0.0,
+      "evaluation_phase_max": 118.0,
+      "rmse": 0.0,
+      "max_absolute_error": 0.0,
+      "examples": [
+        {
+          "phase": 0.0,
+          "stock": -0.05828464776277542,
+          "candidate": -0.05828464776277542
+        },
+        {
+          "phase": 24.0,
+          "stock": -0.12321785092353821,
+          "candidate": -0.12321785092353821
+        },
+        {
+          "phase": 48.0,
+          "stock": -0.14390221238136292,
+          "candidate": -0.14390221238136292
+        },
+        {
+          "phase": 72.0,
+          "stock": -0.12321785092353821,
+          "candidate": -0.12321785092353821
+        },
+        {
+          "phase": 96.0,
+          "stock": -0.08996577560901642,
+          "candidate": -0.08996577560901642
+        }
+      ]
+    },
+    "Vanilla": {
+      "clip": "00E97570",
+      "child_index": 46,
+      "comparison": "One recorded scalar channel, grouped by evaluation phase = stored child phase minus rate. Not a whole-skeleton comparison.",
+      "common_phase_count": 80,
+      "evaluation_phase_min": 0.0,
+      "evaluation_phase_max": 158.0,
+      "rmse": 0.0,
+      "max_absolute_error": 0.0,
+      "examples": [
+        {
+          "phase": 0.0,
+          "stock": 0.0262410007417202,
+          "candidate": 0.0262410007417202
+        },
+        {
+          "phase": 32.0,
+          "stock": 0.18398353457450867,
+          "candidate": 0.18398353457450867
+        },
+        {
+          "phase": 64.0,
+          "stock": 0.2597675323486328,
+          "candidate": 0.2597675323486328
+        },
+        {
+          "phase": 96.0,
+          "stock": 0.25421208143234253,
+          "candidate": 0.25421208143234253
+        },
+        {
+          "phase": 128.0,
+          "stock": 0.16396984457969666,
+          "candidate": 0.16396984457969666
+        }
+      ]
+    }
+  },
+  "vanilla_idle_triggers": {
+    "stock": {
+      "definition": "Entry to parent clip E97570, active state 1, after movement ends. Sampling includes at most one frame of transition uncertainty.",
+      "events": [
+        {
+          "sample": 1389,
+          "relative_time": 8.065942499999437,
+          "time": 6808.8318512,
+          "vblank": 109526,
+          "frame": 58022
+        },
+        {
+          "sample": 3084,
+          "relative_time": 18.043742500000008,
+          "time": 6818.8096512,
+          "vblank": 110124,
+          "frame": 58321
+        }
+      ],
+      "intervals": [
+        {
+          "seconds": 9.97780000000057,
+          "vblanks": 598,
+          "frames": 299
+        }
+      ]
+    },
+    "candidate": {
+      "definition": "Entry to parent clip E97570, active state 1, after movement ends. Sampling includes at most one frame of transition uncertainty.",
+      "events": [
+        {
+          "sample": 957,
+          "relative_time": 5.532520400000067,
+          "time": 6740.2591185,
+          "vblank": 108309,
+          "frame": 57768
+        },
+        {
+          "sample": 1796,
+          "relative_time": 10.516521399999874,
+          "time": 6745.2431195,
+          "vblank": 108608,
+          "frame": 58067
+        },
+        {
+          "sample": 2640,
+          "relative_time": 15.524489700000231,
+          "time": 6750.2510878,
+          "vblank": 108908,
+          "frame": 58367
+        },
+        {
+          "sample": 3489,
+          "relative_time": 20.529867999999624,
+          "time": 6755.2564661,
+          "vblank": 109208,
+          "frame": 58667
+        },
+        {
+          "sample": 4332,
+          "relative_time": 25.534171199999946,
+          "time": 6760.2607693,
+          "vblank": 109508,
+          "frame": 58967
+        }
+      ],
+      "intervals": [
+        {
+          "seconds": 4.984000999999807,
+          "vblanks": 299,
+          "frames": 299
+        },
+        {
+          "seconds": 5.007968300000357,
+          "vblanks": 300,
+          "frames": 300
+        },
+        {
+          "seconds": 5.005378299999393,
+          "vblanks": 300,
+          "frames": 300
+        },
+        {
+          "seconds": 5.004303200000322,
+          "vblanks": 300,
+          "frames": 300
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Candidate Connie begins with stale state rate 2 and is excluded until natural clip reinitialization.",
+    "Vanilla idle gesture repeats every 300 updates: approximately 10 s stock versus 5 s candidate, despite matching active-clip speed.",
+    "Run and 120-unit idle traces selected a static child node, so only parent cadence is measured for those clips.",
+    "Bone equality covers the recorded scalar channel of active child index 46 for the two matched clips, not all bones or animations."
+  ]
+}

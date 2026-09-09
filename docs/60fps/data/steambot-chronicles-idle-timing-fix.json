@@ -1,0 +1,348 @@
+{
+  "method": "Compare matching gesture clip E97570 after 3 s forward input. Entry times are first observed active-state samples; one update of transition uncertainty. Active-clip ramps use matching phase 2 to160 and constant child identity/state/rate. Bone scalar is grouped by evaluation phase=child_phase-rate.",
+  "stock": {
+    "source": "anim-stock.json",
+    "metadata": {
+      "words": [
+        "3C034270",
+        "C4610000",
+        "1080001A",
+        "3E23D70A",
+        "2883003C"
+      ]
+    },
+    "samples": 4775,
+    "elapsed_seconds": 27.996619499999724,
+    "movement_end": {
+      "sample": 529,
+      "time": 6803.7688383,
+      "relative_seconds": 3.0029296000002432,
+      "vblank": 109222,
+      "frame": 57870,
+      "idle_counter": null,
+      "phase": 20.0,
+      "rate": 2.0
+    },
+    "gesture_events": [
+      {
+        "sample": 1389,
+        "time": 6808.8318512,
+        "relative_seconds": 8.065942499999437,
+        "vblank": 109526,
+        "frame": 58022,
+        "idle_counter": null,
+        "phase": 0.0,
+        "rate": 2.0
+      },
+      {
+        "sample": 3084,
+        "time": 6818.8096512,
+        "relative_seconds": 18.043742500000008,
+        "vblank": 110124,
+        "frame": 58321,
+        "idle_counter": null,
+        "phase": 0.0,
+        "rate": 2.0
+      }
+    ],
+    "gesture_intervals": [
+      {
+        "seconds": 9.97780000000057,
+        "vblanks": 598,
+        "frames": 299,
+        "idle_counter_delta": null
+      }
+    ],
+    "first_gesture_after_movement": {
+      "seconds": 5.063012899999194,
+      "vblanks": 304,
+      "frames": 152,
+      "idle_counter_delta": null
+    },
+    "active_clip_ramps": [
+      {
+        "start": {
+          "sample": 1435,
+          "time": 6809.1032145,
+          "relative_seconds": 8.33730579999974,
+          "vblank": 109542,
+          "frame": 58030,
+          "idle_counter": null,
+          "phase": 2.0,
+          "rate": 2.0
+        },
+        "end": {
+          "sample": 1880,
+          "time": 6811.7371892,
+          "relative_seconds": 10.97128049999992,
+          "vblank": 109700,
+          "frame": 58109,
+          "idle_counter": null,
+          "phase": 160.0,
+          "rate": 2.0
+        },
+        "seconds": 2.6339747000001807,
+        "vblanks": 158,
+        "frames": 79,
+        "idle_counter_delta": null,
+        "phase_units": 158,
+        "units_per_60_vblanks": 60.0,
+        "units_per_second": 59.985390140607336
+      },
+      {
+        "start": {
+          "sample": 3129,
+          "time": 6819.0759332,
+          "relative_seconds": 18.3100244999996,
+          "vblank": 110140,
+          "frame": 58329,
+          "idle_counter": null,
+          "phase": 2.0,
+          "rate": 2.0
+        },
+        "end": {
+          "sample": 3577,
+          "time": 6821.711657,
+          "relative_seconds": 20.94574829999965,
+          "vblank": 110298,
+          "frame": 58408,
+          "idle_counter": null,
+          "phase": 160.0,
+          "rate": 2.0
+        },
+        "seconds": 2.6357238000000507,
+        "vblanks": 158,
+        "frames": 79,
+        "idle_counter_delta": null,
+        "phase_units": 158,
+        "units_per_60_vblanks": 60.0,
+        "units_per_second": 59.945583069059424
+      }
+    ],
+    "idle_counter_recorded": false
+  },
+  "idle_fixed": {
+    "source": "anim-idle-fixed.json",
+    "metadata": {
+      "words": [
+        "3C0341F0",
+        "C4610000",
+        "1080001A",
+        "3DA3D70A",
+        "28830078"
+      ],
+      "idle_words": [
+        "2841012D",
+        "24020258",
+        "2463FED4"
+      ]
+    },
+    "samples": 7251,
+    "elapsed_seconds": 41.99748139999974,
+    "movement_end": {
+      "sample": 519,
+      "time": 7697.9822713,
+      "relative_seconds": 3.005320700000084,
+      "vblank": 108649,
+      "frame": 58108,
+      "idle_counter": 0,
+      "phase": 20.0,
+      "rate": 1.0
+    },
+    "gesture_events": [
+      {
+        "sample": 1390,
+        "time": 7703.0152922,
+        "relative_seconds": 8.038341599999512,
+        "vblank": 108951,
+        "frame": 58410,
+        "idle_counter": 301,
+        "phase": 0.0,
+        "rate": 1.0
+      },
+      {
+        "sample": 3108,
+        "time": 7713.0051668,
+        "relative_seconds": 18.028216199999406,
+        "vblank": 109550,
+        "frame": 59009,
+        "idle_counter": 900,
+        "phase": 0.0,
+        "rate": 1.0
+      },
+      {
+        "sample": 4844,
+        "time": 7723.0196423,
+        "relative_seconds": 28.042691699999523,
+        "vblank": 110150,
+        "frame": 59609,
+        "idle_counter": 1500,
+        "phase": 0.0,
+        "rate": 1.0
+      },
+      {
+        "sample": 6572,
+        "time": 7733.0272443,
+        "relative_seconds": 38.05029370000011,
+        "vblank": 110750,
+        "frame": 60209,
+        "idle_counter": 2100,
+        "phase": 0.0,
+        "rate": 1.0
+      }
+    ],
+    "gesture_intervals": [
+      {
+        "seconds": 9.989874599999894,
+        "vblanks": 599,
+        "frames": 599,
+        "idle_counter_delta": 599
+      },
+      {
+        "seconds": 10.014475500000117,
+        "vblanks": 600,
+        "frames": 600,
+        "idle_counter_delta": 600
+      },
+      {
+        "seconds": 10.007602000000588,
+        "vblanks": 600,
+        "frames": 600,
+        "idle_counter_delta": 600
+      }
+    ],
+    "first_gesture_after_movement": {
+      "seconds": 5.033020899999428,
+      "vblanks": 302,
+      "frames": 302,
+      "idle_counter_delta": 301
+    },
+    "active_clip_ramps": [
+      {
+        "start": {
+          "sample": 1436,
+          "time": 7703.2811395,
+          "relative_seconds": 8.304188899999644,
+          "vblank": 108967,
+          "frame": 58426,
+          "idle_counter": 317,
+          "phase": 2.0,
+          "rate": 1.0
+        },
+        "end": {
+          "sample": 1894,
+          "time": 7705.9177327,
+          "relative_seconds": 10.940782099999524,
+          "vblank": 109125,
+          "frame": 58584,
+          "idle_counter": 475,
+          "phase": 160.0,
+          "rate": 1.0
+        },
+        "seconds": 2.6365931999998793,
+        "vblanks": 158,
+        "frames": 158,
+        "idle_counter_delta": 158,
+        "phase_units": 158,
+        "units_per_60_vblanks": 60.0,
+        "units_per_second": 59.925816390638964
+      },
+      {
+        "start": {
+          "sample": 3155,
+          "time": 7713.2755858,
+          "relative_seconds": 18.298635199999808,
+          "vblank": 109566,
+          "frame": 59025,
+          "idle_counter": 916,
+          "phase": 2.0,
+          "rate": 1.0
+        },
+        "end": {
+          "sample": 3612,
+          "time": 7715.9116953,
+          "relative_seconds": 20.93474470000001,
+          "vblank": 109724,
+          "frame": 59183,
+          "idle_counter": 1074,
+          "phase": 160.0,
+          "rate": 1.0
+        },
+        "seconds": 2.6361095000002024,
+        "vblanks": 158,
+        "frames": 158,
+        "idle_counter_delta": 158,
+        "phase_units": 158,
+        "units_per_60_vblanks": 60.0,
+        "units_per_second": 59.93681218476997
+      },
+      {
+        "start": {
+          "sample": 4890,
+          "time": 7723.2843682,
+          "relative_seconds": 28.307417600000008,
+          "vblank": 110166,
+          "frame": 59625,
+          "idle_counter": 1516,
+          "phase": 2.0,
+          "rate": 1.0
+        },
+        "end": {
+          "sample": 5352,
+          "time": 7725.9205618,
+          "relative_seconds": 30.943611199999395,
+          "vblank": 110324,
+          "frame": 59783,
+          "idle_counter": 1674,
+          "phase": 160.0,
+          "rate": 1.0
+        },
+        "seconds": 2.6361935999993875,
+        "vblanks": 158,
+        "frames": 158,
+        "idle_counter_delta": 158,
+        "phase_units": 158,
+        "units_per_60_vblanks": 60.0,
+        "units_per_second": 59.934900077155454
+      },
+      {
+        "start": {
+          "sample": 6619,
+          "time": 7733.295382,
+          "relative_seconds": 38.31843140000001,
+          "vblank": 110766,
+          "frame": 60225,
+          "idle_counter": 2116,
+          "phase": 2.0,
+          "rate": 1.0
+        },
+        "end": {
+          "sample": 7070,
+          "time": 7735.9310814,
+          "relative_seconds": 40.9541307999998,
+          "vblank": 110924,
+          "frame": 60383,
+          "idle_counter": 2274,
+          "phase": 160.0,
+          "rate": 1.0
+        },
+        "seconds": 2.635699399999794,
+        "vblanks": 158,
+        "frames": 158,
+        "idle_counter_delta": 158,
+        "phase_units": 158,
+        "units_per_60_vblanks": 60.0,
+        "units_per_second": 59.94613801559174
+      }
+    ],
+    "idle_counter_recorded": true
+  },
+  "bone_comparison": {
+    "clip": "00E97570",
+    "child_index": 46,
+    "common_phases": 80,
+    "rmse": 0.0,
+    "max_absolute_error": 0.0,
+    "scope": "One recorded scalar channel, not whole-skeleton comparison."
+  }
+}
