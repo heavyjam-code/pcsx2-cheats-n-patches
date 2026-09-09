@@ -1,7 +1,10 @@
-# CLAUDE.md
+# AGENTS.md
 
 Hand-made PCSX2 `.pnach` patches. File format reference: `docs/pnach-format.md`.
 Start new patches from `templates/template.pnach`.
+
+At the start of a session, also read `Codex.local.md` if it exists. It holds
+machine-specific paths and notes and is gitignored; keep shared rules here.
 
 ## Never put `//` comments in a `.pnach` file
 
@@ -60,10 +63,11 @@ someone picks between them. Write it properly.
   `<Game>: <what was found>` for survey and measurement work.
 - Work lands on `main` directly: no feature branches, no pull requests. From a
   harness worktree, fast-forward the primary checkout and push from there.
-- `.claude/settings.json` runs a SessionStart hook that fast-forwards this
-  clone from origin, because the repo is edited from more than one machine. It
-  stands down on a dirty tree, and a machine-wide pull hook is expected to
-  stand down here in turn.
+- `.codex/hooks.json` configures a SessionStart hook that fast-forwards this
+  clone from its upstream, because the repo is edited from more than one
+  machine. It skips tracked changes, detached HEAD and branches without an
+  upstream. A machine-wide pull hook should stand down here. See
+  `docs/codex-setup.md` for dependencies and the one-time hook trust step.
 
 ## Before writing a group
 
@@ -110,7 +114,7 @@ someone picks between them. Write it properly.
   tick custom groups in Game Properties → Patches or in
   `gamesettings/SERIAL_CRC.ini` (`[Patches]`, then one `Enable = <Group>` line
   each), and restart the game. Machine-specific paths belong in
-  `CLAUDE.local.md` (gitignored), not here.
+  `Codex.local.md` (gitignored), not here.
 - A savestate (`.p2s`) is a zip; `eeMemory.bin` inside is the flat 32 MB EE RAM,
   the cheapest way to confirm a patched word landed and to read display envs.
 - Frame rate and game speed are measured from two savestates:

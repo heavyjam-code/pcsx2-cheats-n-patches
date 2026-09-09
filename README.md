@@ -38,3 +38,6 @@ Every file is named `SERIAL_CRC.pnach` (for example `SCES-50916_6A8F18B9.pnach`)
 ## Making your own patches
 
 Start from [`templates/template.pnach`](templates/template.pnach) and read [`docs/pnach-format.md`](docs/pnach-format.md) for the full file-format reference, including the standard group names the PCSX2 community uses (`[60 FPS]`, `[No-Interlacing]`, `[Remove Blur]`, ...).
+
+For work with Codex, follow [`AGENTS.md`](AGENTS.md) and the
+[Codex setup guide](docs/codex-setup.md), including the session-start Git hook.
