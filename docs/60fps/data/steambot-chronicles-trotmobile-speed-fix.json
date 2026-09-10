@@ -1,0 +1,1028 @@
+{
+  "target": {
+    "game": "Steambot Chronicles USA UNDUB",
+    "serial": "SLUS-21344",
+    "elf_crc": "9F391882",
+    "pcsx2_version": "2.8.1",
+    "measurement_internal_resolution": "1x",
+    "candidate_total_patch_writes": 21,
+    "preserved_user_savestate_sha256": "A1AEFA088A4DE3ABEFD7062135EFFE09C39961DE3DA234855034B9907EDA1EB1"
+  },
+  "method": "Stock and corrected runs used native PCSX2 toggle macros for full forward, full reverse and lower-pressure forward. PINE sampled counters, vehicle positions, requested vectors and animation parent data. All captures retained 360 VBlanks after motion onset. Only net XZ endpoint displacement is used; asynchronous sampled steps are not summed into a path.",
+  "sources": {
+    "stock-forward": {
+      "filename": "stock-forward.json",
+      "sha256": "557FA6AB024407B503BBEDA9F41DBCC0815D5FEDB03E101E713CDDDF572BF1CF",
+      "samples": 3730
+    },
+    "fixed-forward": {
+      "filename": "fixed-forward.json",
+      "sha256": "E988BA058B58E8D71FE3BE4897B34E99544E6BD14CDC6660EAF4A2386F400ADD",
+      "samples": 2810
+    },
+    "stock-slow": {
+      "filename": "stock-slow.json",
+      "sha256": "D5EDBEFDF993F2D42C5698070CB666B166AAEA18C2C67E109F23E9BC32EF0F88",
+      "samples": 3771
+    },
+    "fixed-slow": {
+      "filename": "fixed-slow.json",
+      "sha256": "E1863176616D0C33C39B97C05D015BEFF8392B498F9B13E693A12B1E33B30DF1",
+      "samples": 3831
+    },
+    "stock-reverse": {
+      "filename": "stock-reverse.json",
+      "sha256": "89C488B700E0E570E34FCCE82F3EB795BE5E6642FD9C36E862464B4323CF3473",
+      "samples": 3879
+    },
+    "fixed-reverse": {
+      "filename": "fixed-reverse.json",
+      "sha256": "346DC2FF1937DFB097DEF78740AA2B3FF8B9575BB9752DEA644A7F8148FE8FEC",
+      "samples": 4664
+    }
+  },
+  "code_words": {
+    "stock": {
+      "005BC89C": "00000002",
+      "0022B68C": "3C034270",
+      "0021E7AC": "3C023E4C",
+      "0021E814": "3C023E4C",
+      "0021E8AC": "3C023ECC",
+      "0021E914": "3C023ECC",
+      "0021E9AC": "3C033E4C",
+      "0021EA04": "3C033ECC",
+      "0021EA08": "3463CCCE",
+      "0021EA0C": "3C024100"
+    },
+    "fixed": {
+      "005BC89C": "00000001",
+      "0022B68C": "3C0341F0",
+      "0021E7AC": "3C023DCC",
+      "0021E814": "3C023DCC",
+      "0021E8AC": "3C023E4C",
+      "0021E914": "3C023E4C",
+      "0021E9AC": "3C033DCC",
+      "0021EA04": "3C033E4C",
+      "0021EA08": "3463CCCE",
+      "0021EA0C": "3C024100"
+    }
+  },
+  "tests": {
+    "forward": {
+      "primary_window_relative_vblanks": "180:300",
+      "movement": {
+        "stock": {
+          "start": {
+            "sample": 3188,
+            "t": 10102.58098,
+            "vblank": 180905,
+            "frame": 177545
+          },
+          "end": {
+            "sample": 3549,
+            "t": 10104.5855998,
+            "vblank": 181025,
+            "frame": 177605
+          },
+          "seconds": 2.0046198000000004,
+          "vblanks": 120,
+          "updates": 60,
+          "position_start": [
+            -37.136634826660156,
+            -0.39559483528137207,
+            8.202634811401367
+          ],
+          "position_end": [
+            -54.4661979675293,
+            6.337760714814067e-05,
+            21.096357345581055
+          ],
+          "horizontal_net_displacement": 21.600042579628944,
+          "net_per_update": 0.3600007096604824,
+          "net_per_60_vblanks": 10.800021289814472,
+          "requested_vector_start": [
+            -0.2888283133506775,
+            0.0,
+            0.21489718556404114
+          ],
+          "requested_vector_end": [
+            -0.2888255715370178,
+            0.0,
+            0.21489514410495758
+          ],
+          "requested_magnitude": {
+            "min": 0.36000018574102916,
+            "median": 0.36000018574102916,
+            "max": 0.36000360408799115
+          },
+          "calculated_speed_at_nominal_full_cadence": 10.800021289814472
+        },
+        "fixed": {
+          "start": {
+            "sample": 2280,
+            "t": 10212.5104432,
+            "vblank": 180422,
+            "frame": 177977
+          },
+          "end": {
+            "sample": 2632,
+            "t": 10214.49914,
+            "vblank": 180542,
+            "frame": 178096
+          },
+          "seconds": 1.9886967999991612,
+          "vblanks": 120,
+          "updates": 119,
+          "position_start": [
+            -37.31316375732422,
+            -0.38626524806022644,
+            8.33397388458252
+          ],
+          "position_end": [
+            -54.49831008911133,
+            6.331989425234497e-05,
+            21.120195388793945
+          ],
+          "horizontal_net_displacement": 21.420007348264253,
+          "net_per_update": 0.18000006175011976,
+          "net_per_60_vblanks": 10.710003674132127,
+          "requested_vector_start": [
+            -0.1444127857685089,
+            0.0,
+            0.10744757205247879
+          ],
+          "requested_vector_end": [
+            -0.1444127857685089,
+            0.0,
+            0.10744757205247879
+          ],
+          "requested_magnitude": {
+            "min": 0.18000009287051458,
+            "median": 0.18000009287051458,
+            "max": 0.18000009287051458
+          },
+          "calculated_speed_at_nominal_full_cadence": 10.800003705007185
+        }
+      },
+      "animation": {
+        "stock": [
+          {
+            "parent": "0x135c",
+            "clip": "00D00280",
+            "clip_start": 0,
+            "clip_end": 12.0,
+            "context": {
+              "action": 0,
+              "gait": 6,
+              "axes": [
+                127,
+                0,
+                127,
+                0
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 2716,
+                "t": 10099.9586783,
+                "vblank": 180747,
+                "frame": 177466,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3725,
+                "t": 10105.5596715,
+                "vblank": 181083,
+                "frame": 177634,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 29
+              },
+              "seconds": 5.600993199999721,
+              "vblanks": 336,
+              "updates": 168,
+              "phase_units": 336.0,
+              "cycles_crossed": 28,
+              "phase_per_update": 2.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 2.0,
+                "median": 2.0,
+                "max": 2.0
+              }
+            },
+            "all_wraps_has_exact_cadence": true
+          },
+          {
+            "parent": "0x15bc",
+            "clip": "00D3A300",
+            "clip_start": 0,
+            "clip_end": 38.0,
+            "context": {
+              "action": 0,
+              "gait": 6,
+              "axes": [
+                127,
+                0,
+                127,
+                0
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 2793,
+                "t": 10100.3878781,
+                "vblank": 180773,
+                "frame": 177479,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3707,
+                "t": 10105.4605888,
+                "vblank": 181077,
+                "frame": 177631,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 9
+              },
+              "seconds": 5.072710700000243,
+              "vblanks": 304,
+              "updates": 152,
+              "phase_units": 304.0,
+              "cycles_crossed": 8,
+              "phase_per_update": 2.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 2.0,
+                "median": 2.0,
+                "max": 2.0
+              }
+            },
+            "all_wraps_has_exact_cadence": true
+          }
+        ],
+        "fixed": [
+          {
+            "parent": "0x135c",
+            "clip": "00D00280",
+            "clip_start": 0,
+            "clip_end": 12.0,
+            "context": {
+              "action": 0,
+              "gait": 6,
+              "axes": [
+                127,
+                0,
+                127,
+                0
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 1817,
+                "t": 10209.8873202,
+                "vblank": 180265,
+                "frame": 177825,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 2790,
+                "t": 10215.3930738,
+                "vblank": 180595,
+                "frame": 178149,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 28
+              },
+              "seconds": 5.505753600000389,
+              "vblanks": 330,
+              "updates": 324,
+              "phase_units": 324.0,
+              "cycles_crossed": 27,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 58.90909090909091,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            },
+            "longest_exact_cadence": {
+              "start": {
+                "sample": 2332,
+                "t": 10212.8054783,
+                "vblank": 180439,
+                "frame": 177993,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 15
+              },
+              "end": {
+                "sample": 2790,
+                "t": 10215.3930738,
+                "vblank": 180595,
+                "frame": 178149,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 28
+              },
+              "seconds": 2.5875954999992246,
+              "vblanks": 156,
+              "updates": 156,
+              "phase_units": 156.0,
+              "cycles_crossed": 13,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            }
+          },
+          {
+            "parent": "0x15bc",
+            "clip": "00D3A300",
+            "clip_start": 0,
+            "clip_end": 38.0,
+            "context": {
+              "action": 0,
+              "gait": 6,
+              "axes": [
+                127,
+                0,
+                127,
+                0
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 1899,
+                "t": 10210.3492336,
+                "vblank": 180292,
+                "frame": 177851,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 2808,
+                "t": 10215.4931831,
+                "vblank": 180601,
+                "frame": 178155,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 9
+              },
+              "seconds": 5.143949499999508,
+              "vblanks": 309,
+              "updates": 304,
+              "phase_units": 304.0,
+              "cycles_crossed": 8,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 59.029126213592235,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            },
+            "longest_exact_cadence": {
+              "start": {
+                "sample": 2358,
+                "t": 10212.9518989,
+                "vblank": 180449,
+                "frame": 178003,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 5
+              },
+              "end": {
+                "sample": 2808,
+                "t": 10215.4931831,
+                "vblank": 180601,
+                "frame": 178155,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 9
+              },
+              "seconds": 2.5412841999986995,
+              "vblanks": 152,
+              "updates": 152,
+              "phase_units": 152.0,
+              "cycles_crossed": 4,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            }
+          }
+        ]
+      },
+      "initial_0_to_60_vblanks": {
+        "fixed_over_stock_distance": 1.0872517164124849,
+        "fixed_distance_excess_percent": 8.725171641248487,
+        "stock": {
+          "horizontal_net_displacement": 8.350761186424787,
+          "vblanks": 60,
+          "updates": 30
+        },
+        "fixed": {
+          "horizontal_net_displacement": 9.079379433291109,
+          "vblanks": 60,
+          "updates": 57
+        }
+      },
+      "ratios": {
+        "fixed_over_stock_net_per_60_vblanks": 0.9916650520154769,
+        "fixed_over_stock_net_per_update": 0.49999918589015635,
+        "fixed_over_stock_requested_magnitude": 0.5
+      },
+      "interpretation": "Requested translation and observed plateau distance per update are halved. At nominal update cadence this gives approximately 10.800 units per 60 VBlanks in both configurations. The measured corrected window contains 119 updates over 120 VBlanks, so its actual speed is slightly lower. Forward animation rates remain 2 stock and 1 corrected."
+    },
+    "slow": {
+      "primary_window_relative_vblanks": "180:300",
+      "movement": {
+        "stock": {
+          "start": {
+            "sample": 3230,
+            "t": 10168.0939569,
+            "vblank": 180053,
+            "frame": 177119
+          },
+          "end": {
+            "sample": 3590,
+            "t": 10170.0978641,
+            "vblank": 180173,
+            "frame": 177179
+          },
+          "seconds": 2.003907199999958,
+          "vblanks": 120,
+          "updates": 60,
+          "position_start": [
+            -25.181346893310547,
+            -0.8599596619606018,
+            -0.6924697756767273
+          ],
+          "position_end": [
+            -33.847251892089844,
+            -0.5602630376815796,
+            5.7552313804626465
+          ],
+          "horizontal_net_displacement": 10.80142396384611,
+          "net_per_update": 0.1800237327307685,
+          "net_per_60_vblanks": 5.400711981923055,
+          "requested_vector_start": [
+            -0.14457619190216064,
+            0.0,
+            0.1075691431760788
+          ],
+          "requested_vector_end": [
+            -0.1444127857685089,
+            0.0,
+            0.10744757205247879
+          ],
+          "requested_magnitude": {
+            "min": 0.18000009287051458,
+            "median": 0.1800037302857742,
+            "max": 0.18020376197118118
+          },
+          "calculated_speed_at_nominal_full_cadence": 5.400711981923055
+        },
+        "fixed": {
+          "start": {
+            "sample": 3294,
+            "t": 10284.3920324,
+            "vblank": 180067,
+            "frame": 177631
+          },
+          "end": {
+            "sample": 3651,
+            "t": 10286.3914497,
+            "vblank": 180187,
+            "frame": 177748
+          },
+          "seconds": 1.9994173000013689,
+          "vblanks": 120,
+          "updates": 117,
+          "position_start": [
+            -25.094209671020508,
+            -0.861178994178772,
+            -0.7572944760322571
+          ],
+          "position_end": [
+            -33.54233932495117,
+            -0.575351357460022,
+            5.528402328491211
+          ],
+          "horizontal_net_displacement": 10.529999001330397,
+          "net_per_update": 0.08999999146436237,
+          "net_per_60_vblanks": 5.264999500665199,
+          "requested_vector_start": [
+            -0.07220878452062607,
+            0.0,
+            0.05372556298971176
+          ],
+          "requested_vector_end": [
+            -0.07220639288425446,
+            0.0,
+            0.053723786026239395
+          ],
+          "requested_magnitude": {
+            "min": 0.09000004643525729,
+            "median": 0.09000004643525729,
+            "max": 0.09000302595195171
+          },
+          "calculated_speed_at_nominal_full_cadence": 5.399999487861742
+        }
+      },
+      "animation": {
+        "stock": [
+          {
+            "parent": "0x135c",
+            "clip": "00CFF630",
+            "clip_start": 0,
+            "clip_end": 80.0,
+            "context": {
+              "action": 0,
+              "gait": 5,
+              "axes": [
+                127,
+                43,
+                127,
+                43
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 2962,
+                "t": 10166.6053225,
+                "vblank": 179963,
+                "frame": 177074,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3682,
+                "t": 10170.6082588,
+                "vblank": 180203,
+                "frame": 177194,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 4
+              },
+              "seconds": 4.002936300001238,
+              "vblanks": 240,
+              "updates": 120,
+              "phase_units": 240.0,
+              "cycles_crossed": 3,
+              "phase_per_update": 2.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 2.0,
+                "median": 2.0,
+                "max": 2.0
+              }
+            },
+            "all_wraps_has_exact_cadence": true
+          },
+          {
+            "parent": "0x15bc",
+            "clip": "00D38100",
+            "clip_start": 0,
+            "clip_end": 78.0,
+            "context": {
+              "action": 0,
+              "gait": 5,
+              "axes": [
+                127,
+                43,
+                127,
+                43
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 2956,
+                "t": 10166.5719198,
+                "vblank": 179961,
+                "frame": 177073,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3658,
+                "t": 10170.4753874,
+                "vblank": 180195,
+                "frame": 177190,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 4
+              },
+              "seconds": 3.9034675999992032,
+              "vblanks": 234,
+              "updates": 117,
+              "phase_units": 234.0,
+              "cycles_crossed": 3,
+              "phase_per_update": 2.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 2.0,
+                "median": 2.0,
+                "max": 2.0
+              }
+            },
+            "all_wraps_has_exact_cadence": true
+          }
+        ],
+        "fixed": [
+          {
+            "parent": "0x135c",
+            "clip": "00CFF630",
+            "clip_start": 0,
+            "clip_end": 80.0,
+            "context": {
+              "action": 0,
+              "gait": 5,
+              "axes": [
+                127,
+                43,
+                127,
+                43
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 3034,
+                "t": 10282.9451251,
+                "vblank": 179982,
+                "frame": 177550,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3778,
+                "t": 10287.0974849,
+                "vblank": 180229,
+                "frame": 177790,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 4
+              },
+              "seconds": 4.15235980000034,
+              "vblanks": 247,
+              "updates": 240,
+              "phase_units": 240.0,
+              "cycles_crossed": 3,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 58.29959514170041,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            }
+          },
+          {
+            "parent": "0x15bc",
+            "clip": "00D38100",
+            "clip_start": 0,
+            "clip_end": 78.0,
+            "context": {
+              "action": 0,
+              "gait": 5,
+              "axes": [
+                127,
+                43,
+                127,
+                43
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 3028,
+                "t": 10282.9109178,
+                "vblank": 179980,
+                "frame": 177548,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3754,
+                "t": 10286.9643514,
+                "vblank": 180221,
+                "frame": 177782,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 4
+              },
+              "seconds": 4.053433600000062,
+              "vblanks": 241,
+              "updates": 234,
+              "phase_units": 234.0,
+              "cycles_crossed": 3,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 58.25726141078838,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            }
+          }
+        ]
+      },
+      "initial_0_to_60_vblanks": {
+        "fixed_over_stock_distance": 1.0916100036623162,
+        "fixed_distance_excess_percent": 9.161000366231619,
+        "stock": {
+          "horizontal_net_displacement": 4.194757830750778,
+          "vblanks": 60,
+          "updates": 30
+        },
+        "fixed": {
+          "horizontal_net_displacement": 4.579039610988386,
+          "vblanks": 60,
+          "updates": 57
+        }
+      },
+      "ratios": {
+        "fixed_over_stock_net_per_60_vblanks": 0.9748713721983129,
+        "fixed_over_stock_net_per_update": 0.49993403702477585,
+        "fixed_over_stock_requested_magnitude": 0.49998989627811086
+      },
+      "interpretation": "The lower-pressure forward plateau also halves requested translation and distance per update: approximately 0.180 stock and 0.090 corrected. At nominal update cadence both give approximately 5.400 units per 60 VBlanks. The corrected measured window contains 117 updates over 120 VBlanks."
+    },
+    "reverse": {
+      "primary_window_relative_vblanks": "60:120",
+      "movement": {
+        "stock": {
+          "start": {
+            "sample": 2978,
+            "t": 10133.6947084,
+            "vblank": 179969,
+            "frame": 177077
+          },
+          "end": {
+            "sample": 3159,
+            "t": 10134.6979387,
+            "vblank": 180029,
+            "frame": 177107
+          },
+          "seconds": 1.0032302999989042,
+          "vblanks": 60,
+          "updates": 30,
+          "position_start": [
+            -9.4183349609375,
+            -1.890106201171875,
+            -14.063026428222656
+          ],
+          "position_end": [
+            -2.5215840339660645,
+            -2.1578683853149414,
+            -19.19279670715332
+          ],
+          "horizontal_net_displacement": 8.595331085146269,
+          "net_per_update": 0.2865110361715423,
+          "net_per_60_vblanks": 8.595331085146269,
+          "requested_vector_start": [
+            0.22610346972942352,
+            0.0,
+            -0.16768978536128998
+          ],
+          "requested_vector_end": [
+            0.23096537590026855,
+            0.0,
+            -0.17184540629386902
+          ],
+          "requested_magnitude": {
+            "min": 0.2815006982907855,
+            "median": 0.2871230871337338,
+            "max": 0.2878816571597733
+          }
+        },
+        "fixed": {
+          "start": {
+            "sample": 3774,
+            "t": 10248.4590148,
+            "vblank": 180221,
+            "frame": 177781
+          },
+          "end": {
+            "sample": 3955,
+            "t": 10249.484625,
+            "vblank": 180281,
+            "frame": 177839
+          },
+          "seconds": 1.0256101999984821,
+          "vblanks": 60,
+          "updates": 58,
+          "position_start": [
+            -8.305834770202637,
+            -1.9608253240585327,
+            -14.297337532043457
+          ],
+          "position_end": [
+            -1.4898772239685059,
+            -2.202993631362915,
+            -19.368358612060547
+          ],
+          "horizontal_net_displacement": 8.495441840542709,
+          "net_per_update": 0.14647313518177085,
+          "net_per_60_vblanks": 8.495441840542709,
+          "requested_vector_start": [
+            0.11546538770198822,
+            0.0,
+            -0.08590982854366302
+          ],
+          "requested_vector_end": [
+            0.11566180735826492,
+            0.0,
+            -0.08578065037727356
+          ],
+          "requested_magnitude": {
+            "min": 0.14391926346939116,
+            "median": 0.14399833109372756,
+            "max": 0.14399990854347244
+          }
+        }
+      },
+      "animation": {
+        "stock": [
+          {
+            "parent": "0x15bc",
+            "clip": "00D3B400",
+            "clip_start": 0,
+            "clip_end": 38.0,
+            "context": {
+              "action": 0,
+              "gait": 6,
+              "axes": [
+                127,
+                255,
+                127,
+                255
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 2950,
+                "t": 10133.5399495,
+                "vblank": 179959,
+                "frame": 177072,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 3861,
+                "t": 10138.6080093,
+                "vblank": 180263,
+                "frame": 177224,
+                "phase": 2.0,
+                "rate": 2.0,
+                "cycles": 9
+              },
+              "seconds": 5.068059799999901,
+              "vblanks": 304,
+              "updates": 152,
+              "phase_units": 304.0,
+              "cycles_crossed": 8,
+              "phase_per_update": 2.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 2.0,
+                "median": 2.0,
+                "max": 2.0
+              }
+            },
+            "all_wraps_has_exact_cadence": true
+          }
+        ],
+        "fixed": [
+          {
+            "parent": "0x15bc",
+            "clip": "00D3B400",
+            "clip_start": 0,
+            "clip_end": 38.0,
+            "context": {
+              "action": 0,
+              "gait": 6,
+              "axes": [
+                127,
+                255,
+                127,
+                255
+              ]
+            },
+            "all_wraps": {
+              "start": {
+                "sample": 3749,
+                "t": 10248.3170653,
+                "vblank": 180212,
+                "frame": 177773,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 1
+              },
+              "end": {
+                "sample": 4659,
+                "t": 10253.4603946,
+                "vblank": 180519,
+                "frame": 178077,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 9
+              },
+              "seconds": 5.143329300000914,
+              "vblanks": 307,
+              "updates": 304,
+              "phase_units": 304.0,
+              "cycles_crossed": 8,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 59.413680781758956,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            },
+            "longest_exact_cadence": {
+              "start": {
+                "sample": 3989,
+                "t": 10249.6769439,
+                "vblank": 180291,
+                "frame": 177849,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 3
+              },
+              "end": {
+                "sample": 4659,
+                "t": 10253.4603946,
+                "vblank": 180519,
+                "frame": 178077,
+                "phase": 1.0,
+                "rate": 1.0,
+                "cycles": 9
+              },
+              "seconds": 3.783450700000685,
+              "vblanks": 228,
+              "updates": 228,
+              "phase_units": 228.0,
+              "cycles_crossed": 6,
+              "phase_per_update": 1.0,
+              "phase_per_60_vblanks": 60.0,
+              "rates": {
+                "min": 1.0,
+                "median": 1.0,
+                "max": 1.0
+              }
+            }
+          }
+        ]
+      },
+      "initial_0_to_60_vblanks": {
+        "fixed_over_stock_distance": 1.1699539786682542,
+        "fixed_distance_excess_percent": 16.995397866825424,
+        "stock": {
+          "horizontal_net_displacement": 5.601463493704691,
+          "vblanks": 60,
+          "updates": 30
+        },
+        "fixed": {
+          "horizontal_net_displacement": 6.553454500824783,
+          "vblanks": 60,
+          "updates": 57
+        }
+      },
+      "ratios": {
+        "fixed_over_stock_net_per_60_vblanks": 0.9883786623675055,
+        "fixed_over_stock_net_per_update": 0.5112303426038822,
+        "fixed_over_stock_requested_magnitude": 0.5015212553306702
+      },
+      "interpretation": "Early reverse travel is approximately stock speed rather than doubled; requested translation is approximately halved. Steering, acceleration, terrain and missed updates prevent an exact trajectory or terminal-speed equivalence claim for this interval."
+    }
+  },
+  "limitations": [
+    "The six additional writes halve ordinary vehicle translation targets. Acceleration divisors, braking, turning and collision response were not changed.",
+    "The corrected runs did not sustain one update per VBlank throughout. Actual VBlank-normalized distances are retained; calculated full-cadence speeds are explicitly derived from measured distance per update.",
+    "Fixed-rate straight motion can retain one-update endpoint uncertainty because counters and positions are published at different times within an update.",
+    "Reverse travel reaches an obstacle later in the capture. Only the earlier 60..120 VBlank interval is used for a travel comparison, and it does not establish a matched reverse trajectory.",
+    "Animation comparisons cover the observed parent clips only; no whole-skeleton, attack, jump or full vehicle-physics validation is claimed.",
+    "Initial 0..60 VBlank distances remain different because per-update acceleration and steering behavior have not been converted."
+  ]
+}

@@ -1,8 +1,8 @@
 # Devlog: 60 FPS for Steambot Chronicles (SLUS-21344)
 
 The [patch](../../patches/SLUS-21344_9F391882.pnach) unlocks 60 FPS and corrects
-the measured on-foot distance, follower speeds, animation-rate setup, idle-gesture timing and
-in-game clock. It remains
+the measured on-foot distance, follower speeds, normal Trotmobile cruising speeds,
+animation-rate setup, idle-gesture timing and in-game clock. It remains
 **experimental**: this is not a complete conversion of the simulation to 60 Hz.
 See the [frame-rate survey](frame-rate-survey.md) for the comparison with other games.
 
@@ -18,7 +18,7 @@ The serial was read from the disc, not inferred from its title. XORing the ELF's
 The UNDUB retains the CRC associated with the USA release. This record covers
 that extracted executable; it does not establish compatibility with other mods.
 
-## What the fifteen writes change
+## What the twenty-one writes change
 
 | Address | Original | Patched | Purpose |
 |---|---|---|---|
@@ -37,11 +37,17 @@ that extracted executable; it does not establish compatibility with other mods.
 | `001DDA1C` | `2463FF6A` | `2463FED4` | Idle-gesture repeat offset: -150 to -300 updates |
 | `001DED84` | `3C023D8F` | `3C023D0F` | Follower's inline walking speed: 0.070 to 0.035 |
 | `001DEDEC` | `3C023E23` | `3C023DA3` | Follower's inline running speed: 0.160 to 0.080 |
+| `0021E7AC` | `3C023E4C` | `3C023DCC` | Trotmobile gait 1 target: approximately 0.200 to 0.100 |
+| `0021E814` | `3C023E4C` | `3C023DCC` | Trotmobile gait 2 target: approximately 0.200 to 0.100 |
+| `0021E8AC` | `3C023ECC` | `3C023E4C` | Trotmobile gait 3 target: approximately 0.400 to 0.200 |
+| `0021E914` | `3C023ECC` | `3C023E4C` | Trotmobile gait 4 target: approximately 0.400 to 0.200 |
+| `0021E9AC` | `3C033E4C` | `3C033DCC` | Trotmobile gait 5 target: approximately 0.200 to 0.100 |
+| `0021EA04` | `3C033ECC` | `3C033E4C` | Trotmobile gait 6 target: approximately 0.400 to 0.200 |
 
 The interval is a runtime field. Changing only the initialization argument at
 `003D18C4` is insufficient when loading a state that already contains interval 2.
 The shipped write maintains `005BC89C = 1`; it does not rely on initialization
-running again. All fifteen writes use `place=1`.
+running again. All twenty-one writes use `place=1`.
 
 This address belongs to the **static** display object at `005BC650`, field
 `+024C`; it is not a guessed heap allocation. Initialization at `0022A064` and
@@ -303,6 +309,131 @@ with the fifteen-write patch enabled. See the
 [runtime comparison](data/steambot-chronicles-follower-stop-comparison.json) and
 [saved-state gate evaluation](data/steambot-chronicles-follower-stop-gate.json).
 
+## Trotmobile animation and forward travel
+
+A matched test loaded the user's Trotmobile beach scene from the slot-7 backup.
+Both configurations began from the same copy, with all 41 unique targets from
+the current and earlier local patches restored offline from the disc ELF and
+the display interval reset to 2. The fifteen-write patch was enabled only for
+the 60 FPS run, through a restart. No code was written live. Native PCSX2
+controller input held both sticks forward; the observed axis bytes were
+`[127, 0, 127, 0]` (RX, RY, LX, LY), with vehicle gait 6 and action 0.
+The comparison temporarily used 1x internal resolution, without EE overclock.
+
+The vehicle pointer at `0058F660` identifies the object at `0058F6A0` in this
+state. Its animation parents at `+135C` and `+15BC` naturally changed to forward
+clips `00D00280` (length 12) and `00D3A300` (length 38). Both acquired rate 2
+stock and rate 1 patched. This excludes inherited idle rates from the playback
+claim. The vehicle calls the same native rate setter at `0022B680`, including
+calls around `00219744..00219798`; the existing numerator correction therefore
+also reaches these vehicle parents.
+
+After excluding the initial phase hold during the transition, matching
+complete-cycle intervals with sustained update cadence measured:
+
+| Parent / clip length | Stock cycles / updates / VBlanks | Patched cycles / updates / VBlanks | Phase units per 60 VBlanks, stock / patched |
+|---|---|---|---|
+| `+135C` / 12 | 63 / 378 / 756 | 63 / 756 / 756 | 60.000 / 60.000 |
+| `+15BC` / 38 | 19 / 361 / 722 | 19 / 722 / 722 | 60.000 / 60.000 |
+
+The tracks advance exactly 2 phase units per stock update and 1 per patched
+update. These intervals took 12.613891 versus 12.600922 seconds and 12.043717
+versus 12.041928 seconds, respectively. Across the longer available wrap
+intervals, the patched tracks lost two and one updates, measuring 59.851 and
+59.921 phase units per 60 VBlanks; those small deficits are recorded rather
+than claiming sustained 60 FPS throughout the capture. Neither animation runs
+at double speed. Both configurations take 12 and 38 VBlanks per cycle at full
+cadence (about 0.200 and 0.634 seconds). The other two
+sampled parents, `+870C` and `+896C`, remained frozen and provide no playback
+evidence. This comparison measures animation-parent progression, not individual
+bone values, attacks, turning, jumping or every vehicle animation.
+
+**The fifteen-write patch ran forward vehicle travel approximately twice as fast.** In the
+straight interval from 120 to 180 VBlanks after the first sampled forward gait, stock
+horizontal displacement was approximately 10.801 units and patched displacement
+21.600 units. Later travel hits terrain, so whole-run distance is unsuitable
+for this comparison. Gait 6 selects the branch at `0021EA00`, which retains
+the target speed `0.40000004 * vehicle[+1010]`, approached using divisor 8.
+The observed multiplier is 0.9, producing approximately 0.36 units per update
+in both configurations. Doubling update frequency therefore doubles travel
+speed even though animation playback is corrected. Acceleration also remains
+expressed per update. This first test recorded the issue; the correction below
+adds the six vehicle targets to the patch.
+
+The [Trotmobile measurement summary](data/steambot-chronicles-trotmobile-comparison.json)
+records the trace hashes, counter/phase endpoints, clip identities and movement
+comparison. The original Trotmobile position, 2x resolution and enabled 60 FPS
+group were restored afterward; original save files and the installed patch
+were preserved. Full captures and the reusable harness remain local.
+
+### Normal Trotmobile cruising-speed correction
+
+The next six writes halve the speed targets in the normal driving branches
+for gaits 1 through 6, listed in the instruction table. They change only the
+upper half of each float; the following low-half instruction is preserved.
+Gaits 1/2 handle single-stick forward/backward input, 3/4 mixed longitudinal
+and lateral input, and 5/6 slower/full same-direction input. Full forward and
+full reverse both select gait 6. The animation setter and its requested rates
+are unchanged.
+
+Halving the stored movement vector after the branches converge would be
+incorrect: that vector feeds the next update's acceleration calculation.
+Repeatedly halving it would change the equilibrium beyond the intended factor
+of two. Halving the target instead preserves the recurrence and halves its
+steady result. This is a cruising-speed correction; it does not convert the
+acceleration or steering recurrence to elapsed time.
+
+Three fresh stock/corrected comparisons used identical copies of the beach
+state, native full-forward/full-reverse/half-pressure-forward controller macros,
+1x rendering and no EE overclock. Each captured 360 VBlanks after movement
+began. All six new instruction words were read back in each capture. Forward
+axes were `[127, 0, 127, 0]`, reverse `[127, 255, 127, 255]`, and slow forward
+`[127, 43, 127, 43]`; slow input naturally selected gait 5.
+
+The clean forward and slow intervals cover VBlanks 180 through 300 after
+movement onset. Net XZ endpoint distance and the requested vector agree:
+
+| Input | Stock distance per update | Corrected distance per update | Corrected / stock |
+|---|---:|---:|---:|
+| Full forward | 0.36000071 | 0.18000006 | 0.499999 |
+| Slow forward | 0.18002373 | 0.08999999 | 0.499934 |
+
+Multiplying these measured distances by the intended 30/60 updates per second
+gives approximately 10.800/10.800 units for full forward and 5.401/5.400 for
+slow forward. Those are calculated full-cadence rates, not a claim that every
+captured second reached 60 FPS. The corrected intervals contained 119 and 117
+updates in 120 VBlanks, so their actual distance per 60 VBlanks was 10.710 and
+5.265, versus stock's 10.800 and 5.401. The doubled cruising speed is removed;
+missed updates reduce actual speed in this scene.
+
+The reverse test's earlier VBlank 60..120 interval measured 8.595 versus 8.495
+units, with a requested-vector ratio of approximately 0.502. Its direction and
+terrain response were still changing, and later travel was obstructed. This
+supports the correction but is not a precise validation of reverse handling.
+Gaits 1..4 share the verified scalar target pattern; their complete turning
+trajectories were not separately validated.
+
+The forward animation parents retained rate 1, versus stock's 2, with no
+additional animation writes. At sustained cadence, the corrected body clip
+completed 13 cycles in 156 VBlanks and the leg clip completed four in 152,
+matching their stock 12- and 38-VBlank periods. The longer wrap intervals in
+all three tests expose missed updates rather than concealing them. This checks
+the observed parent tracks, not every bone or vehicle action.
+
+**Acceleration remains quicker.** During the first 60 VBlanks, corrected
+forward travel was 9.079 units versus stock's 8.351 (about 8.7% farther), and
+slow travel was 4.579 versus 4.195 (about 9.2%). The speed targets are halved,
+but each update still approaches its target using divisor 8. Braking, steering,
+boost, jumps and combat need their own timing work and measurements.
+
+The [speed-fix measurement summary](data/steambot-chronicles-trotmobile-speed-fix.json)
+contains all six trace hashes, code read-backs, movement endpoints, animation
+intervals and remaining limitations. Final live verification confirmed all 21
+patch words after reloading the user's pre-test state at the original settings.
+The installed patch was updated, temporary controller macros were removed,
+the user's current state was retained in slot 8, and PCSX2 was closed after
+verification. Existing slots 1, 7's backup and 9 were preserved.
+
 ## Earlier codes and the local experiment
 
 [asasega's original post, number 90, 18 January 2017](https://forums.pcsx2.net/Thread-60-fps-codes?page=9)
@@ -363,9 +494,12 @@ ordinary path at `001E1A08`. Acceleration and camera smoothing were not converte
 to elapsed-time calculations. Equal straight-line distance therefore does not
 mean every aspect of the controls feels identical at 30 and 60 FPS.
 
-Vehicles, physics, cutscenes, effects and rhythm minigames were not validated.
-The likely twin-stick vehicle paths read raw axes through `00164AE0`, bypassing
-the on-foot D-pad conversion; the running test provides no vehicle evidence.
+The Trotmobile tests validate forward-animation parent cycles and the correction
+to normal cruising-speed targets. Vehicle acceleration, braking and turning
+remain tied to updates. Boost, jumping, combat, other physics, cutscenes, effects
+and rhythm minigames remain unvalidated. Twin-stick vehicle
+paths read raw axes through `00164AE0`, bypassing the on-foot D-pad conversion;
+the earlier on-foot running test provides no vehicle evidence.
 Keep the experimental qualification until those systems have their own matched
 measurements. A separate fresh boot reached the opening movie/title sequence,
 and memory reads confirmed the interval, animation, gait and clock writes.

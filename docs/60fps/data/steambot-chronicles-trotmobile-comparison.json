@@ -1,0 +1,504 @@
+{
+  "target": {
+    "game": "Steambot Chronicles USA UNDUB",
+    "serial": "SLUS-21344",
+    "elf_crc": "9F391882",
+    "pcsx2_version": "2.8.1",
+    "measurement_internal_resolution": "1x",
+    "patch_write_count": 15,
+    "original_savestate_sha256": "1D1016249D4C93A26561EEC9622841CC1463B44FDA9613A5DE39A2D3CDF52A23"
+  },
+  "method": "Both runs began from copies of the same Trotmobile savestate, with retail code/table words restored offline for stock and the fifteen-write patch for 60 FPS. A temporary PCSX2 toggle macro held native left-stick-up and right-stick-up; observed bytes were RX=127, RY=0, LX=127, LY=0. PINE was read-only. Vehicle base 0058F6A0, active gait 6 and action 0. Natural motion selection reinitialized the active animation parents.",
+  "sources": {
+    "stock": {
+      "filename": "stock-move.json",
+      "sha256": "935579C5FBD916EE7ED0D214857F34DC651835EA35BFD6058034CC8B397BCA62",
+      "samples": 4463,
+      "code_words": {
+        "005BC89C": "00000002",
+        "0022B68C": "3C034270",
+        "0021EA04": "3C033ECC",
+        "0021EA08": "3463CCCE",
+        "0021EA0C": "3C024100"
+      }
+    },
+    "patched": {
+      "filename": "patched-move.json",
+      "sha256": "94899792AE3886117799639A460450CA472D82682DE51B7A3542B87E0977D4F2",
+      "samples": 4470,
+      "code_words": {
+        "005BC89C": "00000001",
+        "0022B68C": "3C0341F0",
+        "0021EA04": "3C033ECC",
+        "0021EA08": "3463CCCE",
+        "0021EA0C": "3C024100"
+      }
+    }
+  },
+  "animation": {
+    "0x135c": {
+      "parent_address": "005909FC",
+      "clip": "00D00280",
+      "clip_start": 0,
+      "clip_end": 12,
+      "all_observed_wraps": {
+        "stock": {
+          "first_sample": 1303,
+          "last_sample": 4450,
+          "start": {
+            "t": 2026.3868105,
+            "vblank": 180527,
+            "frame": 177356,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 1
+          },
+          "end": {
+            "t": 2044.0021467,
+            "vblank": 181583,
+            "frame": 177884,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 89
+          },
+          "seconds": 17.6153362,
+          "vblanks": 1056,
+          "updates": 528,
+          "updates_per_60_vblanks": 30.0,
+          "vblanks_per_second": 59.94776301800019,
+          "updates_per_second": 29.973881509000094,
+          "phase_units": 1056.0,
+          "cycles_crossed": 88,
+          "phase_units_per_update": 2.0,
+          "phase_units_per_60_vblanks": 60.0,
+          "phase_units_per_wall_second": 59.94776301800019,
+          "rate": {
+            "min": 2.0,
+            "max": 2.0,
+            "median": 2.0
+          }
+        },
+        "patched": {
+          "first_sample": 2043,
+          "last_sample": 4449,
+          "start": {
+            "t": 1962.5397626,
+            "vblank": 180516,
+            "frame": 178067,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 1
+          },
+          "end": {
+            "t": 1975.9945051,
+            "vblank": 181322,
+            "frame": 178871,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 68
+          },
+          "seconds": 13.454742500000066,
+          "vblanks": 806,
+          "updates": 804,
+          "updates_per_60_vblanks": 59.851116625310176,
+          "vblanks_per_second": 59.90452808740086,
+          "updates_per_second": 59.755881615719964,
+          "phase_units": 804.0,
+          "cycles_crossed": 67,
+          "phase_units_per_update": 1.0,
+          "phase_units_per_60_vblanks": 59.851116625310176,
+          "phase_units_per_wall_second": 59.755881615719964,
+          "rate": {
+            "min": 1.0,
+            "max": 1.0,
+            "median": 1.0
+          }
+        }
+      },
+      "matched_exact_cadence": {
+        "stock": {
+          "first_sample": 1303,
+          "last_sample": 3556,
+          "start": {
+            "t": 2026.3868105,
+            "vblank": 180527,
+            "frame": 177356,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 1
+          },
+          "end": {
+            "t": 2039.0007014,
+            "vblank": 181283,
+            "frame": 177734,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 64
+          },
+          "seconds": 12.613890900000115,
+          "vblanks": 756,
+          "updates": 378,
+          "updates_per_60_vblanks": 30.0,
+          "vblanks_per_second": 59.93392570091066,
+          "updates_per_second": 29.96696285045533,
+          "phase_units": 756.0,
+          "cycles_crossed": 63,
+          "phase_units_per_update": 2.0,
+          "phase_units_per_60_vblanks": 60.0,
+          "phase_units_per_wall_second": 59.93392570091066,
+          "rate": {
+            "min": 2.0,
+            "max": 2.0,
+            "median": 2.0
+          }
+        },
+        "patched": {
+          "first_sample": 2195,
+          "last_sample": 4449,
+          "start": {
+            "t": 1963.3935828,
+            "vblank": 180566,
+            "frame": 178115,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 5
+          },
+          "end": {
+            "t": 1975.9945051,
+            "vblank": 181322,
+            "frame": 178871,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 68
+          },
+          "seconds": 12.600922299999866,
+          "vblanks": 756,
+          "updates": 756,
+          "updates_per_60_vblanks": 60.0,
+          "vblanks_per_second": 59.99560841669566,
+          "updates_per_second": 59.99560841669566,
+          "phase_units": 756.0,
+          "cycles_crossed": 63,
+          "phase_units_per_update": 1.0,
+          "phase_units_per_60_vblanks": 60.0,
+          "phase_units_per_wall_second": 59.99560841669566,
+          "rate": {
+            "min": 1.0,
+            "max": 1.0,
+            "median": 1.0
+          }
+        },
+        "complete_cycles_each": 63
+      },
+      "interpretation": "Stock rate 2 per update and patched rate 1 per update produce equal phase advance per VBlank in the matched exact-cadence intervals."
+    },
+    "0x15bc": {
+      "parent_address": "00590C5C",
+      "clip": "00D3A300",
+      "clip_start": 0,
+      "clip_end": 38,
+      "all_observed_wraps": {
+        "stock": {
+          "first_sample": 1380,
+          "last_sample": 4438,
+          "start": {
+            "t": 2026.8208921,
+            "vblank": 180553,
+            "frame": 177369,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 1
+          },
+          "end": {
+            "t": 2043.9348499,
+            "vblank": 181579,
+            "frame": 177882,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 28
+          },
+          "seconds": 17.11395779999998,
+          "vblanks": 1026,
+          "updates": 513,
+          "updates_per_60_vblanks": 30.0,
+          "vblanks_per_second": 59.951065205968966,
+          "updates_per_second": 29.975532602984483,
+          "phase_units": 1026.0,
+          "cycles_crossed": 27,
+          "phase_units_per_update": 2.0,
+          "phase_units_per_60_vblanks": 60.0,
+          "phase_units_per_wall_second": 59.951065205968966,
+          "rate": {
+            "min": 2.0,
+            "max": 2.0,
+            "median": 2.0
+          }
+        },
+        "patched": {
+          "first_sample": 2126,
+          "last_sample": 4396,
+          "start": {
+            "t": 1963.005676,
+            "vblank": 180543,
+            "frame": 178093,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 1
+          },
+          "end": {
+            "t": 1975.6992918,
+            "vblank": 181304,
+            "frame": 178853,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 21
+          },
+          "seconds": 12.693615800000089,
+          "vblanks": 761,
+          "updates": 760,
+          "updates_per_60_vblanks": 59.92115637319316,
+          "vblanks_per_second": 59.95139698493117,
+          "updates_per_second": 59.87261722542404,
+          "phase_units": 760.0,
+          "cycles_crossed": 20,
+          "phase_units_per_update": 1.0,
+          "phase_units_per_60_vblanks": 59.92115637319316,
+          "phase_units_per_wall_second": 59.87261722542404,
+          "rate": {
+            "min": 1.0,
+            "max": 1.0,
+            "median": 1.0
+          }
+        }
+      },
+      "matched_exact_cadence": {
+        "stock": {
+          "first_sample": 1380,
+          "last_sample": 3532,
+          "start": {
+            "t": 2026.8208921,
+            "vblank": 180553,
+            "frame": 177369,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 1
+          },
+          "end": {
+            "t": 2038.8646093,
+            "vblank": 181275,
+            "frame": 177730,
+            "phase": 2.0,
+            "rate": 2.0,
+            "cycles": 20
+          },
+          "seconds": 12.043717199999946,
+          "vblanks": 722,
+          "updates": 361,
+          "updates_per_60_vblanks": 30.0,
+          "vblanks_per_second": 59.94826912740887,
+          "updates_per_second": 29.974134563704435,
+          "phase_units": 722.0,
+          "cycles_crossed": 19,
+          "phase_units_per_update": 2.0,
+          "phase_units_per_60_vblanks": 60.0,
+          "phase_units_per_wall_second": 59.94826912740887,
+          "rate": {
+            "min": 2.0,
+            "max": 2.0,
+            "median": 2.0
+          }
+        },
+        "patched": {
+          "first_sample": 2242,
+          "last_sample": 4396,
+          "start": {
+            "t": 1963.6573642,
+            "vblank": 180582,
+            "frame": 178131,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 2
+          },
+          "end": {
+            "t": 1975.6992918,
+            "vblank": 181304,
+            "frame": 178853,
+            "phase": 1.0,
+            "rate": 1.0,
+            "cycles": 21
+          },
+          "seconds": 12.041927600000008,
+          "vblanks": 722,
+          "updates": 722,
+          "updates_per_60_vblanks": 60.0,
+          "vblanks_per_second": 59.95717828431384,
+          "updates_per_second": 59.95717828431384,
+          "phase_units": 722.0,
+          "cycles_crossed": 19,
+          "phase_units_per_update": 1.0,
+          "phase_units_per_60_vblanks": 60.0,
+          "phase_units_per_wall_second": 59.95717828431384,
+          "rate": {
+            "min": 1.0,
+            "max": 1.0,
+            "median": 1.0
+          }
+        },
+        "complete_cycles_each": 19
+      },
+      "interpretation": "Stock rate 2 per update and patched rate 1 per update produce equal phase advance per VBlank in the matched exact-cadence intervals."
+    }
+  },
+  "movement": {
+    "stock": {
+      "first_sample": 1592,
+      "last_sample": 1770,
+      "start": {
+        "t": 2028.0140548,
+        "vblank": 180625,
+        "frame": 177405
+      },
+      "end": {
+        "t": 2029.0114225,
+        "vblank": 180685,
+        "frame": 177435
+      },
+      "seconds": 0.9973677000000407,
+      "vblanks": 60,
+      "updates": 30,
+      "updates_per_60_vblanks": 30.0,
+      "vblanks_per_second": 60.158354837436136,
+      "updates_per_second": 30.079177418718068,
+      "movement": {
+        "horizontal_net_displacement": 10.80136403942023,
+        "net_displacement_per_update": 0.3600454679806743,
+        "net_displacement_per_60_vblanks": 10.80136403942023,
+        "net_displacement_per_wall_second": 10.829871510196078
+      },
+      "gait_onset_sample": 1238,
+      "gait_onset_vblank": 180505,
+      "interval_after_gait_onset_vblanks": [
+        120,
+        180
+      ],
+      "position_start": [
+        -28.47077751159668,
+        -0.8114835619926453,
+        1.7549699544906616
+      ],
+      "position_end": [
+        -37.136634826660156,
+        -0.39559483528137207,
+        8.202634811401367
+      ],
+      "requested_vector_start": [
+        -0.2889844477176666,
+        0.0,
+        0.21501335501670837
+      ],
+      "requested_vector_end": [
+        -0.2888283133506775,
+        0.0,
+        0.21489718556404114
+      ],
+      "requested_vector_horizontal_magnitude": {
+        "min": 0.36000360408799115,
+        "max": 0.3601982146793982,
+        "median": 0.36002673686906433
+      },
+      "gaits": [
+        6
+      ],
+      "axes": [
+        [
+          127,
+          0,
+          127,
+          0
+        ]
+      ]
+    },
+    "patched": {
+      "first_sample": 2335,
+      "last_sample": 2512,
+      "start": {
+        "t": 1964.1769027,
+        "vblank": 180613,
+        "frame": 178162
+      },
+      "end": {
+        "t": 1965.1653031,
+        "vblank": 180673,
+        "frame": 178221
+      },
+      "seconds": 0.9884004000000459,
+      "vblanks": 60,
+      "updates": 59,
+      "updates_per_60_vblanks": 59.0,
+      "vblanks_per_second": 60.70414378626032,
+      "updates_per_second": 59.69240805648931,
+      "movement": {
+        "horizontal_net_displacement": 21.60003439562958,
+        "net_displacement_per_update": 0.3661022778920268,
+        "net_displacement_per_60_vblanks": 21.60003439562958,
+        "net_displacement_per_wall_second": 21.85352656234111
+      },
+      "gait_onset_sample": 1969,
+      "gait_onset_vblank": 180493,
+      "interval_after_gait_onset_vblanks": [
+        120,
+        180
+      ],
+      "position_start": [
+        -44.934940338134766,
+        -0.004127661697566509,
+        14.004815101623535
+      ],
+      "position_end": [
+        -62.26449966430664,
+        5.253603376331739e-05,
+        26.898529052734375
+      ],
+      "requested_vector_start": [
+        -0.2888255715370178,
+        0.0,
+        0.21489514410495758
+      ],
+      "requested_vector_end": [
+        -0.2888255715370178,
+        0.0,
+        0.21489514410495758
+      ],
+      "requested_vector_horizontal_magnitude": {
+        "min": 0.36000018574102916,
+        "max": 0.36000018574102916,
+        "median": 0.36000018574102916
+      },
+      "gaits": [
+        6
+      ],
+      "axes": [
+        [
+          127,
+          0,
+          127,
+          0
+        ]
+      ]
+    },
+    "patched_over_stock_distance_per_60_vblanks": 1.9997506163850187,
+    "interpretation": "The tested forward vehicle movement is approximately double stock speed while the measured parent animation playback retains stock cadence."
+  },
+  "limitations": [
+    "Animation measurements cover the two observed moving parent clips, not every joint, every vehicle action, physics or other game systems.",
+    "Clip-start phase stayed zero for several updates during startup; wrap intervals exclude this initial hold.",
+    "The complete patched capture did not sustain one update per VBlank. Whole-wrap and exact-cadence intervals are both retained so dropped updates are visible.",
+    "Vehicle path after the early interval reaches an obstacle/cliff; the full-run distance is not used for speed comparison.",
+    "Capture and input onset were asynchronous; movement offsets are relative to the first observed gait-6 sample in each run.",
+    "Frame and position/phase publication can occur at different points within an update, so endpoint update counts can differ by one from displacement counts."
+  ],
+  "frozen_parents_excluded": [
+    "00597DAC (+870C)",
+    "0059800C (+896C)"
+  ]
+}
