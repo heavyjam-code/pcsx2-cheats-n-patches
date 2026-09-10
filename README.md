@@ -12,6 +12,7 @@ Hand-made patches and cheats for PS2 games, in the `.pnach` format used by the [
 |---|---|---|
 | [`patches/`](patches/) | Quality-of-life patches (60 FPS, No-Interlacing, Remove Blur, ...) | `patches` folder |
 | [`cheats/`](cheats/) | Gameplay-altering cheats (infinite health, unlocks, ...) | `cheats` folder |
+| [`gamesettings/`](gamesettings/) | Optional per-game settings | `gamesettings` folder |
 | [`docs/pnach-format.md`](docs/pnach-format.md) | Reference for the pnach 2.0 file format | — |
 | [`docs/deinterlace/`](docs/deinterlace/) | No-Interlacing devlogs, the [candidate list](docs/deinterlace/no-interlacing-candidates.md), the [/v/ recommended-games cross-reference](docs/deinterlace/vsrecommended-ps2-crossref.md), and coverage data | — |
 | [`docs/deblur/`](docs/deblur/) | Remove Blur devlogs | — |
@@ -30,6 +31,20 @@ Patch and cheat files are stored flat (no per-game subfolders), one file per gam
    - **Portable install:** the `patches` / `cheats` folder next to `pcsx2-qt.exe`
 3. In PCSX2, right-click the game → **Properties** → **Patches** tab and tick the patches you want. Files from the `cheats` folder appear on the **Cheats** tab instead and additionally require **Enable Cheats** (per-game on that tab, or globally under Settings → Emulation).
 4. Restart the game if it was running.
+
+## Installing a per-game config
+
+Files in [`gamesettings/`](gamesettings/) are named `SERIAL_CRC.ini` and must match
+your game's serial and CRC. With PCSX2 closed, copy the matching file into its
+`gamesettings` folder. If a config already exists there, merge the settings into
+it to preserve your other choices.
+
+The [Steambot Chronicles config](gamesettings/SLUS-21344_9F391882.ini) enables the
+experimental [60 FPS patch](patches/SLUS-21344_9F391882.pnach) and inverts controller
+1's right-stick horizontal axis. Install the matching patch to use 60 FPS, and
+read its [limitations and loading instructions](docs/60fps/devlog-SLUS-21344-steambot-chronicles-60fps.md).
+The stick inversion also affects Trotmobile controls. Settings take effect when
+the game next starts.
 
 ## Matching your disc
 
