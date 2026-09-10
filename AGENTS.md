@@ -1,7 +1,10 @@
-# CLAUDE.md
+# AGENTS.md
 
 Hand-made PCSX2 `.pnach` patches. File format reference: `docs/pnach-format.md`.
 Start new patches from `templates/template.pnach`.
+
+At the start of a session, also read `Codex.local.md` if it exists. It holds
+machine-specific paths and notes and is gitignored; keep shared rules here.
 
 ## Never put `//` comments in a `.pnach` file
 
@@ -47,3 +50,8 @@ someone picks between them. Write it properly.
   for the same serial+CRC unless you mean to shadow it; PCSX2 merges the
   bundled and loose entries and de-duplicates by group name.
 - Files are CRLF (`.gitattributes` marks `*.pnach` and `*.md` as text).
+- `.codex/hooks.json` configures a SessionStart hook that fast-forwards this
+  clone from its upstream, because the repo is edited from more than one
+  machine. It skips tracked changes, detached HEAD and branches without an
+  upstream. A machine-wide pull hook should stand down here. See
+  `docs/codex-setup.md` for dependencies and the one-time hook trust step.
