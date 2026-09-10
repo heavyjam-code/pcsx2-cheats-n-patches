@@ -47,7 +47,7 @@ Two traps:
 | Mortal Kombat: Shaolin Monks | `SLUS-21087` | **60** | not needed - already 60 |
 | Red Dead Revolver | `SLUS-20500` | 30 | **ships upstream**, verified here |
 | Radiata Stories | `SLUS-21262` | 30 | lever not located |
-| Steambot Chronicles (USA undub) | `SLUS-21344` / `9F391882` | 30 → 60 | **experimental group here**; player/follower movement, normal Trotmobile cruising speed, measured animation and clock checked; acceleration and turning still use per-update timing |
+| Steambot Chronicles (USA undub) | `SLUS-21344` / `9F391882` | 30 → 60 | **experimental group here**; player/follower movement, normal Trotmobile cruising, acceleration and steering, measured animation and clock checked; boost and other physics remain unverified |
 
 ### Steambot Chronicles - experimental conversion
 
@@ -73,10 +73,15 @@ parents but approximately doubled forward travel. Six additional writes halve
 the normal driving speed targets; matched forward and slow-input tests confirmed
 the halved distance and requested vector per update, preserving cruising speed
 when the update frequency doubles. Animation playback remains unchanged.
-Vehicle acceleration is still quicker: the first 60-VBlank forward interval
-travels about 9% farther than stock. Turning, acceleration and camera
-smoothing remain tied to frames; boost, jumping, combat, other physics, rhythm
-sections and cutscenes have not been validated. Start from a fresh boot
+Sixteen further writes correct normal vehicle acceleration, steering and the
+camera reference that feeds steering. Native input tests measured the normalized
+startup speed curve within 0.11% of stock and five steady steering modes within
+0.6%, while preserving immediate stopping and forward animation cadence. The
+camera correction was necessary: halving angular steps alone left turns about
+12..15% fast. Missed updates still reduce actual speed; these measurements do
+not establish uninterrupted 60 FPS. On-foot turn smoothing, other attachments,
+camera obstruction transitions, boost, jumping, combat, other physics, rhythm
+sections and cutscenes remain unverified. Start from a fresh boot
 and load a memory-card save, because older savestates can retain animation
 rates or code from another patch. See the
 [devlog](devlog-SLUS-21344-steambot-chronicles-60fps.md) for the addresses,

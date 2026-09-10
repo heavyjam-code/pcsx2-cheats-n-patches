@@ -1,8 +1,9 @@
 # Devlog: 60 FPS for Steambot Chronicles (SLUS-21344)
 
 The [patch](../../patches/SLUS-21344_9F391882.pnach) unlocks 60 FPS and corrects
-the measured on-foot distance, follower speeds, normal Trotmobile cruising speeds,
-animation-rate setup, idle-gesture timing and in-game clock. It remains
+the measured on-foot distance, follower speeds, normal Trotmobile cruising,
+acceleration, steering and camera follow, animation-rate setup, idle-gesture
+timing and in-game clock. It remains
 **experimental**: this is not a complete conversion of the simulation to 60 Hz.
 See the [frame-rate survey](frame-rate-survey.md) for the comparison with other games.
 
@@ -18,7 +19,7 @@ The serial was read from the disc, not inferred from its title. XORing the ELF's
 The UNDUB retains the CRC associated with the USA release. This record covers
 that extracted executable; it does not establish compatibility with other mods.
 
-## What the twenty-one writes change
+## What the thirty-seven writes change
 
 | Address | Original | Patched | Purpose |
 |---|---|---|---|
@@ -43,11 +44,27 @@ that extracted executable; it does not establish compatibility with other mods.
 | `0021E914` | `3C023ECC` | `3C023E4C` | Trotmobile gait 4 target: approximately 0.400 to 0.200 |
 | `0021E9AC` | `3C033E4C` | `3C033DCC` | Trotmobile gait 5 target: approximately 0.200 to 0.100 |
 | `0021EA04` | `3C033ECC` | `3C033E4C` | Trotmobile gait 6 target: approximately 0.400 to 0.200 |
+| `0021E7B4` | `3C034100` | `3C034178` | Gait 1 acceleration divisor: 8 to 15.5 |
+| `0021E818` | `3C034100` | `3C034178` | Gait 2 acceleration divisor: 8 to 15.5 |
+| `0021E8B4` | `3C034100` | `3C034178` | Gait 3 acceleration divisor: 8 to 15.5 |
+| `0021E918` | `3C034100` | `3C034178` | Gait 4 acceleration divisor: 8 to 15.5 |
+| `0021E9B4` | `3C024100` | `3C024178` | Gait 5 acceleration divisor: 8 to 15.5 |
+| `0021EA0C` | `3C024100` | `3C024178` | Gait 6 acceleration divisor: 8 to 15.5 |
+| `0021E7BC` | `3C024180` | `3C0241FC` | Gait 1 yaw-error divisor: 16 to 31.5 |
+| `0021E860` | `3C024180` | `3C0241FC` | Gait 2 yaw-error divisor: 16 to 31.5 |
+| `0021E8BC` | `3C024180` | `3C0241FC` | Gait 3 yaw-error divisor: 16 to 31.5 |
+| `0021E960` | `3C024180` | `3C0241FC` | Gait 4 yaw-error divisor: 16 to 31.5 |
+| `0021EEB8` | `3C034180` | `3C0341FC` | Gait 12 ordinary spin yaw-error divisor: 16 to 31.5 |
+| `0013B854` | `3C033E33` | `3C033DBB` | Clear-view vehicle-camera eye alpha, upper half |
+| `0013B858` | `34633333` | `3463CFC6` | Clear-view alpha, lower half: float bits `3DBBCFC6` |
+| `0013B838` | `3C033E80` | `3C033E09` | Obstructed vehicle-camera eye alpha: 0.25 to 0.1337890625 |
+| `0013B8F4` | `3C043E33` | `3C043DBB` | Vehicle-camera initialization alpha, upper half |
+| `0013B8FC` | `34883333` | `3488CFC6` | Initialization alpha, lower half: float bits `3DBBCFC6` |
 
 The interval is a runtime field. Changing only the initialization argument at
 `003D18C4` is insufficient when loading a state that already contains interval 2.
 The shipped write maintains `005BC89C = 1`; it does not rely on initialization
-running again. All twenty-one writes use `place=1`.
+running again. All thirty-seven writes use `place=1`.
 
 This address belongs to the **static** display object at `005BC650`, field
 `+024C`; it is not a guessed heap allocation. Initialization at `0022A064` and
@@ -410,8 +427,8 @@ The reverse test's earlier VBlank 60..120 interval measured 8.595 versus 8.495
 units, with a requested-vector ratio of approximately 0.502. Its direction and
 terrain response were still changing, and later travel was obstructed. This
 supports the correction but is not a precise validation of reverse handling.
-Gaits 1..4 share the verified scalar target pattern; their complete turning
-trajectories were not separately validated.
+Gaits 1..4 share the verified scalar target pattern; their turning trajectories
+were not separately validated at this stage.
 
 The forward animation parents retained rate 1, versus stock's 2, with no
 additional animation writes. At sustained cadence, the corrected body clip
@@ -420,11 +437,12 @@ matching their stock 12- and 38-VBlank periods. The longer wrap intervals in
 all three tests expose missed updates rather than concealing them. This checks
 the observed parent tracks, not every bone or vehicle action.
 
-**Acceleration remains quicker.** During the first 60 VBlanks, corrected
+**The cruising-only version still accelerated quicker.** During the first 60 VBlanks, corrected
 forward travel was 9.079 units versus stock's 8.351 (about 8.7% farther), and
 slow travel was 4.579 versus 4.195 (about 9.2%). The speed targets are halved,
-but each update still approaches its target using divisor 8. Braking, steering,
-boost, jumps and combat need their own timing work and measurements.
+but each update still approached its target using divisor 8. The next section
+records the subsequent normal acceleration and steering correction; boost,
+jumps and combat still need their own timing work and measurements.
 
 The [speed-fix measurement summary](data/steambot-chronicles-trotmobile-speed-fix.json)
 contains all six trace hashes, code read-backs, movement endpoints, animation
@@ -433,6 +451,112 @@ patch words after reloading the user's pre-test state at the original settings.
 The installed patch was updated, temporary controller macros were removed,
 the user's current state was retained in slot 8, and PCSX2 was closed after
 verification. Existing slots 1, 7's backup and 9 were preserved.
+
+### Normal acceleration and steering correction
+
+The next sixteen writes correct response coefficients in the six normal driving
+branches, five normal steering branches and the vehicle camera. They preserve
+the earlier cruising targets and animation setter. Original instruction words
+were checked against the extracted ELF, and all 37 installed words were read
+back after restarting and loading the user's preserved state.
+
+Each ordinary driving branch calculates `v_next = v + (target - v) / D`.
+Keeping divisor 8 while doubling update frequency makes acceleration quicker.
+For a fixed target, the stock error retention is `q = 1 - 1/D`; two new updates
+should retain the same error, so `D_new = 1 / (1 - sqrt(q))`. For acceleration,
+the exact divisor is 15.4833148. The single-instruction value 15.5 gives paired
+retention 0.875130073 versus stock's 0.875, about 0.11% slower relaxation. Using
+16 would be about 3.45% slower. The target remains halved because it represents
+distance per update, and the stored vector still feeds the next recurrence.
+
+The forward startup trace fitted divisor 7.999993 stock and 15.499991 patched,
+with targets 0.359999759 and 0.179999893. After stock updates 1, 2, 4, 8 and 12,
+compared with patched updates 2, 4, 8, 16 and 24, the normalized requested speeds
+agreed within 0.11%. This establishes the response curve independently of
+occasional missed updates. During the first 60 VBlanks the patched counter
+advanced only 56 updates, versus stock's 30, and displacement was 7.792 versus
+8.396 units. That is not evidence of identical startup position in wall time:
+missed updates and the smaller integration steps both matter. The later
+180..300-VBlank interval traveled 21.600088 versus 21.600043 units.
+
+**Normal release already stops immediately.** The gait-0 branch checks the
+previous gait. After normal driving gaits 1..6 it zeros the requested movement
+vector at `0021E798`. Both captured releases reached zero in the same VBlank
+as neutral stick input. The separate 0.8 damping constants at `0021E77C` and
+`0021EF30` belong to other conditions; changing them would not correct ordinary
+stopping. They remain untouched.
+
+Steering requires correcting its camera reference as well. Gaits 1/3 add the
+wrapped heading error to vehicle `+ED4`; gaits 2/4 calculate the reverse-facing
+error first. Gait 12 is an ordinary opposed-stick spin and additionally uses
+vehicle multiplier `+1194`, which was 1 in these tests. Each uses divisor 16.
+Divisor 31.5 approximates the fixed-target half-step value 31.4919334, with paired
+retention 0.937515747 versus stock's 0.9375. These are approximations for a
+coupled system, not an exact guarantee for every attachment or camera mode.
+
+The vehicle-camera updater `0013B350` reads the current Trotmobile and its
+published yaw at `+F94`. It writes eye interpolation alpha 0.175 to camera
+`+254` on the clear-view path at `0013B854..0013B85C`. The common camera code
+at `00134738..00134770` blends desired eye `+1F0` from previous eye `+210` with
+coefficient `camera[+254] * camera[+25C]`. Camera-derived yaw is stored at `+230`
+by `00134904`; steering reads that reference at `0021E66C`. Letting the camera
+follow twice as frequently reduces its lag and increases the steering error.
+
+The camera correction uses `1 - sqrt(1 - 0.175)`, float `3DBBCFC6`, approximately
+0.09170489. The initializer seeds the same coefficient. The obstruction branch
+has only one LUI available for its 0.25 coefficient; replacement `3E090000`
+represents 0.1337890625, approximately 0.14% below `1 - sqrt(0.75)`. Its paired
+retention is 0.750321388 versus stock's 0.75. That obstruction value is a static
+correction: the final captures observed only the clear-view coefficient, with
+eye/look-at multipliers 1 and camera `+264` flag 0. That flag controls an offset
+applied to the previous eye/look-at positions, not the selected camera mode.
+Obstruction transitions and the
+separate distance-recovery divisor 8 at `0013B3A4` remain unvalidated.
+
+Simply changing the five turn divisors to 32 with the original camera was
+rejected: steady turns remained approximately 12..15% fast. Adding the camera
+correction with divisor 32 made the measured turns approximately 1..1.5% slow.
+The final 31.5 plus camera correction was then tested with native controller
+macros, without input-buffer writes or injected game code:
+
+| Native stick input | Gait | Final steady angular speed versus stock |
+|---|---:|---:|
+| Left forward, right neutral | 1 | +0.058% |
+| Left backward, right neutral | 2 | -0.233% |
+| Left forward, right rightward | 3 | +0.047% |
+| Left backward, right rightward | 4 | -0.573% |
+| Left forward, right backward | 12 | +0.053% |
+
+These comparisons use VBlanks 180..300 after input onset. Repeated scalar yaw
+values establish individual update increments; normalized 30/60-update rates
+and the independently measured angle per 60 VBlanks agree closely in these
+windows. The report retains both, plus sample endpoints and rejection counts.
+PINE reads can straddle publication boundaries: for example, the final spin
+window contains 120 observed yaw increments while its frame-counter endpoints
+differ by 119. Earlier windows also expose real missed updates. None of these
+figures promises uninterrupted 60 FPS on this machine.
+
+The final forward animation check retained rate 1 versus stock's 2. The body
+parent completed 92 cycles in 1104 VBlanks and the leg parent 29 in 1102, retaining
+the stock 12- and 38-VBlank periods. The existing animation correction therefore
+survives the handling change; this does not validate every bone or action.
+
+Boost gaits and the L2-triggered spin burst, gait 13, remain unverified. That
+burst uses divisor 4 plus a countdown initialized to 8 or 10, shared with boost
+handling; these initial values are not a measurement of its total duration.
+Halving its angular step alone would halve its total rotation without restoring
+duration, so `0021EEE4` remains stock. Actions that retain the vehicle camera
+can still be affected by its correction; they are not claimed to be unchanged.
+
+The [handling measurement summary](data/steambot-chronicles-trotmobile-handling.json)
+records source hashes, original and final code read-backs, acceleration fits,
+native input modes, steering endpoints, animation intervals and rejected
+variants. Each code variant was tested through a pnach and restart, using the
+same cleaned beach state, 1x rendering and no EE overclock. Full captures and
+analysis scripts remain local. The original 2x settings and controller bindings
+were restored, temporary slot 6 was removed after a hash check, and the user's
+slot 8 retained its original hash. Final verification confirmed all 37 words,
+the original input getter, neutral sticks and idle gait; PCSX2 was closed.
 
 ## Earlier codes and the local experiment
 
@@ -490,13 +614,15 @@ by a continuous patch or a live interrupt handler.
 ## Deliberately left alone
 
 On-foot turn smoothing still uses per-update divisors, including 2.5 on the
-ordinary path at `001E1A08`. Acceleration and camera smoothing were not converted
-to elapsed-time calculations. Equal straight-line distance therefore does not
+ordinary path at `001E1A08`. The vehicle-specific response corrections do not
+convert the whole engine to elapsed-time calculations. Equal straight-line distance therefore does not
 mean every aspect of the controls feels identical at 30 and 60 FPS.
 
-The Trotmobile tests validate forward-animation parent cycles and the correction
-to normal cruising-speed targets. Vehicle acceleration, braking and turning
-remain tied to updates. Boost, jumping, combat, other physics, cutscenes, effects
+The Trotmobile tests validate forward-animation parent cycles, normal cruising
+targets, acceleration response, ordinary release-to-stop behavior and five normal
+steering modes in the tested vehicle. Other attachment multipliers, camera
+obstruction transitions and camera distance recovery remain unvalidated.
+Boost, jumping, combat, other physics, cutscenes, effects
 and rhythm minigames remain unvalidated. Twin-stick vehicle
 paths read raw axes through `00164AE0`, bypassing the on-foot D-pad conversion;
 the earlier on-foot running test provides no vehicle evidence.
