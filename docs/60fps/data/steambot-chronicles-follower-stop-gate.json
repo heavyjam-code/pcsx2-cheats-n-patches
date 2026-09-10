@@ -1,0 +1,138 @@
+{
+  "source": "user-follow-stop-ram.bin",
+  "method": "Offline evaluation of original 001E1670 and 0011BA60/0011B3F0 using saved EE RAM; no emulator writes.",
+  "follower": {
+    "address": "00A288C0",
+    "xyz": [
+      -26.088285446166992,
+      -3.1935296058654785,
+      51.224918365478516
+    ],
+    "mode": 10,
+    "gait_published": 0,
+    "gait_desired": 0,
+    "status": 0,
+    "pause": 0,
+    "restriction": 1,
+    "allowed_surface_ids": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ]
+  },
+  "target": {
+    "address": "00A29350",
+    "xyz": [
+      -14.058621406555176,
+      -3.939958095550537,
+      54.21947479248047
+    ],
+    "surface_pointer": "018AE340",
+    "surface_id": 20
+  },
+  "type5_regions": [
+    {
+      "address": "006D1150",
+      "id": 1,
+      "active": false,
+      "center": [
+        -4.0,
+        -4.0,
+        0.0
+      ],
+      "full_size": [
+        40.0,
+        20.0,
+        80.0
+      ],
+      "xyz_bounds": [
+        [
+          -24.0,
+          16.0
+        ],
+        [
+          -14.0,
+          6.0
+        ],
+        [
+          -40.0,
+          40.0
+        ]
+      ],
+      "contains_target": false,
+      "contains_follower": false
+    },
+    {
+      "address": "006D11B0",
+      "id": 2,
+      "active": true,
+      "center": [
+        -31.0,
+        -2.5,
+        50.0
+      ],
+      "full_size": [
+        14.0,
+        10.0,
+        10.0
+      ],
+      "xyz_bounds": [
+        [
+          -38.0,
+          -24.0
+        ],
+        [
+          -7.5,
+          2.5
+        ],
+        [
+          45.0,
+          55.0
+        ]
+      ],
+      "contains_target": false,
+      "contains_follower": true
+    },
+    {
+      "address": "006D1630",
+      "id": 14,
+      "active": false,
+      "center": [
+        17.0,
+        -5.0,
+        19.5
+      ],
+      "full_size": [
+        2.0,
+        10.0,
+        30.0
+      ],
+      "xyz_bounds": [
+        [
+          16.0,
+          18.0
+        ],
+        [
+          -10.0,
+          0.0
+        ],
+        [
+          4.5,
+          34.5
+        ]
+      ],
+      "contains_target": false,
+      "contains_follower": false
+    }
+  ],
+  "surface_allowed": false,
+  "active_type5_region_contains_target": false,
+  "original_001E1670_return": 1,
+  "original_001DEB88_forces_gait_zero": true,
+  "limitations": "This reconstructs the spatial stop gate at the saved point; runtime stock comparison is separate evidence."
+}

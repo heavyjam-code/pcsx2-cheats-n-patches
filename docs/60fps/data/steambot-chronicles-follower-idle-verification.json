@@ -1,0 +1,75 @@
+{
+  "result": "Connie idle animation is normal speed at the saved user position; no doubled cadence observed.",
+  "clip": "0126DFB0",
+  "duration_units": 120,
+  "child_index": 46,
+  "method": "Compare stable active sections of the same clip. Parent progress is unwrapped with the repeat counter; child progress is unwrapped independently. Complete cycle intervals avoid clip-entry and endpoint transition effects. Bone scalar samples are matched by evaluation phase = child_phase - rate.",
+  "stock": {
+    "source": "anim-stock.json",
+    "samples": 4100,
+    "seconds": 24.132508900000175,
+    "vblanks": 1447,
+    "frames": 723,
+    "rate_per_update": 2.0,
+    "parent_units_per_second_regression": 59.93367616866168,
+    "child_units_per_second_regression": 59.92627635390288,
+    "parent_complete_cycles": {
+      "seconds": 20.019280099999378,
+      "vblanks": 1200,
+      "frames": 600,
+      "cycles": 10
+    },
+    "parent_mean_seconds_per_cycle": 2.0019280099999377,
+    "parent_mean_vblanks_per_cycle": 120.0,
+    "child_complete_cycle_count": 10,
+    "child_complete_cycle_seconds": 20.020193900000777,
+    "child_complete_cycle_vblanks": 1200,
+    "child_cycle_vblank_intervals": [
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120
+    ]
+  },
+  "follower-user-idle": {
+    "source": "anim-follower-user-idle.json",
+    "samples": 2097,
+    "seconds": 11.996150199998738,
+    "vblanks": 719,
+    "frames": 719,
+    "rate_per_update": 1.0,
+    "parent_units_per_second_regression": 59.94318852735164,
+    "child_units_per_second_regression": 59.94231039385175,
+    "parent_complete_cycles": {
+      "seconds": 10.00871879999977,
+      "vblanks": 600,
+      "frames": 600,
+      "cycles": 5
+    },
+    "parent_mean_seconds_per_cycle": 2.001743759999954,
+    "parent_mean_vblanks_per_cycle": 120.0,
+    "child_complete_cycle_count": 5,
+    "child_complete_cycle_seconds": 10.008966600000349,
+    "child_complete_cycle_vblanks": 600,
+    "child_cycle_vblank_intervals": [
+      120,
+      120,
+      120,
+      120,
+      120
+    ]
+  },
+  "bone_scalar": {
+    "clip": "0126DFB0",
+    "child_index": 46,
+    "common_evaluation_phases": 60,
+    "rmse": 0.0,
+    "max_absolute_difference": 0.0
+  }
+}

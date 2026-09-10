@@ -47,7 +47,7 @@ Two traps:
 | Mortal Kombat: Shaolin Monks | `SLUS-21087` | **60** | not needed - already 60 |
 | Red Dead Revolver | `SLUS-20500` | 30 | **ships upstream**, verified here |
 | Radiata Stories | `SLUS-21262` | 30 | lever not located |
-| Steambot Chronicles (USA undub) | `SLUS-21344` / `9F391882` | 30 → 60 | **experimental group here**; running, animation rate and clock checked; other timing remains unverified |
+| Steambot Chronicles (USA undub) | `SLUS-21344` / `9F391882` | 30 → 60 | **experimental group here**; player/follower movement, animation rate and clock checked; other timing remains unverified |
 
 ### Steambot Chronicles - experimental conversion
 
@@ -57,13 +57,18 @@ with the patch. Horizontal displacement differed by less than 0.002 game units,
 the running animation rate changed from 2 to 1 units per frame, and both builds
 advanced the game clock six seconds in a twelve-second wall-clock sample. The
 patch changes the active presentation interval, the native animation rate
-calculation, six shared gait values, the clock divisor and Vanilla's idle timer.
+calculation, six shared gait values, the follower's inline movement speeds,
+the clock divisor and Vanilla's idle timer.
 A subsequent phase comparison confirmed matching playback speed for Vanilla's
 run and idle gesture and Connie's idle loop. It also exposed doubled idle-gesture
 frequency, now corrected by scaling the initial delay and repeat constants.
 A 42-second retest measured gesture intervals of 9.99-10.01 seconds, matching
-stock's roughly ten seconds, with unchanged measured gesture playback. Turning,
-acceleration and camera smoothing remain tied to frames; vehicles, physics,
+stock's roughly ten seconds, with unchanged measured gesture playback. Separate
+follower testing found doubled walking and catch-up speeds; two additional
+writes restored the measured stock rates of 2.1 and 4.8 units per 60 VBlanks.
+Connie waiting outside the active follow area was reproduced in stock; both
+versions resume following when Vanilla returns to that area.
+Turning, acceleration and camera smoothing remain tied to frames; vehicles, physics,
 rhythm sections and cutscenes have not been validated. Start from a fresh boot
 and load a memory-card save, because older savestates can retain animation
 rates or code from another patch. See the

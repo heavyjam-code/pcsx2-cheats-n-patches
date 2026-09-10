@@ -1,0 +1,2292 @@
+{
+  "method": "The last observed snapshot of each game-update counter is retained for movement and animation measurements. Movement aggregates only positive-VBlank adjacent update intervals with unchanged published and desired gait at both endpoints. Connie additionally requires mode 10 and unchanged target. Distances use X/Z. Animation unwrapping uses phase + clip end * repeat counter within segments of unchanged gait, mode, clip, rate and state; clip start/end were independently read from the same-scene RAM dump. Gait transitions use the first raw sample observing the new state. Capture is asynchronous; transition timing is bounded by sampling/update granularity. Initial saved-state idle rate 2 persists until a fresh transition, so that short stale interval is separate. Animation segments exclude the initial unchanged parent phase during clip blending: the playback measurement starts at the snapshot immediately preceding its first observed phase advance.",
+  "runs": {
+    "stock": {
+      "source": "follow-stock.json",
+      "metadata": {
+        "words": {
+          "0022B68C": "3C034270",
+          "001E0200": "C4610000",
+          "0022C414": "1080001A",
+          "004186E8": "3E23D70A",
+          "001DED84": "3C023D8F",
+          "001DEDEC": "3C023E23"
+        },
+        "move_seconds": 3.0,
+        "offsets": [
+          16,
+          20,
+          24,
+          156,
+          160,
+          168,
+          296,
+          320,
+          488,
+          492,
+          720,
+          724,
+          728,
+          880,
+          884,
+          888,
+          1324,
+          1328,
+          1332,
+          1336,
+          1348
+        ]
+      },
+      "samples": 2161,
+      "observed_updates": 360,
+      "start": {
+        "seconds": 0.0,
+        "vblank": 117980,
+        "relative_vblank": 0,
+        "frame": 62249,
+        "relative_frame": 0
+      },
+      "end": {
+        "seconds": 11.999481200000446,
+        "vblank": 118699,
+        "relative_vblank": 719,
+        "frame": 62608,
+        "relative_frame": 359
+      },
+      "release": {
+        "seconds": 3.0007101999999577,
+        "vblank": 118160,
+        "relative_vblank": 180,
+        "frame": 62339,
+        "relative_frame": 90
+      },
+      "gap": {
+        "initial": 1.701374339094197,
+        "final": 1.1016916343194685,
+        "maximum": 3.340916463701194,
+        "maximum_at": {
+          "seconds": 0.7657122000000527,
+          "vblank": 118026,
+          "relative_vblank": 46,
+          "frame": 62272,
+          "relative_frame": 23
+        }
+      },
+      "actors": {
+        "Vanilla": {
+          "initial_xyz": [
+            7.8087639808654785,
+            -2.640479564666748,
+            -4.134763717651367
+          ],
+          "final_xyz": [
+            11.432967185974121,
+            -2.6954545974731445,
+            9.801684379577637
+          ],
+          "net_horizontal_displacement": 14.399980362440695,
+          "path_over_observed_updates": 14.399987718779807,
+          "first_motion": {
+            "seconds": 0.03380710000055842,
+            "vblank": 117982,
+            "relative_vblank": 2,
+            "frame": 62250,
+            "relative_frame": 1
+          },
+          "modes": [
+            0
+          ],
+          "gaits": {
+            "0": {
+              "pairs": 268,
+              "frames": 268,
+              "vblanks": 536,
+              "seconds": 8.944498799999565,
+              "horizontal_path": 0.0,
+              "horizontal_units_per_update": 0.0,
+              "horizontal_units_per_vblank": 0.0,
+              "horizontal_units_per_60_vblanks": 0.0,
+              "horizontal_units_per_wall_second": 0.0,
+              "vector_xz_median": 0.0,
+              "vector_xz_min": 0.0,
+              "vector_xz_max": 0.0,
+              "rates": [
+                2.0
+              ]
+            },
+            "2": {
+              "pairs": 89,
+              "frames": 89,
+              "vblanks": 178,
+              "seconds": 2.9610417999992933,
+              "horizontal_path": 14.239987941448431,
+              "horizontal_units_per_update": 0.15999986451065654,
+              "horizontal_units_per_vblank": 0.07999993225532827,
+              "horizontal_units_per_60_vblanks": 4.799995935319696,
+              "horizontal_units_per_wall_second": 4.809114123769489,
+              "vector_xz_median": 0.16000001470158948,
+              "vector_xz_min": 0.16000000168502956,
+              "vector_xz_max": 0.16000001470158948,
+              "rates": [
+                2.0
+              ]
+            }
+          },
+          "transitions": [
+            {
+              "at": {
+                "seconds": 0.0,
+                "vblank": 117980,
+                "relative_vblank": 0,
+                "frame": 62249,
+                "relative_frame": 0
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00E97570",
+              "rate": 2.0,
+              "gap": 1.701374339094197,
+              "xyz": [
+                7.8087639808654785,
+                -2.640479564666748,
+                -4.134763717651367
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 0.03380710000055842,
+                "vblank": 117982,
+                "relative_vblank": 2,
+                "frame": 62250,
+                "relative_frame": 1
+              },
+              "gait": 2,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00773DB0",
+              "rate": 2.0,
+              "gap": 1.7417516099906878,
+              "xyz": [
+                7.847878932952881,
+                -2.641848087310791,
+                -3.979618787765503
+              ],
+              "vector_xz": 0.1600000102146736
+            },
+            {
+              "at": {
+                "seconds": 3.032827000000907,
+                "vblank": 118162,
+                "relative_vblank": 182,
+                "frame": 62340,
+                "relative_frame": 91
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00773DB0",
+              "rate": 2.0,
+              "gap": 3.0239745056775074,
+              "xyz": [
+                11.432967185974121,
+                -2.7172179222106934,
+                9.801684379577637
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 3.03836770000089,
+                "vblank": 118162,
+                "relative_vblank": 182,
+                "frame": 62340,
+                "relative_frame": 91
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "0076D7B0",
+              "rate": 2.0,
+              "gap": 3.0239745056775074,
+              "xyz": [
+                11.432967185974121,
+                -2.7172179222106934,
+                9.801684379577637
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 8.072945600000821,
+                "vblank": 118464,
+                "relative_vblank": 484,
+                "frame": 62491,
+                "relative_frame": 242
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00E97570",
+              "rate": 2.0,
+              "gap": 1.1016916343194685,
+              "xyz": [
+                11.432967185974121,
+                -2.6954545974731445,
+                9.801684379577637
+              ],
+              "vector_xz": 0.0
+            }
+          ],
+          "animation_segments": [
+            {
+              "gait": 2,
+              "clip": "00773DB0",
+              "clip_start": 0,
+              "clip_end": 30,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 0.05605190000096627,
+                "vblank": 117983,
+                "relative_vblank": 3,
+                "frame": 62250,
+                "relative_frame": 1
+              },
+              "first_phase_advance": {
+                "seconds": 0.22265060000063386,
+                "vblank": 117993,
+                "relative_vblank": 13,
+                "frame": 62255,
+                "relative_frame": 6
+              },
+              "start": {
+                "seconds": 0.18918760000087786,
+                "vblank": 117991,
+                "relative_vblank": 11,
+                "frame": 62254,
+                "relative_frame": 5
+              },
+              "end": {
+                "seconds": 3.0170937000002596,
+                "vblank": 118161,
+                "relative_vblank": 181,
+                "frame": 62339,
+                "relative_frame": 90
+              },
+              "phase_start": 0.0,
+              "phase_end": 20.0,
+              "cycles_start": 0,
+              "cycles_end": 5,
+              "unwrapped_phase_units": 170.0,
+              "frames": 85,
+              "vblanks": 170,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 60.115150216634554
+            },
+            {
+              "gait": 0,
+              "clip": "0076D7B0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 3.054982400000881,
+                "vblank": 118163,
+                "relative_vblank": 183,
+                "frame": 62340,
+                "relative_frame": 91
+              },
+              "first_phase_advance": {
+                "seconds": 3.322350700000243,
+                "vblank": 118179,
+                "relative_vblank": 199,
+                "frame": 62348,
+                "relative_frame": 99
+              },
+              "start": {
+                "seconds": 3.289228200001162,
+                "vblank": 118177,
+                "relative_vblank": 197,
+                "frame": 62347,
+                "relative_frame": 98
+              },
+              "end": {
+                "seconds": 8.061684400001468,
+                "vblank": 118463,
+                "relative_vblank": 483,
+                "frame": 62490,
+                "relative_frame": 241
+              },
+              "phase_start": 0.0,
+              "phase_end": 46.0,
+              "cycles_start": 0,
+              "cycles_end": 2,
+              "unwrapped_phase_units": 286.0,
+              "frames": 143,
+              "vblanks": 286,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.92721316121909
+            },
+            {
+              "gait": 0,
+              "clip": "00E97570",
+              "clip_start": 0,
+              "clip_end": 160,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 8.09514339999987,
+                "vblank": 118465,
+                "relative_vblank": 485,
+                "frame": 62491,
+                "relative_frame": 242
+              },
+              "first_phase_advance": {
+                "seconds": 8.361421700001301,
+                "vblank": 118481,
+                "relative_vblank": 501,
+                "frame": 62499,
+                "relative_frame": 250
+              },
+              "start": {
+                "seconds": 8.327796000001399,
+                "vblank": 118479,
+                "relative_vblank": 499,
+                "frame": 62498,
+                "relative_frame": 249
+              },
+              "end": {
+                "seconds": 11.029108300001099,
+                "vblank": 118641,
+                "relative_vblank": 661,
+                "frame": 62579,
+                "relative_frame": 330
+              },
+              "phase_start": 0.0,
+              "phase_end": 2.0,
+              "cycles_start": 0,
+              "cycles_end": 1,
+              "unwrapped_phase_units": 162.0,
+              "frames": 81,
+              "vblanks": 162,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.970851944818826
+            }
+          ]
+        },
+        "Connie": {
+          "initial_xyz": [
+            6.108560562133789,
+            -2.555664539337158,
+            -4.071652889251709
+          ],
+          "final_xyz": [
+            10.41790771484375,
+            -2.7807226181030273,
+            9.373456954956055
+          ],
+          "net_horizontal_displacement": 14.118833223938228,
+          "path_over_observed_updates": 14.149991545376539,
+          "first_motion": {
+            "seconds": 0.3002360000009503,
+            "vblank": 117998,
+            "relative_vblank": 18,
+            "frame": 62258,
+            "relative_frame": 9
+          },
+          "modes": [
+            10
+          ],
+          "gaits": {
+            "0": {
+              "pairs": 251,
+              "frames": 251,
+              "vblanks": 502,
+              "seconds": 8.371484499999497,
+              "horizontal_path": 0.0,
+              "horizontal_units_per_update": 0.0,
+              "horizontal_units_per_vblank": 0.0,
+              "horizontal_units_per_60_vblanks": 0.0,
+              "horizontal_units_per_wall_second": 0.0,
+              "vector_xz_median": 0.0,
+              "vector_xz_min": 0.0,
+              "vector_xz_max": 0.0,
+              "rates": [
+                2.0
+              ]
+            },
+            "1": {
+              "pairs": 31,
+              "frames": 31,
+              "vblanks": 62,
+              "seconds": 1.031449899999643,
+              "horizontal_path": 2.1699924349043243,
+              "horizontal_units_per_update": 0.06999975596465562,
+              "horizontal_units_per_vblank": 0.03499987798232781,
+              "horizontal_units_per_60_vblanks": 2.099992678939669,
+              "horizontal_units_per_wall_second": 2.103827277413159,
+              "vector_xz_median": 0.07000000093918901,
+              "vector_xz_min": 0.0699999929272332,
+              "vector_xz_max": 0.07000001018225768,
+              "rates": [
+                1.600000023841858
+              ]
+            },
+            "2": {
+              "pairs": 73,
+              "frames": 73,
+              "vblanks": 146,
+              "seconds": 2.4345023999994737,
+              "horizontal_path": 11.679998816965224,
+              "horizontal_units_per_update": 0.15999998379404415,
+              "horizontal_units_per_vblank": 0.07999999189702207,
+              "horizontal_units_per_60_vblanks": 4.799999513821325,
+              "horizontal_units_per_wall_second": 4.797694517355065,
+              "vector_xz_median": 0.15999999593853564,
+              "vector_xz_min": 0.15999997841989785,
+              "vector_xz_max": 0.1600000135597023,
+              "rates": [
+                2.0
+              ]
+            }
+          },
+          "transitions": [
+            {
+              "at": {
+                "seconds": 0.0,
+                "vblank": 117980,
+                "relative_vblank": 0,
+                "frame": 62249,
+                "relative_frame": 0
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "0126DFB0",
+              "rate": 2.0,
+              "gap": 1.701374339094197,
+              "xyz": [
+                6.108560562133789,
+                -2.555664539337158,
+                -4.071652889251709
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 0.3002360000009503,
+                "vblank": 117998,
+                "relative_vblank": 18,
+                "frame": 62258,
+                "relative_frame": 9
+              },
+              "gait": 1,
+              "desired_gait": 1,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01294030",
+              "rate": 1.600000023841858,
+              "gap": 2.387966977029907,
+              "xyz": [
+                6.14854621887207,
+                -2.5571632385253906,
+                -4.01419734954834
+              ],
+              "vector_xz": 0.07000000265727614
+            },
+            {
+              "at": {
+                "seconds": 0.7991435000003548,
+                "vblank": 118028,
+                "relative_vblank": 48,
+                "frame": 62273,
+                "relative_frame": 24
+              },
+              "gait": 2,
+              "desired_gait": 2,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01297A70",
+              "rate": 2.0,
+              "gap": 3.3324024921467306,
+              "xyz": [
+                6.668582439422607,
+                -2.582080841064453,
+                -3.001690149307251
+              ],
+              "vector_xz": 0.15999999611405946
+            },
+            {
+              "at": {
+                "seconds": 3.2670593000002555,
+                "vblank": 118176,
+                "relative_vblank": 196,
+                "frame": 62347,
+                "relative_frame": 98
+              },
+              "gait": 1,
+              "desired_gait": 1,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01294030",
+              "rate": 1.600000023841858,
+              "gap": 2.058920774332463,
+              "xyz": [
+                10.110114097595215,
+                -2.773764133453369,
+                8.223959922790527
+              ],
+              "vector_xz": 0.0700000047340619
+            },
+            {
+              "at": {
+                "seconds": 3.866710400001466,
+                "vblank": 118212,
+                "relative_vblank": 232,
+                "frame": 62365,
+                "relative_frame": 116
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "0126DFB0",
+              "rate": 2.0,
+              "gap": 1.1016916343194685,
+              "xyz": [
+                10.41790771484375,
+                -2.7807226181030273,
+                9.373456954956055
+              ],
+              "vector_xz": 0.0
+            }
+          ],
+          "animation_segments": [
+            {
+              "gait": 0,
+              "clip": "0126DFB0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 0.022669600000881474,
+                "vblank": 117981,
+                "relative_vblank": 1,
+                "frame": 62249,
+                "relative_frame": 0
+              },
+              "first_phase_advance": {
+                "seconds": 0.05605190000096627,
+                "vblank": 117983,
+                "relative_vblank": 3,
+                "frame": 62250,
+                "relative_frame": 1
+              },
+              "start": {
+                "seconds": 0.022669600000881474,
+                "vblank": 117981,
+                "relative_vblank": 1,
+                "frame": 62249,
+                "relative_frame": 0
+              },
+              "end": {
+                "seconds": 0.289135000000897,
+                "vblank": 117997,
+                "relative_vblank": 17,
+                "frame": 62257,
+                "relative_frame": 8
+              },
+              "phase_start": 110.0,
+              "phase_end": 6.0,
+              "cycles_start": 127,
+              "cycles_end": 128,
+              "unwrapped_phase_units": 16.0,
+              "frames": 8,
+              "vblanks": 16,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 60.04531920466623
+            },
+            {
+              "gait": 1,
+              "clip": "01294030",
+              "clip_start": 0,
+              "clip_end": 58,
+              "rate": 1.600000023841858,
+              "state_segment_start": {
+                "seconds": 0.32220480000069074,
+                "vblank": 117999,
+                "relative_vblank": 19,
+                "frame": 62258,
+                "relative_frame": 9
+              },
+              "first_phase_advance": {
+                "seconds": 0.5548988000009558,
+                "vblank": 118013,
+                "relative_vblank": 33,
+                "frame": 62265,
+                "relative_frame": 16
+              },
+              "start": {
+                "seconds": 0.5212374000002455,
+                "vblank": 118011,
+                "relative_vblank": 31,
+                "frame": 62264,
+                "relative_frame": 15
+              },
+              "end": {
+                "seconds": 0.7873857000013231,
+                "vblank": 118027,
+                "relative_vblank": 47,
+                "frame": 62272,
+                "relative_frame": 23
+              },
+              "phase_start": 0.0,
+              "phase_end": 12.80000114440918,
+              "cycles_start": 0,
+              "cycles_end": 0,
+              "unwrapped_phase_units": 12.80000114440918,
+              "frames": 8,
+              "vblanks": 16,
+              "phase_units_per_60_vblanks": 48.000004291534424,
+              "phase_units_per_wall_second": 48.09349202815631
+            },
+            {
+              "gait": 2,
+              "clip": "01297A70",
+              "clip_start": 0,
+              "clip_end": 38,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 0.8212519000007887,
+                "vblank": 118029,
+                "relative_vblank": 49,
+                "frame": 62273,
+                "relative_frame": 24
+              },
+              "first_phase_advance": {
+                "seconds": 0.9889605000007577,
+                "vblank": 118039,
+                "relative_vblank": 59,
+                "frame": 62278,
+                "relative_frame": 29
+              },
+              "start": {
+                "seconds": 0.9557535000003554,
+                "vblank": 118037,
+                "relative_vblank": 57,
+                "frame": 62277,
+                "relative_frame": 28
+              },
+              "end": {
+                "seconds": 3.2557543000002624,
+                "vblank": 118175,
+                "relative_vblank": 195,
+                "frame": 62346,
+                "relative_frame": 97
+              },
+              "phase_start": 0.0,
+              "phase_end": 24.0,
+              "cycles_start": 0,
+              "cycles_end": 3,
+              "unwrapped_phase_units": 138.0,
+              "frames": 69,
+              "vblanks": 138,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.999979130444466
+            },
+            {
+              "gait": 1,
+              "clip": "01294030",
+              "clip_start": 0,
+              "clip_end": 58,
+              "rate": 1.600000023841858,
+              "state_segment_start": {
+                "seconds": 3.289228200001162,
+                "vblank": 118177,
+                "relative_vblank": 197,
+                "frame": 62347,
+                "relative_frame": 98
+              },
+              "first_phase_advance": {
+                "seconds": 3.5231097000014415,
+                "vblank": 118191,
+                "relative_vblank": 211,
+                "frame": 62354,
+                "relative_frame": 105
+              },
+              "start": {
+                "seconds": 3.4889891000002535,
+                "vblank": 118189,
+                "relative_vblank": 209,
+                "frame": 62353,
+                "relative_frame": 104
+              },
+              "end": {
+                "seconds": 3.8554972000001726,
+                "vblank": 118211,
+                "relative_vblank": 231,
+                "frame": 62364,
+                "relative_frame": 115
+              },
+              "phase_start": 0.0,
+              "phase_end": 17.60000228881836,
+              "cycles_start": 0,
+              "cycles_end": 0,
+              "unwrapped_phase_units": 17.60000228881836,
+              "frames": 11,
+              "vblanks": 22,
+              "phase_units_per_60_vblanks": 48.00000624223189,
+              "phase_units_per_wall_second": 48.02077304382153
+            },
+            {
+              "gait": 0,
+              "clip": "0126DFB0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 3.8944621000009647,
+                "vblank": 118213,
+                "relative_vblank": 233,
+                "frame": 62365,
+                "relative_frame": 116
+              },
+              "first_phase_advance": {
+                "seconds": 4.06059230000028,
+                "vblank": 118223,
+                "relative_vblank": 243,
+                "frame": 62370,
+                "relative_frame": 121
+              },
+              "start": {
+                "seconds": 4.026796199999808,
+                "vblank": 118221,
+                "relative_vblank": 241,
+                "frame": 62369,
+                "relative_frame": 120
+              },
+              "end": {
+                "seconds": 11.999481200000446,
+                "vblank": 118699,
+                "relative_vblank": 719,
+                "frame": 62608,
+                "relative_frame": 359
+              },
+              "phase_start": 0.0,
+              "phase_end": 118.0,
+              "cycles_start": 0,
+              "cycles_end": 3,
+              "unwrapped_phase_units": 478.0,
+              "frames": 239,
+              "vblanks": 478,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.954707855629785
+            }
+          ]
+        }
+      }
+    },
+    "before": {
+      "source": "follow-before.json",
+      "metadata": {
+        "words": {
+          "0022B68C": "3C0341F0",
+          "001E0200": "C4610000",
+          "0022C414": "1080001A",
+          "004186E8": "3DA3D70A",
+          "001DED84": "3C023D8F",
+          "001DEDEC": "3C023E23"
+        },
+        "move_seconds": 3.0,
+        "offsets": [
+          16,
+          20,
+          24,
+          156,
+          160,
+          168,
+          296,
+          320,
+          488,
+          492,
+          720,
+          724,
+          728,
+          880,
+          884,
+          888,
+          1324,
+          1328,
+          1332,
+          1336,
+          1348
+        ]
+      },
+      "samples": 2155,
+      "observed_updates": 720,
+      "start": {
+        "seconds": 0.0,
+        "vblank": 107875,
+        "relative_vblank": 0,
+        "frame": 57334,
+        "relative_frame": 0
+      },
+      "end": {
+        "seconds": 11.99740010000096,
+        "vblank": 108594,
+        "relative_vblank": 719,
+        "frame": 58053,
+        "relative_frame": 719
+      },
+      "release": {
+        "seconds": 3.004610500000126,
+        "vblank": 108055,
+        "relative_vblank": 180,
+        "frame": 57514,
+        "relative_frame": 180
+      },
+      "gap": {
+        "initial": 1.701374339094197,
+        "final": 1.0839930283357382,
+        "maximum": 3.136041971284904,
+        "maximum_at": {
+          "seconds": 2.5317367000006925,
+          "vblank": 108027,
+          "relative_vblank": 152,
+          "frame": 57486,
+          "relative_frame": 152
+        }
+      },
+      "actors": {
+        "Vanilla": {
+          "initial_xyz": [
+            7.8087639808654785,
+            -2.640479564666748,
+            -4.134763717651367
+          ],
+          "final_xyz": [
+            11.434592247009277,
+            -2.694918632507324,
+            9.80128288269043
+          ],
+          "net_horizontal_displacement": 14.400000884113359,
+          "path_over_observed_updates": 14.400004660252524,
+          "first_motion": {
+            "seconds": 0.011853600000904407,
+            "vblank": 107876,
+            "relative_vblank": 1,
+            "frame": 57335,
+            "relative_frame": 1
+          },
+          "modes": [
+            0
+          ],
+          "gaits": {
+            "0": {
+              "pairs": 538,
+              "frames": 538,
+              "vblanks": 538,
+              "seconds": 8.975967800000944,
+              "horizontal_path": 0.0,
+              "horizontal_units_per_update": 0.0,
+              "horizontal_units_per_vblank": 0.0,
+              "horizontal_units_per_60_vblanks": 0.0,
+              "horizontal_units_per_wall_second": 0.0,
+              "vector_xz_median": 0.0,
+              "vector_xz_min": 0.0,
+              "vector_xz_max": 0.0,
+              "rates": [
+                1.0
+              ]
+            },
+            "2": {
+              "pairs": 179,
+              "frames": 179,
+              "vblanks": 179,
+              "seconds": 2.9874722000004112,
+              "horizontal_path": 14.320004424810364,
+              "horizontal_units_per_update": 0.08000002471961097,
+              "horizontal_units_per_vblank": 0.08000002471961097,
+              "horizontal_units_per_60_vblanks": 4.800001483176659,
+              "horizontal_units_per_wall_second": 4.793351524679759,
+              "vector_xz_median": 0.08000000735079474,
+              "vector_xz_min": 0.08000000084251478,
+              "vector_xz_max": 0.08000000735079474,
+              "rates": [
+                1.0
+              ]
+            }
+          },
+          "transitions": [
+            {
+              "at": {
+                "seconds": 0.0,
+                "vblank": 107875,
+                "relative_vblank": 0,
+                "frame": 57334,
+                "relative_frame": 0
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00E97570",
+              "rate": 1.0,
+              "gap": 1.701374339094197,
+              "xyz": [
+                7.8087639808654785,
+                -2.640479564666748,
+                -4.134763717651367
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 0.011853600000904407,
+                "vblank": 107876,
+                "relative_vblank": 1,
+                "frame": 57335,
+                "relative_frame": 1
+              },
+              "gait": 2,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00773DB0",
+              "rate": 1.0,
+              "gap": 1.7198217013615273,
+              "xyz": [
+                7.82832145690918,
+                -2.641505718231201,
+                -4.057190895080566
+              ],
+              "vector_xz": 0.0800000051073368
+            },
+            {
+              "at": {
+                "seconds": 3.0158511999998154,
+                "vblank": 108056,
+                "relative_vblank": 181,
+                "frame": 57515,
+                "relative_frame": 181
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "0076D7B0",
+              "rate": 1.0,
+              "gap": 2.2257759619875674,
+              "xyz": [
+                11.434592247009277,
+                -2.7057271003723145,
+                9.80128288269043
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 8.037122300000192,
+                "vblank": 108357,
+                "relative_vblank": 482,
+                "frame": 57816,
+                "relative_frame": 482
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00E97570",
+              "rate": 1.0,
+              "gap": 1.0839930283357382,
+              "xyz": [
+                11.434592247009277,
+                -2.694918632507324,
+                9.80128288269043
+              ],
+              "vector_xz": 0.0
+            }
+          ],
+          "animation_segments": [
+            {
+              "gait": 2,
+              "clip": "00773DB0",
+              "clip_start": 0,
+              "clip_end": 30,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 0.017138299999714945,
+                "vblank": 107876,
+                "relative_vblank": 1,
+                "frame": 57335,
+                "relative_frame": 1
+              },
+              "first_phase_advance": {
+                "seconds": 0.1847739000004367,
+                "vblank": 107886,
+                "relative_vblank": 11,
+                "frame": 57345,
+                "relative_frame": 11
+              },
+              "start": {
+                "seconds": 0.16829599999982747,
+                "vblank": 107885,
+                "relative_vblank": 10,
+                "frame": 57344,
+                "relative_frame": 10
+              },
+              "end": {
+                "seconds": 3.004610500000126,
+                "vblank": 108055,
+                "relative_vblank": 180,
+                "frame": 57514,
+                "relative_frame": 180
+              },
+              "phase_start": 0.0,
+              "phase_end": 20.0,
+              "cycles_start": 0,
+              "cycles_end": 5,
+              "unwrapped_phase_units": 170.0,
+              "frames": 170,
+              "vblanks": 170,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.936935766461055
+            },
+            {
+              "gait": 0,
+              "clip": "0076D7B0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 3.021432300000015,
+                "vblank": 108056,
+                "relative_vblank": 181,
+                "frame": 57515,
+                "relative_frame": 181
+              },
+              "first_phase_advance": {
+                "seconds": 3.2712486000000354,
+                "vblank": 108071,
+                "relative_vblank": 196,
+                "frame": 57530,
+                "relative_frame": 196
+              },
+              "start": {
+                "seconds": 3.2546077000006335,
+                "vblank": 108070,
+                "relative_vblank": 195,
+                "frame": 57529,
+                "relative_frame": 195
+              },
+              "end": {
+                "seconds": 8.02551510000012,
+                "vblank": 108356,
+                "relative_vblank": 481,
+                "frame": 57815,
+                "relative_frame": 481
+              },
+              "phase_start": 0.0,
+              "phase_end": 46.0,
+              "cycles_start": 0,
+              "cycles_end": 2,
+              "unwrapped_phase_units": 286.0,
+              "frames": 286,
+              "vblanks": 286,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.946667587811646
+            },
+            {
+              "gait": 0,
+              "clip": "00E97570",
+              "clip_start": 0,
+              "clip_end": 160,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 8.042425899999216,
+                "vblank": 108357,
+                "relative_vblank": 482,
+                "frame": 57816,
+                "relative_frame": 482
+              },
+              "first_phase_advance": {
+                "seconds": 8.292291300000215,
+                "vblank": 108372,
+                "relative_vblank": 497,
+                "frame": 57831,
+                "relative_frame": 497
+              },
+              "start": {
+                "seconds": 8.275171299999784,
+                "vblank": 108371,
+                "relative_vblank": 496,
+                "frame": 57830,
+                "relative_frame": 496
+              },
+              "end": {
+                "seconds": 10.96291679999922,
+                "vblank": 108532,
+                "relative_vblank": 657,
+                "frame": 57991,
+                "relative_frame": 657
+              },
+              "phase_start": 0.0,
+              "phase_end": 1.0,
+              "cycles_start": 0,
+              "cycles_end": 1,
+              "unwrapped_phase_units": 161.0,
+              "frames": 161,
+              "vblanks": 161,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.901504811386985
+            }
+          ]
+        },
+        "Connie": {
+          "initial_xyz": [
+            6.108560562133789,
+            -2.555664539337158,
+            -4.071652889251709
+          ],
+          "final_xyz": [
+            10.429975509643555,
+            -2.7812588214874268,
+            9.39411449432373
+          ],
+          "net_horizontal_displacement": 14.142189306367136,
+          "path_over_observed_updates": 14.190003492915434,
+          "first_motion": {
+            "seconds": 0.2623242999998183,
+            "vblank": 107891,
+            "relative_vblank": 16,
+            "frame": 57350,
+            "relative_frame": 16
+          },
+          "modes": [
+            10
+          ],
+          "gaits": {
+            "0": {
+              "pairs": 532,
+              "frames": 532,
+              "vblanks": 532,
+              "seconds": 8.876537200001621,
+              "horizontal_path": 0.0,
+              "horizontal_units_per_update": 0.0,
+              "horizontal_units_per_vblank": 0.0,
+              "horizontal_units_per_60_vblanks": 0.0,
+              "horizontal_units_per_wall_second": 0.0,
+              "vector_xz_median": 0.0,
+              "vector_xz_min": 0.0,
+              "vector_xz_max": 0.0,
+              "rates": [
+                1.0,
+                2.0
+              ]
+            },
+            "1": {
+              "pairs": 171,
+              "frames": 171,
+              "vblanks": 171,
+              "seconds": 2.8526046999995742,
+              "horizontal_path": 11.970003777116826,
+              "horizontal_units_per_update": 0.07000002208840249,
+              "horizontal_units_per_vblank": 0.07000002208840249,
+              "horizontal_units_per_60_vblanks": 4.200001325304149,
+              "horizontal_units_per_wall_second": 4.196166323752679,
+              "vector_xz_median": 0.07000000006615156,
+              "vector_xz_min": 0.06999999129540815,
+              "vector_xz_max": 0.07000000883937253,
+              "rates": [
+                0.800000011920929
+              ]
+            },
+            "2": {
+              "pairs": 12,
+              "frames": 12,
+              "vblanks": 12,
+              "seconds": 0.20057530000121915,
+              "horizontal_path": 1.9199999314955862,
+              "horizontal_units_per_update": 0.15999999429129885,
+              "horizontal_units_per_vblank": 0.15999999429129885,
+              "horizontal_units_per_60_vblanks": 9.599999657477932,
+              "horizontal_units_per_wall_second": 9.572464463390636,
+              "vector_xz_median": 0.15999999534127346,
+              "vector_xz_min": 0.1599999810521865,
+              "vector_xz_max": 0.16000001060188868,
+              "rates": [
+                1.0
+              ]
+            }
+          },
+          "transitions": [
+            {
+              "at": {
+                "seconds": 0.0,
+                "vblank": 107875,
+                "relative_vblank": 0,
+                "frame": 57334,
+                "relative_frame": 0
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "0126DFB0",
+              "rate": 2.0,
+              "gap": 1.701374339094197,
+              "xyz": [
+                6.108560562133789,
+                -2.555664539337158,
+                -4.071652889251709
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 0.2623242999998183,
+                "vblank": 107891,
+                "relative_vblank": 16,
+                "frame": 57350,
+                "relative_frame": 16
+              },
+              "gait": 1,
+              "desired_gait": 1,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01294030",
+              "rate": 0.800000011920929,
+              "gap": 2.27467388589212,
+              "xyz": [
+                6.1493000984191895,
+                -2.557176113128662,
+                -4.0147294998168945
+              ],
+              "vector_xz": 0.06999999591856758
+            },
+            {
+              "at": {
+                "seconds": 2.5482897000001685,
+                "vblank": 108028,
+                "relative_vblank": 153,
+                "frame": 57487,
+                "relative_frame": 153
+              },
+              "gait": 2,
+              "desired_gait": 2,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01297A70",
+              "rate": 1.0,
+              "gap": 3.059103675347912,
+              "xyz": [
+                9.29275894165039,
+                -2.788356304168701,
+                5.102222919464111
+              ],
+              "vector_xz": 0.1600000063892913
+            },
+            {
+              "at": {
+                "seconds": 2.7656096999999136,
+                "vblank": 108041,
+                "relative_vblank": 166,
+                "frame": 57500,
+                "relative_frame": 166
+              },
+              "gait": 1,
+              "desired_gait": 1,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01294030",
+              "rate": 0.800000011920929,
+              "gap": 2.163136699993917,
+              "xyz": [
+                9.805085182189941,
+                -2.7681915760040283,
+                7.025142669677734
+              ],
+              "vector_xz": 0.0700000013977719
+            },
+            {
+              "at": {
+                "seconds": 3.365697100000034,
+                "vblank": 108077,
+                "relative_vblank": 202,
+                "frame": 57536,
+                "relative_frame": 202
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "0126DFB0",
+              "rate": 1.0,
+              "gap": 1.0839930283357382,
+              "xyz": [
+                10.429975509643555,
+                -2.7812588214874268,
+                9.39411449432373
+              ],
+              "vector_xz": 0.0
+            }
+          ],
+          "animation_segments": [
+            {
+              "gait": 0,
+              "clip": "0126DFB0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 0.0006310999997367617,
+                "vblank": 107875,
+                "relative_vblank": 0,
+                "frame": 57334,
+                "relative_frame": 0
+              },
+              "first_phase_advance": {
+                "seconds": 0.017138299999714945,
+                "vblank": 107876,
+                "relative_vblank": 1,
+                "frame": 57335,
+                "relative_frame": 1
+              },
+              "start": {
+                "seconds": 0.0006310999997367617,
+                "vblank": 107875,
+                "relative_vblank": 0,
+                "frame": 57334,
+                "relative_frame": 0
+              },
+              "end": {
+                "seconds": 0.2512053999998898,
+                "vblank": 107890,
+                "relative_vblank": 15,
+                "frame": 57349,
+                "relative_frame": 15
+              },
+              "phase_start": 120.0,
+              "phase_end": 30.0,
+              "cycles_start": 45,
+              "cycles_end": 46,
+              "unwrapped_phase_units": 30.0,
+              "frames": 15,
+              "vblanks": 15,
+              "phase_units_per_60_vblanks": 120.0,
+              "phase_units_per_wall_second": 119.72496780388764
+            },
+            {
+              "gait": 1,
+              "clip": "01294030",
+              "clip_start": 0,
+              "clip_end": 58,
+              "rate": 0.800000011920929,
+              "state_segment_start": {
+                "seconds": 0.2677065000007133,
+                "vblank": 107891,
+                "relative_vblank": 16,
+                "frame": 57350,
+                "relative_frame": 16
+              },
+              "first_phase_advance": {
+                "seconds": 0.4864412999995693,
+                "vblank": 107904,
+                "relative_vblank": 29,
+                "frame": 57363,
+                "relative_frame": 29
+              },
+              "start": {
+                "seconds": 0.4697852999997849,
+                "vblank": 107903,
+                "relative_vblank": 28,
+                "frame": 57362,
+                "relative_frame": 28
+              },
+              "end": {
+                "seconds": 2.537020100000518,
+                "vblank": 108027,
+                "relative_vblank": 152,
+                "frame": 57486,
+                "relative_frame": 152
+              },
+              "phase_start": 0.0,
+              "phase_end": 41.19992446899414,
+              "cycles_start": 0,
+              "cycles_end": 1,
+              "unwrapped_phase_units": 99.19992446899414,
+              "frames": 124,
+              "vblanks": 124,
+              "phase_units_per_60_vblanks": 47.9999634527391,
+              "phase_units_per_wall_second": 47.986771734376255
+            },
+            {
+              "gait": 1,
+              "clip": "01294030",
+              "clip_start": 0,
+              "clip_end": 58,
+              "rate": 0.800000011920929,
+              "state_segment_start": {
+                "seconds": 2.7711849000006623,
+                "vblank": 108041,
+                "relative_vblank": 166,
+                "frame": 57500,
+                "relative_frame": 166
+              },
+              "first_phase_advance": {
+                "seconds": 2.9877536999993026,
+                "vblank": 108054,
+                "relative_vblank": 179,
+                "frame": 57513,
+                "relative_frame": 179
+              },
+              "start": {
+                "seconds": 2.97128739999971,
+                "vblank": 108053,
+                "relative_vblank": 178,
+                "frame": 57512,
+                "relative_frame": 178
+              },
+              "end": {
+                "seconds": 3.3544760000004317,
+                "vblank": 108076,
+                "relative_vblank": 201,
+                "frame": 57535,
+                "relative_frame": 201
+              },
+              "phase_start": 0.0,
+              "phase_end": 18.399991989135742,
+              "cycles_start": 0,
+              "cycles_end": 0,
+              "unwrapped_phase_units": 18.399991989135742,
+              "frames": 23,
+              "vblanks": 23,
+              "phase_units_per_60_vblanks": 47.99997910209324,
+              "phase_units_per_wall_second": 48.0181090697925
+            },
+            {
+              "gait": 0,
+              "clip": "0126DFB0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 3.371437199999491,
+                "vblank": 108077,
+                "relative_vblank": 202,
+                "frame": 57536,
+                "relative_frame": 202
+              },
+              "first_phase_advance": {
+                "seconds": 3.537794899999426,
+                "vblank": 108087,
+                "relative_vblank": 212,
+                "frame": 57546,
+                "relative_frame": 212
+              },
+              "start": {
+                "seconds": 3.5211839999992662,
+                "vblank": 108086,
+                "relative_vblank": 211,
+                "frame": 57545,
+                "relative_frame": 211
+              },
+              "end": {
+                "seconds": 11.99740010000096,
+                "vblank": 108594,
+                "relative_vblank": 719,
+                "frame": 58053,
+                "relative_frame": 719
+              },
+              "phase_start": 0.0,
+              "phase_end": 28.0,
+              "cycles_start": 0,
+              "cycles_end": 4,
+              "unwrapped_phase_units": 508.0,
+              "frames": 508,
+              "vblanks": 508,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.93240309197621
+            }
+          ]
+        }
+      }
+    },
+    "fixed": {
+      "source": "follow-fixed.json",
+      "metadata": {
+        "words": {
+          "0022B68C": "3C0341F0",
+          "001E0200": "C4610000",
+          "0022C414": "1080001A",
+          "004186E8": "3DA3D70A",
+          "001DED84": "3C023D0F",
+          "001DEDEC": "3C023DA3"
+        },
+        "move_seconds": 3.0,
+        "offsets": [
+          16,
+          20,
+          24,
+          156,
+          160,
+          168,
+          296,
+          320,
+          488,
+          492,
+          720,
+          724,
+          728,
+          880,
+          884,
+          888,
+          1324,
+          1328,
+          1332,
+          1336,
+          1348
+        ]
+      },
+      "samples": 2150,
+      "observed_updates": 720,
+      "start": {
+        "seconds": 0.0,
+        "vblank": 107832,
+        "relative_vblank": 0,
+        "frame": 57291,
+        "relative_frame": 0
+      },
+      "end": {
+        "seconds": 11.995257000000493,
+        "vblank": 108551,
+        "relative_vblank": 719,
+        "frame": 58010,
+        "relative_frame": 719
+      },
+      "release": {
+        "seconds": 3.0031221999997797,
+        "vblank": 108012,
+        "relative_vblank": 180,
+        "frame": 57471,
+        "relative_frame": 180
+      },
+      "gap": {
+        "initial": 1.701374339094197,
+        "final": 1.108368336165522,
+        "maximum": 3.30740513172178,
+        "maximum_at": {
+          "seconds": 0.7667933000011544,
+          "vblank": 107878,
+          "relative_vblank": 46,
+          "frame": 57337,
+          "relative_frame": 46
+        }
+      },
+      "actors": {
+        "Vanilla": {
+          "initial_xyz": [
+            7.8087639808654785,
+            -2.640479564666748,
+            -4.134763717651367
+          ],
+          "final_xyz": [
+            11.434592247009277,
+            -2.694918632507324,
+            9.80128288269043
+          ],
+          "net_horizontal_displacement": 14.400000884113359,
+          "path_over_observed_updates": 14.400004660252524,
+          "first_motion": {
+            "seconds": 0.017573999999513035,
+            "vblank": 107833,
+            "relative_vblank": 1,
+            "frame": 57292,
+            "relative_frame": 1
+          },
+          "modes": [
+            0
+          ],
+          "gaits": {
+            "0": {
+              "pairs": 536,
+              "frames": 536,
+              "vblanks": 538,
+              "seconds": 8.942039999999906,
+              "horizontal_path": 0.0,
+              "horizontal_units_per_update": 0.0,
+              "horizontal_units_per_vblank": 0.0,
+              "horizontal_units_per_60_vblanks": 0.0,
+              "horizontal_units_per_wall_second": 0.0,
+              "vector_xz_median": 0.0,
+              "vector_xz_min": 0.0,
+              "vector_xz_max": 0.0,
+              "rates": [
+                1.0
+              ]
+            },
+            "2": {
+              "pairs": 179,
+              "frames": 179,
+              "vblanks": 179,
+              "seconds": 2.985754999999699,
+              "horizontal_path": 14.320004424810364,
+              "horizontal_units_per_update": 0.08000002471961097,
+              "horizontal_units_per_vblank": 0.08000002471961097,
+              "horizontal_units_per_60_vblanks": 4.800001483176659,
+              "horizontal_units_per_wall_second": 4.796108329320995,
+              "vector_xz_median": 0.08000000735079474,
+              "vector_xz_min": 0.08000000084251478,
+              "vector_xz_max": 0.08000000735079474,
+              "rates": [
+                1.0
+              ]
+            }
+          },
+          "transitions": [
+            {
+              "at": {
+                "seconds": 0.0,
+                "vblank": 107832,
+                "relative_vblank": 0,
+                "frame": 57291,
+                "relative_frame": 0
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00E97570",
+              "rate": 1.0,
+              "gap": 1.701374339094197,
+              "xyz": [
+                7.8087639808654785,
+                -2.640479564666748,
+                -4.134763717651367
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 0.017573999999513035,
+                "vblank": 107833,
+                "relative_vblank": 1,
+                "frame": 57292,
+                "relative_frame": 1
+              },
+              "gait": 2,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00773DB0",
+              "rate": 1.0,
+              "gap": 1.7198217013615273,
+              "xyz": [
+                7.82832145690918,
+                -2.641505718231201,
+                -4.057190895080566
+              ],
+              "vector_xz": 0.0800000051073368
+            },
+            {
+              "at": {
+                "seconds": 3.0199506000008114,
+                "vblank": 108013,
+                "relative_vblank": 181,
+                "frame": 57472,
+                "relative_frame": 181
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "0076D7B0",
+              "rate": 1.0,
+              "gap": 3.067880387985544,
+              "xyz": [
+                11.434592247009277,
+                -2.7057271003723145,
+                9.80128288269043
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 8.041978200000813,
+                "vblank": 108314,
+                "relative_vblank": 482,
+                "frame": 57773,
+                "relative_frame": 482
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 0,
+              "target": "00000000",
+              "clip": "00E97570",
+              "rate": 1.0,
+              "gap": 1.108368336165522,
+              "xyz": [
+                11.434592247009277,
+                -2.694918632507324,
+                9.80128288269043
+              ],
+              "vector_xz": 0.0
+            }
+          ],
+          "animation_segments": [
+            {
+              "gait": 2,
+              "clip": "00773DB0",
+              "clip_start": 0,
+              "clip_end": 30,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 0.023102099999960046,
+                "vblank": 107833,
+                "relative_vblank": 1,
+                "frame": 57292,
+                "relative_frame": 1
+              },
+              "first_phase_advance": {
+                "seconds": 0.19170330000088143,
+                "vblank": 107843,
+                "relative_vblank": 11,
+                "frame": 57302,
+                "relative_frame": 11
+              },
+              "start": {
+                "seconds": 0.1746899999998277,
+                "vblank": 107842,
+                "relative_vblank": 10,
+                "frame": 57301,
+                "relative_frame": 10
+              },
+              "end": {
+                "seconds": 3.008857099999659,
+                "vblank": 108012,
+                "relative_vblank": 180,
+                "frame": 57471,
+                "relative_frame": 180
+              },
+              "phase_start": 0.0,
+              "phase_end": 20.0,
+              "cycles_start": 0,
+              "cycles_end": 5,
+              "unwrapped_phase_units": 170.0,
+              "frames": 170,
+              "vblanks": 170,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.9823489588917
+            },
+            {
+              "gait": 0,
+              "clip": "0076D7B0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 3.025468300000284,
+                "vblank": 108013,
+                "relative_vblank": 181,
+                "frame": 57472,
+                "relative_frame": 181
+              },
+              "first_phase_advance": {
+                "seconds": 3.276595900000757,
+                "vblank": 108028,
+                "relative_vblank": 196,
+                "frame": 57487,
+                "relative_frame": 196
+              },
+              "start": {
+                "seconds": 3.259103000000323,
+                "vblank": 108027,
+                "relative_vblank": 195,
+                "frame": 57486,
+                "relative_frame": 195
+              },
+              "end": {
+                "seconds": 8.030794199999946,
+                "vblank": 108313,
+                "relative_vblank": 481,
+                "frame": 57772,
+                "relative_frame": 481
+              },
+              "phase_start": 0.0,
+              "phase_end": 46.0,
+              "cycles_start": 0,
+              "cycles_end": 2,
+              "unwrapped_phase_units": 286.0,
+              "frames": 286,
+              "vblanks": 286,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.93682072302219
+            },
+            {
+              "gait": 0,
+              "clip": "00E97570",
+              "clip_start": 0,
+              "clip_end": 160,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 8.047325200001069,
+                "vblank": 108314,
+                "relative_vblank": 482,
+                "frame": 57773,
+                "relative_frame": 482
+              },
+              "first_phase_advance": {
+                "seconds": 8.2974592999999,
+                "vblank": 108329,
+                "relative_vblank": 497,
+                "frame": 57788,
+                "relative_frame": 497
+              },
+              "start": {
+                "seconds": 8.281113900000491,
+                "vblank": 108328,
+                "relative_vblank": 496,
+                "frame": 57787,
+                "relative_frame": 496
+              },
+              "end": {
+                "seconds": 10.975207800000135,
+                "vblank": 108489,
+                "relative_vblank": 657,
+                "frame": 57948,
+                "relative_frame": 657
+              },
+              "phase_start": 0.0,
+              "phase_end": 1.0,
+              "cycles_start": 0,
+              "cycles_end": 1,
+              "unwrapped_phase_units": 161.0,
+              "frames": 161,
+              "vblanks": 161,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.76035207979251
+            }
+          ]
+        },
+        "Connie": {
+          "initial_xyz": [
+            6.108560562133789,
+            -2.555664539337158,
+            -4.071652889251709
+          ],
+          "final_xyz": [
+            10.416717529296875,
+            -2.7811102867126465,
+            9.362635612487793
+          ],
+          "net_horizontal_displacement": 14.108165153615335,
+          "path_over_observed_updates": 14.139993782457305,
+          "first_motion": {
+            "seconds": 0.27159299999948416,
+            "vblank": 107848,
+            "relative_vblank": 16,
+            "frame": 57307,
+            "relative_frame": 16
+          },
+          "modes": [
+            10
+          ],
+          "gaits": {
+            "0": {
+              "pairs": 501,
+              "frames": 501,
+              "vblanks": 503,
+              "seconds": 8.355847299999368,
+              "horizontal_path": 0.0,
+              "horizontal_units_per_update": 0.0,
+              "horizontal_units_per_vblank": 0.0,
+              "horizontal_units_per_60_vblanks": 0.0,
+              "horizontal_units_per_wall_second": 0.0,
+              "vector_xz_median": 0.0,
+              "vector_xz_min": 0.0,
+              "vector_xz_max": 0.0,
+              "rates": [
+                1.0,
+                2.0
+              ]
+            },
+            "1": {
+              "pairs": 66,
+              "frames": 66,
+              "vblanks": 66,
+              "seconds": 1.0955254999971658,
+              "horizontal_path": 2.3099944077975167,
+              "horizontal_units_per_update": 0.03499991526965934,
+              "horizontal_units_per_vblank": 0.03499991526965934,
+              "horizontal_units_per_60_vblanks": 2.099994916179561,
+              "horizontal_units_per_wall_second": 2.10857201206498,
+              "vector_xz_median": 0.03499999997107549,
+              "vector_xz_min": 0.034999995316800675,
+              "vector_xz_max": 0.03500000401966245,
+              "rates": [
+                0.800000011920929
+              ]
+            },
+            "2": {
+              "pairs": 146,
+              "frames": 146,
+              "vblanks": 146,
+              "seconds": 2.4367221999982576,
+              "horizontal_path": 11.679999185696117,
+              "horizontal_units_per_update": 0.07999999442257615,
+              "horizontal_units_per_vblank": 0.07999999442257615,
+              "horizontal_units_per_60_vblanks": 4.7999996653545685,
+              "horizontal_units_per_wall_second": 4.793324075146715,
+              "vector_xz_median": 0.07999999826312937,
+              "vector_xz_min": 0.07999998790207152,
+              "vector_xz_max": 0.08000000771851862,
+              "rates": [
+                1.0
+              ]
+            }
+          },
+          "transitions": [
+            {
+              "at": {
+                "seconds": 0.0,
+                "vblank": 107832,
+                "relative_vblank": 0,
+                "frame": 57291,
+                "relative_frame": 0
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "0126DFB0",
+              "rate": 2.0,
+              "gap": 1.701374339094197,
+              "xyz": [
+                6.108560562133789,
+                -2.555664539337158,
+                -4.071652889251709
+              ],
+              "vector_xz": 0.0
+            },
+            {
+              "at": {
+                "seconds": 0.27159299999948416,
+                "vblank": 107848,
+                "relative_vblank": 16,
+                "frame": 57307,
+                "relative_frame": 16
+              },
+              "gait": 1,
+              "desired_gait": 1,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01294030",
+              "rate": 0.800000011920929,
+              "gap": 2.3064573677967797,
+              "xyz": [
+                6.128930568695068,
+                -2.556818723678589,
+                -4.043190956115723
+              ],
+              "vector_xz": 0.03499999795928379
+            },
+            {
+              "at": {
+                "seconds": 0.7834359999997105,
+                "vblank": 107879,
+                "relative_vblank": 47,
+                "frame": 57338,
+                "relative_frame": 47
+              },
+              "gait": 2,
+              "desired_gait": 2,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01297A70",
+              "rate": 1.0,
+              "gap": 3.3031148538645168,
+              "xyz": [
+                6.653829097747803,
+                -2.5832653045654297,
+                -3.0447921752929688
+              ],
+              "vector_xz": 0.0799999892620452
+            },
+            {
+              "at": {
+                "seconds": 3.2366761000012048,
+                "vblank": 108026,
+                "relative_vblank": 194,
+                "frame": 57485,
+                "relative_frame": 194
+              },
+              "gait": 1,
+              "desired_gait": 1,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "01294030",
+              "rate": 0.800000011920929,
+              "gap": 2.13244473490234,
+              "xyz": [
+                10.090800285339355,
+                -2.774059772491455,
+                8.145522117614746
+              ],
+              "vector_xz": 0.034999995316800675
+            },
+            {
+              "at": {
+                "seconds": 3.8538977000007435,
+                "vblank": 108063,
+                "relative_vblank": 231,
+                "frame": 57522,
+                "relative_frame": 231
+              },
+              "gait": 0,
+              "desired_gait": 0,
+              "mode": 10,
+              "target": "00A29350",
+              "clip": "0126DFB0",
+              "rate": 1.0,
+              "gap": 1.108368336165522,
+              "xyz": [
+                10.416717529296875,
+                -2.7811102867126465,
+                9.362635612487793
+              ],
+              "vector_xz": 0.0
+            }
+          ],
+          "animation_segments": [
+            {
+              "gait": 0,
+              "clip": "0126DFB0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 2.0,
+              "state_segment_start": {
+                "seconds": 0.006418400000256952,
+                "vblank": 107832,
+                "relative_vblank": 0,
+                "frame": 57291,
+                "relative_frame": 0
+              },
+              "first_phase_advance": {
+                "seconds": 0.023102099999960046,
+                "vblank": 107833,
+                "relative_vblank": 1,
+                "frame": 57292,
+                "relative_frame": 1
+              },
+              "start": {
+                "seconds": 0.006418400000256952,
+                "vblank": 107832,
+                "relative_vblank": 0,
+                "frame": 57291,
+                "relative_frame": 0
+              },
+              "end": {
+                "seconds": 0.25417229999948177,
+                "vblank": 107847,
+                "relative_vblank": 15,
+                "frame": 57306,
+                "relative_frame": 15
+              },
+              "phase_start": 34.0,
+              "phase_end": 64.0,
+              "cycles_start": 45,
+              "cycles_end": 45,
+              "unwrapped_phase_units": 30.0,
+              "frames": 15,
+              "vblanks": 15,
+              "phase_units_per_60_vblanks": 120.0,
+              "phase_units_per_wall_second": 121.08790214843789
+            },
+            {
+              "gait": 1,
+              "clip": "01294030",
+              "clip_start": 0,
+              "clip_end": 58,
+              "rate": 0.800000011920929,
+              "state_segment_start": {
+                "seconds": 0.27709610000056273,
+                "vblank": 107848,
+                "relative_vblank": 16,
+                "frame": 57307,
+                "relative_frame": 16
+              },
+              "first_phase_advance": {
+                "seconds": 0.488161700001001,
+                "vblank": 107861,
+                "relative_vblank": 29,
+                "frame": 57320,
+                "relative_frame": 29
+              },
+              "start": {
+                "seconds": 0.47103880000031495,
+                "vblank": 107860,
+                "relative_vblank": 28,
+                "frame": 57319,
+                "relative_frame": 28
+              },
+              "end": {
+                "seconds": 0.7722945999994408,
+                "vblank": 107878,
+                "relative_vblank": 46,
+                "frame": 57337,
+                "relative_frame": 46
+              },
+              "phase_start": 0.0,
+              "phase_end": 14.399995803833008,
+              "cycles_start": 0,
+              "cycles_end": 0,
+              "unwrapped_phase_units": 14.399995803833008,
+              "frames": 18,
+              "vblanks": 18,
+              "phase_units_per_60_vblanks": 47.999986012776695,
+              "phase_units_per_wall_second": 47.79989564972622
+            },
+            {
+              "gait": 2,
+              "clip": "01297A70",
+              "clip_start": 0,
+              "clip_end": 38,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 0.7888252000011562,
+                "vblank": 107879,
+                "relative_vblank": 47,
+                "frame": 57338,
+                "relative_frame": 47
+              },
+              "first_phase_advance": {
+                "seconds": 0.955606200001057,
+                "vblank": 107889,
+                "relative_vblank": 57,
+                "frame": 57348,
+                "relative_frame": 57
+              },
+              "start": {
+                "seconds": 0.9387342999998509,
+                "vblank": 107888,
+                "relative_vblank": 56,
+                "frame": 57347,
+                "relative_frame": 56
+              },
+              "end": {
+                "seconds": 3.2255473999994138,
+                "vblank": 108025,
+                "relative_vblank": 193,
+                "frame": 57484,
+                "relative_frame": 193
+              },
+              "phase_start": 0.0,
+              "phase_end": 23.0,
+              "cycles_start": 0,
+              "cycles_end": 3,
+              "unwrapped_phase_units": 137.0,
+              "frames": 137,
+              "vblanks": 137,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.908700015767
+            },
+            {
+              "gait": 1,
+              "clip": "01294030",
+              "clip_start": 0,
+              "clip_end": 58,
+              "rate": 0.800000011920929,
+              "state_segment_start": {
+                "seconds": 3.2426499000011972,
+                "vblank": 108026,
+                "relative_vblank": 194,
+                "frame": 57485,
+                "relative_frame": 194
+              },
+              "first_phase_advance": {
+                "seconds": 3.46014920000016,
+                "vblank": 108039,
+                "relative_vblank": 207,
+                "frame": 57498,
+                "relative_frame": 207
+              },
+              "start": {
+                "seconds": 3.4430358999998134,
+                "vblank": 108038,
+                "relative_vblank": 206,
+                "frame": 57497,
+                "relative_frame": 206
+              },
+              "end": {
+                "seconds": 3.842976899999485,
+                "vblank": 108062,
+                "relative_vblank": 230,
+                "frame": 57521,
+                "relative_frame": 230
+              },
+              "phase_start": 0.0,
+              "phase_end": 19.19999122619629,
+              "cycles_start": 0,
+              "cycles_end": 0,
+              "unwrapped_phase_units": 19.19999122619629,
+              "frames": 24,
+              "vblanks": 24,
+              "phase_units_per_60_vblanks": 47.99997806549072,
+              "phase_units_per_wall_second": 48.0070591067484
+            },
+            {
+              "gait": 0,
+              "clip": "0126DFB0",
+              "clip_start": 0,
+              "clip_end": 120,
+              "rate": 1.0,
+              "state_segment_start": {
+                "seconds": 3.859414900000047,
+                "vblank": 108063,
+                "relative_vblank": 231,
+                "frame": 57522,
+                "relative_frame": 231
+              },
+              "first_phase_advance": {
+                "seconds": 4.026560000000245,
+                "vblank": 108073,
+                "relative_vblank": 241,
+                "frame": 57532,
+                "relative_frame": 241
+              },
+              "start": {
+                "seconds": 4.0095149999997375,
+                "vblank": 108072,
+                "relative_vblank": 240,
+                "frame": 57531,
+                "relative_frame": 240
+              },
+              "end": {
+                "seconds": 11.995257000000493,
+                "vblank": 108551,
+                "relative_vblank": 719,
+                "frame": 58010,
+                "relative_frame": 719
+              },
+              "phase_start": 0.0,
+              "phase_end": 119.0,
+              "cycles_start": 0,
+              "cycles_end": 3,
+              "unwrapped_phase_units": 479.0,
+              "frames": 479,
+              "vblanks": 479,
+              "phase_units_per_60_vblanks": 60.0,
+              "phase_units_per_wall_second": 59.98190274616369
+            }
+          ]
+        }
+      }
+    }
+  }
+}

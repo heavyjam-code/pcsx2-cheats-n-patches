@@ -1,7 +1,7 @@
 # Devlog: 60 FPS for Steambot Chronicles (SLUS-21344)
 
 The [patch](../../patches/SLUS-21344_9F391882.pnach) unlocks 60 FPS and corrects
-the measured on-foot distance, animation-rate setup, idle-gesture timing and
+the measured on-foot distance, follower speeds, animation-rate setup, idle-gesture timing and
 in-game clock. It remains
 **experimental**: this is not a complete conversion of the simulation to 60 Hz.
 See the [frame-rate survey](frame-rate-survey.md) for the comparison with other games.
@@ -18,7 +18,7 @@ The serial was read from the disc, not inferred from its title. XORing the ELF's
 The UNDUB retains the CRC associated with the USA release. This record covers
 that extracted executable; it does not establish compatibility with other mods.
 
-## What the thirteen writes change
+## What the fifteen writes change
 
 | Address | Original | Patched | Purpose |
 |---|---|---|---|
@@ -35,11 +35,13 @@ that extracted executable; it does not establish compatibility with other mods.
 | `001DD970` | `28410097` | `2841012D` | Idle-gesture eligibility threshold: 151 to 301 updates |
 | `001DDA18` | `2402012C` | `24020258` | Idle-gesture repeat divisor: 300 to 600 updates |
 | `001DDA1C` | `2463FF6A` | `2463FED4` | Idle-gesture repeat offset: -150 to -300 updates |
+| `001DED84` | `3C023D8F` | `3C023D0F` | Follower's inline walking speed: 0.070 to 0.035 |
+| `001DEDEC` | `3C023E23` | `3C023DA3` | Follower's inline running speed: 0.160 to 0.080 |
 
 The interval is a runtime field. Changing only the initialization argument at
 `003D18C4` is insufficient when loading a state that already contains interval 2.
 The shipped write maintains `005BC89C = 1`; it does not rely on initialization
-running again. All thirteen writes use `place=1`.
+running again. All fifteen writes use `place=1`.
 
 This address belongs to the **static** display object at `005BC650`, field
 `+024C`; it is not a guessed heap allocation. Initialization at `0022A064` and
@@ -176,8 +178,8 @@ the executable patch; the following correction resolves it.
 
 ## Idle gesture timing correction
 
-The final patch scales all three scheduling constants together, as listed in
-the last three rows above. Eligibility begins at counter 301 instead of 151;
+The patch scales all three scheduling constants together, as listed in
+the instruction table above. Eligibility begins at counter 301 instead of 151;
 forced repeats use `(counter - 300) % 600 == 0`. This preserves both the initial
 roughly five-second delay and the subsequent roughly ten-second intervals.
 
@@ -214,8 +216,92 @@ comparison. The [idle-fix measurement summary](data/steambot-chronicles-idle-tim
 records the events, counters, instruction words and matched phase ramps.
 
 The user's current state was backed up before testing and restored in PCSX2
-with the final thirteen-write patch after verification. The original save slots
+with the then-current thirteen-write patch after verification. The original save slots
 were left unchanged.
+
+## Follower movement correction
+
+Playtesting exposed a separate issue: Connie walked behind Vanilla, then rushed
+up beside him. The follower action, mode 10 at actor `+00A0`, calls `001DE950`.
+It bypasses the shared gait table used by ordinary player input and contains
+its own 0.07 walking and 0.16 running constants. Both therefore produced double
+the stock distance per second at 60 FPS, despite the corrected player speed.
+
+The two additional writes halve those inline floats by changing their upper
+16 bits; the low halves at `001DED88` and `001DEDF0` remain unchanged. Both branches
+multiply by actor `+01E8`, write their movement vector at `+0370`, and add it
+to accumulated displacement at `+02D0`. The published gait at `+009C` still
+selects the walking or running animation. Distance thresholds, target pointer
+`+0128`, and the far-distance repositioning path are unchanged. The follower
+does not update `+01EC`, so that field is unsuitable for measuring its speed.
+
+Three matched runs used the clean beach state, three seconds of forward input,
+then nine seconds stationary: stock, the thirteen-write patch, and the corrected
+fifteen-write patch. All Connie samples remained in mode 10. The comparison
+uses actual X/Z displacement between successive observed updates with stable
+gait and target, normalized to 60 VBlanks; it also records the requested vector.
+
+| Movement | Stock 30 FPS | Before follower fix | Corrected 60 FPS |
+|---|---:|---:|---:|
+| Connie walking, units per 60 VBlanks | 2.099993 | 4.200001 | 2.099995 |
+| Connie running, units per 60 VBlanks | 4.800000 | 9.600000 | 4.800000 |
+| Vanilla running, units per 60 VBlanks | 4.799996 | 4.800002 | 4.800002 |
+
+Before the correction, Connie's walking speed nearly matched Vanilla's running
+speed, delaying the switch to running; her eventual catch-up then used double
+the stock running speed. The correction restores both measured speeds while
+preserving player movement. Her final distance from Vanilla was 1.1084 units,
+versus 1.1017 stock. Small trajectory and transition differences remain; follower
+turn smoothing and its idle-look timer have not been converted.
+
+The [follower comparison](data/steambot-chronicles-follower-comparison.json)
+includes instruction read-backs, movement intervals, gait transitions and gaps.
+
+The user also reported that Connie's idle animation looked fast. A separate
+12-second capture at the user's saved position compared her active idle clip
+`0126DFB0` with the stock reference. Stock completed ten parent and child cycles
+over 1200 VBlanks; the corrected patch completed five over 600. Both therefore
+take exactly 120 VBlanks per cycle, averaging 2.00193 seconds stock and 2.00174
+seconds patched. The sampled child-46 scalar matched at all 60 common evaluation
+phases, with RMS and maximum difference zero. No clip or state changes occurred
+in the new capture. This observed idle clip is not double speed, so no additional
+animation-rate change was made. The
+[idle verification](data/steambot-chronicles-follower-idle-verification.json)
+records those matched intervals and the scope of the bone comparison.
+
+### Stopping outside the follow area is stock behavior
+
+A later report described Connie staying behind after a longer walk. At the
+reported beach position, both stock and patched captures left her at exactly
+the same coordinates for six seconds, with mode 10, gait 0 and a zero movement
+vector. Vanilla stood 12.3968 horizontal units away. The stock comparison state
+restored fourteen instruction/table words from the retail ELF and set interval 2 offline,
+preserving the reported positions and other runtime data. Inherited animation
+rates in this copy are not evidence about stock animation; this test concerns
+the movement gate.
+
+The original call at `001DEB74` invokes `001E1670(follower, target)`. For this
+state, Connie's restriction byte `+012C` is 1, all eight allowed surface IDs at
+`+012E..+013C` are -1, and the target surface ID is 20. Following therefore
+depends on the target position lying inside an active type-5 region, checked
+by `0011BA60`. The only active region is record `006D11B0`, ID 2, with inclusive
+bounds X `[-38, -24]`, Y `[-7.5, 2.5]`, Z `[45, 55]`. Vanilla's reported
+position `(-14.0586, -3.9400, 54.2195)` is outside, while Connie remains inside.
+The stock gate returns 1 and `001DEB88` forces the desired gait to zero.
+The gate, region-test routines and caller match the retail ELF byte for byte.
+
+A second matched replay applied forward input for 600 VBlanks, followed by
+240 VBlanks idle. Vanilla reentered the area at relative VBlank 130 stock and
+129 patched; Connie resumed walking at 132 and 130 respectively, one native
+update after reentry in each case. Neither route subsequently exited the area.
+The captures covered 840 VBlanks with 420 stock updates and 823 patched updates;
+the latter did not sustain one update per VBlank, so wall-time and trajectory equality
+are not claimed. Both demonstrate the same stop and resume rule.
+
+No patch change was made for this behavior. The user's position was restored
+with the fifteen-write patch enabled. See the
+[runtime comparison](data/steambot-chronicles-follower-stop-comparison.json) and
+[saved-state gate evaluation](data/steambot-chronicles-follower-stop-gate.json).
 
 ## Earlier codes and the local experiment
 

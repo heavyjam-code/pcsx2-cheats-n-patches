@@ -1,0 +1,551 @@
+{
+  "test": "Connie stopped at the user-reported position: original code versus the 15-word 60 FPS patch, then identical 600-VBlank forward-input replay followed by 240 VBlanks of idle.",
+  "method": "Each run starts from the captured user position. The stock reference restores 14 instruction/table words from the disc ELF and sets the native frame interval to 2 offline before loading, covering all 15 patch targets; PCSX2 is restarted for code changes. Input uses the game replay data path and is restored in finally. Positions, mode, target, gait and restriction fields are compared; inherited animation rates are not evidence for this test. Captures are asynchronous. VBlank and update counts are measured, with no assumption that the patched run maintains one update per VBlank.",
+  "original_region": {
+    "type": 5,
+    "x": [
+      -38,
+      -24
+    ],
+    "y": [
+      -7.5,
+      2.5
+    ],
+    "z": [
+      45,
+      55
+    ],
+    "evidence": "Original game code and active region data independently inspected by the timing investigation."
+  },
+  "Connie_state_in_every_sample": {
+    "mode": 10,
+    "target": "00A29350",
+    "follow_restricted": 1,
+    "region_id": 20
+  },
+  "initial_positions": {
+    "Vanilla": [
+      -14.058621407,
+      -3.939958096,
+      54.219474792
+    ],
+    "Connie": [
+      -26.088285446,
+      -3.193529606,
+      51.224918365
+    ]
+  },
+  "sampled_code_words": {
+    "stock": {
+      "0022B68C": "3C034270",
+      "001E0200": "C4610000",
+      "0022C414": "1080001A",
+      "004186E8": "3E23D70A",
+      "001DED84": "3C023D8F",
+      "001DEDEC": "3C023E23"
+    },
+    "fixed": {
+      "0022B68C": "3C0341F0",
+      "001E0200": "C4610000",
+      "0022C414": "1080001A",
+      "004186E8": "3DA3D70A",
+      "001DED84": "3C023D0F",
+      "001DEDEC": "3C023DA3"
+    }
+  },
+  "stationary_runs": {
+    "stock": {
+      "source": "follow-stopped-stock.json",
+      "samples": 1027,
+      "capture": {
+        "seconds": 5.9998467,
+        "vblanks": 360,
+        "updates": 180
+      },
+      "observed_interval_values": [
+        2
+      ],
+      "initial_gap_xz": 12.39678124,
+      "final": {
+        "at": {
+          "seconds": 5.9998467,
+          "vblanks": 360,
+          "updates": 180
+        },
+        "player_xyz": [
+          -14.058621407,
+          -3.939958096,
+          54.219474792
+        ],
+        "Connie_xyz": [
+          -26.088285446,
+          -3.193529606,
+          51.224918365
+        ],
+        "gap_xz": 12.39678124,
+        "player_in_box": false,
+        "Connie_gait": 0
+      },
+      "player_unique_xyz": 1,
+      "Connie_unique_xyz": 1,
+      "Connie_gaits": [
+        0
+      ],
+      "Connie_desired_gaits": [
+        0
+      ],
+      "Connie_vectors_unique": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "Connie_clips": [
+        "0126DFB0"
+      ]
+    },
+    "fixed": {
+      "source": "follow-stopped-fixed.json",
+      "samples": 1013,
+      "capture": {
+        "seconds": 5.9985902,
+        "vblanks": 346,
+        "updates": 339
+      },
+      "observed_interval_values": [
+        1
+      ],
+      "initial_gap_xz": 12.39678124,
+      "final": {
+        "at": {
+          "seconds": 5.9985902,
+          "vblanks": 346,
+          "updates": 339
+        },
+        "player_xyz": [
+          -14.058621407,
+          -3.939958096,
+          54.219474792
+        ],
+        "Connie_xyz": [
+          -26.088285446,
+          -3.193529606,
+          51.224918365
+        ],
+        "gap_xz": 12.39678124,
+        "player_in_box": false,
+        "Connie_gait": 0
+      },
+      "player_unique_xyz": 1,
+      "Connie_unique_xyz": 1,
+      "Connie_gaits": [
+        0
+      ],
+      "Connie_desired_gaits": [
+        0
+      ],
+      "Connie_vectors_unique": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "Connie_clips": [
+        "0126DFB0"
+      ]
+    }
+  },
+  "movement_runs": {
+    "stock": {
+      "source": "follow-long-stock.json",
+      "samples": 2375,
+      "capture": {
+        "seconds": 14.0017512,
+        "vblanks": 840,
+        "updates": 420
+      },
+      "observed_interval_values": [
+        2
+      ],
+      "initial_gap_xz": 12.39678124,
+      "final": {
+        "at": {
+          "seconds": 14.0017512,
+          "vblanks": 840,
+          "updates": 420
+        },
+        "player_xyz": [
+          -37.074398041,
+          -2.673950672,
+          46.845474243
+        ],
+        "Connie_xyz": [
+          -37.424758911,
+          -2.784944534,
+          48.022972107
+        ],
+        "gap_xz": 1.228516975,
+        "player_in_box": true,
+        "Connie_gait": 0
+      },
+      "requested_input_vblanks": 600,
+      "first_observed_input_release": {
+        "seconds": 10.002141,
+        "vblanks": 600,
+        "updates": 300
+      },
+      "box_entry": {
+        "at": {
+          "seconds": 2.1659662,
+          "vblanks": 130,
+          "updates": 65
+        },
+        "player_xyz": [
+          -24.15051651,
+          -3.478429317,
+          54.6223526
+        ],
+        "Connie_xyz": [
+          -26.088285446,
+          -3.193529606,
+          51.224918365
+        ],
+        "gap_xz": 3.911202862,
+        "player_in_box": true,
+        "Connie_gait": 0
+      },
+      "Connie_resumes": {
+        "at": {
+          "seconds": 2.2003089,
+          "vblanks": 132,
+          "updates": 66
+        },
+        "player_xyz": [
+          -24.309883118,
+          -3.446606874,
+          54.616863251
+        ],
+        "Connie_xyz": [
+          -26.054700851,
+          -3.194844723,
+          51.286334991
+        ],
+        "gap_xz": 3.759894601,
+        "player_in_box": true,
+        "Connie_gait": 1
+      },
+      "entry_to_resume_vblanks": 2,
+      "entry_to_resume_updates": 1,
+      "Connie_unique_xyz_before_entry": 1,
+      "leaves_box_after_entry": false,
+      "player_xyz_observed_min": [
+        -37.839267731,
+        -4.396873951,
+        46.686065674
+      ],
+      "player_xyz_observed_max": [
+        -14.036845207,
+        -2.673695087,
+        54.804225922
+      ],
+      "gait_and_domain_events": [
+        {
+          "at": {
+            "seconds": 0.0,
+            "vblanks": 0,
+            "updates": 0
+          },
+          "player_in_box": false,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 12.396781
+        },
+        {
+          "at": {
+            "seconds": 2.1659662,
+            "vblanks": 130,
+            "updates": 65
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 3.911203
+        },
+        {
+          "at": {
+            "seconds": 2.2003089,
+            "vblanks": 132,
+            "updates": 66
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 3.759895
+        },
+        {
+          "at": {
+            "seconds": 3.5325788,
+            "vblanks": 212,
+            "updates": 106
+          },
+          "player_in_box": true,
+          "gait": 2,
+          "desired_gait": 2,
+          "gap_xz": 3.258509
+        },
+        {
+          "at": {
+            "seconds": 5.1693366,
+            "vblanks": 310,
+            "updates": 155
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 2.40266
+        },
+        {
+          "at": {
+            "seconds": 6.400223,
+            "vblanks": 384,
+            "updates": 192
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 0.613493
+        },
+        {
+          "at": {
+            "seconds": 7.0054098,
+            "vblanks": 420,
+            "updates": 210
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 2.32591
+        },
+        {
+          "at": {
+            "seconds": 8.7384897,
+            "vblanks": 524,
+            "updates": 262
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 1.203226
+        }
+      ]
+    },
+    "fixed": {
+      "source": "follow-long-fixed.json",
+      "samples": 2402,
+      "capture": {
+        "seconds": 14.3244781,
+        "vblanks": 840,
+        "updates": 823
+      },
+      "observed_interval_values": [
+        1
+      ],
+      "initial_gap_xz": 12.39678124,
+      "final": {
+        "at": {
+          "seconds": 14.3244781,
+          "vblanks": 840,
+          "updates": 823
+        },
+        "player_xyz": [
+          -37.006942749,
+          -2.653100252,
+          46.820785522
+        ],
+        "Connie_xyz": [
+          -37.397289276,
+          -2.776377678,
+          47.964332581
+        ],
+        "gap_xz": 1.208333681,
+        "player_in_box": true,
+        "Connie_gait": 0
+      },
+      "requested_input_vblanks": 600,
+      "first_observed_input_release": {
+        "seconds": 10.2179538,
+        "vblanks": 600,
+        "updates": 588
+      },
+      "box_entry": {
+        "at": {
+          "seconds": 2.1782478,
+          "vblanks": 129,
+          "updates": 127
+        },
+        "player_xyz": [
+          -24.069074631,
+          -3.326153278,
+          54.030761719
+        ],
+        "Connie_xyz": [
+          -26.088285446,
+          -3.193529606,
+          51.224918365
+        ],
+        "gap_xz": 3.456872754,
+        "player_in_box": true,
+        "Connie_gait": 0
+      },
+      "Connie_resumes": {
+        "at": {
+          "seconds": 2.1956933,
+          "vblanks": 130,
+          "updates": 128
+        },
+        "player_xyz": [
+          -24.149000168,
+          -3.32009697,
+          54.027328491
+        ],
+        "Connie_xyz": [
+          -26.066230774,
+          -3.194641829,
+          51.252094269
+        ],
+        "gap_xz": 3.373084373,
+        "player_in_box": true,
+        "Connie_gait": 1
+      },
+      "entry_to_resume_vblanks": 1,
+      "entry_to_resume_updates": 1,
+      "Connie_unique_xyz_before_entry": 1,
+      "leaves_box_after_entry": false,
+      "player_xyz_observed_min": [
+        -37.916412354,
+        -4.168998241,
+        46.741001129
+      ],
+      "player_xyz_observed_max": [
+        -14.047733307,
+        -2.653100252,
+        54.442806244
+      ],
+      "gait_and_domain_events": [
+        {
+          "at": {
+            "seconds": 0.0,
+            "vblanks": 0,
+            "updates": 0
+          },
+          "player_in_box": false,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 12.396781
+        },
+        {
+          "at": {
+            "seconds": 2.1782478,
+            "vblanks": 129,
+            "updates": 127
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 3.456873
+        },
+        {
+          "at": {
+            "seconds": 2.1956933,
+            "vblanks": 130,
+            "updates": 128
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 3.373084
+        },
+        {
+          "at": {
+            "seconds": 2.6000868,
+            "vblanks": 153,
+            "updates": 151
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 1.983918
+        },
+        {
+          "at": {
+            "seconds": 3.0035207,
+            "vblanks": 172,
+            "updates": 170
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 2.47052
+        },
+        {
+          "at": {
+            "seconds": 3.5447338,
+            "vblanks": 204,
+            "updates": 202
+          },
+          "player_in_box": true,
+          "gait": 2,
+          "desired_gait": 2,
+          "gap_xz": 3.358174
+        },
+        {
+          "at": {
+            "seconds": 5.3008522,
+            "vblanks": 311,
+            "updates": 308
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 2.422603
+        },
+        {
+          "at": {
+            "seconds": 6.4735654,
+            "vblanks": 381,
+            "updates": 377
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 0.606772
+        },
+        {
+          "at": {
+            "seconds": 7.0408479,
+            "vblanks": 415,
+            "updates": 411
+          },
+          "player_in_box": true,
+          "gait": 1,
+          "desired_gait": 1,
+          "gap_xz": 2.279607
+        },
+        {
+          "at": {
+            "seconds": 8.8930289,
+            "vblanks": 524,
+            "updates": 518
+          },
+          "player_in_box": true,
+          "gait": 0,
+          "desired_gait": 0,
+          "gap_xz": 1.1889
+        }
+      ]
+    }
+  },
+  "finding": "Both code versions leave Connie stationary outside the original allowed region at the same 12.396781239 X/Z gap. She resumes one game update after Vanilla reenters the region in both versions. Neither movement replay subsequently leaves that region. This reported stop and recovery are reproduced with the original game code; the test does not claim that all follower behavior or travel paths are identical."
+}
