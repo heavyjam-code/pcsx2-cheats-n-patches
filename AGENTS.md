@@ -63,11 +63,9 @@ someone picks between them. Write it properly.
   `<Game>: <what was found>` for survey and measurement work.
 - Work lands on `main` directly: no feature branches, no pull requests. From a
   harness worktree, fast-forward the primary checkout and push from there.
-- `.codex/hooks.json` configures a SessionStart hook that fast-forwards this
-  clone from its upstream, because the repo is edited from more than one
-  machine. It skips tracked changes, detached HEAD and branches without an
-  upstream. A machine-wide pull hook should stand down here. See
-  `docs/codex-setup.md` for dependencies and the one-time hook trust step.
+- `.codex/hooks.json` contains no project lifecycle hooks. Session startup
+  does not automatically pull this clone. See `docs/codex-setup.md` for the
+  optional manual update helper.
 
 ## Before writing a group
 

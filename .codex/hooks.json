@@ -1,18 +1,3 @@
 {
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "^(startup|resume|clear)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/session-start-git-pull.py\"",
-            "commandWindows": "powershell.exe -NoProfile -NonInteractive -Command \"& python (Join-Path (git rev-parse --show-toplevel) '.codex/hooks/session-start-git-pull.py')\"",
-            "timeout": 20,
-            "statusMessage": "Pulling latest from upstream"
-          }
-        ]
-      }
-    ]
-  }
+  "hooks": {}
 }
